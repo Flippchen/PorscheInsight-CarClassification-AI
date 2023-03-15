@@ -10,3 +10,5 @@ Install tensorflow and keras
 pip install tensorflow
 pip install keras
 ```
+# Dataset
+The dataset is from [Github](https://github.com/Flippchen/porsche-pictures) and contains ~ 32.000 pictures of Porsche cars.
