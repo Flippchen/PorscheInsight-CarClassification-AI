@@ -146,6 +146,8 @@ plt.plot(epochs_range, loss, label='Training Loss')
 plt.plot(epochs_range, val_loss, label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
+fig1 = plt.gcf()
 plt.show()
+fig1.savefig('acc/loss-with_augmentation.png')
 
 model.save("keras_model.h5")
