@@ -11,6 +11,9 @@ from tensorflow.keras.models import Sequential
 
 import pathlib
 
+import warnings
+warnings.filterwarnings('ignore')
+
 # dataset_url = "file:///C:/Users/phili/Downloads/resized_DVM_v2.zip"
 # data_dir = tf.keras.utils.get_file('resized_DVM', origin=dataset_url, untar=True)
 # print(data_dir)
