@@ -6,9 +6,9 @@ import PIL
 import tensorflow as tf
 
 from tensorflow import keras
-from tensorflow.keras import layers
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.applications import VGG16
+from keras import layers
+from keras.models import Sequential
+from keras.applications import VGG16
 import pathlib
 
 import warnings
