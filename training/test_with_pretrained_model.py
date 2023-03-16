@@ -11,6 +11,9 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.applications import VGG16
 import pathlib
 
+import warnings
+warnings.filterwarnings('ignore')
+
 # dataset_url = "file:///C:/Users/phili/Downloads/resized_DVM_v2.zip"
 # data_dir = tf.keras.utils.get_file('resized_DVM', origin=dataset_url, untar=True)
 # print(data_dir)
@@ -153,6 +156,7 @@ plt.plot(epochs_range, val_acc, label='Validation Accuracy')
 plt.legend(loc='lower right')
 plt.title('Training and Validation Accuracy')
 plt.show()
+plt.imsave('acc.png')
 plt.savefig('acc.png')
 
 plt.subplot(1, 2, 2)
@@ -162,3 +166,5 @@ plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 plt.show()
 plt.savefig('loss.png')
+
+model.save("keras_model.h5")
