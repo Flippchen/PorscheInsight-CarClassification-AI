@@ -5,13 +5,12 @@ import keras
 from keras import layers
 
 
-def load_dataset(path: str, batch_size: int, img_height: int, img_width: int):
+def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
     data_dir = pathlib.Path(path)
 
     image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
     print("Image count:", image_count)
-
-    cars = list(data_dir.glob('*/*/*/*.jpg'))
+    # cars = list(data_dir.glob('*/*/*/*.jpg'))
     # PIL.Image.open(str(cars[0]))
     train_ds = tf.keras.utils.image_dataset_from_directory(
         data_dir,
@@ -34,7 +33,7 @@ def load_dataset(path: str, batch_size: int, img_height: int, img_width: int):
     return train_ds, val_ds, class_names
 
 
-def show_sample_batch(train_ds, class_names):
+def show_sample_batch(train_ds: tf.data.Dataset, class_names: list) -> None:
     plt.figure(figsize=(10, 10))
     for images, labels in train_ds.take(1):
         for i in range(9):
@@ -45,14 +44,14 @@ def show_sample_batch(train_ds, class_names):
         plt.show()
 
 
-def show_batch_shape(train_ds):
+def show_batch_shape(train_ds: tf.data.Dataset) -> None:
     for image_batch, labels_batch in train_ds:
         print(image_batch.shape)
         print(labels_batch.shape)
         break
 
 
-def create_augmentation_layer(img_height: int, img_width: int):
+def create_augmentation_layer(img_height: int, img_width: int) -> keras.Sequential:
     return keras.Sequential(
         [
             layers.RandomFlip("horizontal",
@@ -65,7 +64,7 @@ def create_augmentation_layer(img_height: int, img_width: int):
     )
 
 
-def show_augmented_batch(train_ds, data_augmentation):
+def show_augmented_batch(train_ds, data_augmentation) -> None:
     plt.figure(figsize=(10, 10))
     for images, _ in train_ds.take(1):
         for i in range(9):
@@ -76,8 +75,7 @@ def show_augmented_batch(train_ds, data_augmentation):
         plt.show()
 
 
-def plot_model_score(history, epochs, name: str):
-
+def plot_model_score(history, epochs, name: str) -> None:
     # Read history and plot model score
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
@@ -100,5 +98,3 @@ def plot_model_score(history, epochs, name: str):
     fig1 = plt.gcf()
     plt.show()
     fig1.savefig(f'acc/loss-{name}-model.png')
-
-
