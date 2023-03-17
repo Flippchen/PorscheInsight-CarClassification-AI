@@ -102,9 +102,3 @@ def plot_model_score(history, epochs, name: str):
     fig1.savefig(f'acc/loss-{name}-model.png')
 
 
-def compile_model(model, optimizer, loss, metrics):
-    model.compile(optimizer=optimizer,
-                  loss=loss,
-                  metrics=metrics)
-    model.summary()
-    return model
