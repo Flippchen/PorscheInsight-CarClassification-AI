@@ -97,4 +97,4 @@ def plot_model_score(history, epochs, name: str) -> None:
     plt.title('Training and Validation Loss')
     fig1 = plt.gcf()
     plt.show()
-    fig1.savefig(f'acc/loss-{name}-model.png')
+    fig1.savefig(f'../results/acc-loss-{name}-model.png')
