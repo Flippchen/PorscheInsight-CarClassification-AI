@@ -55,12 +55,23 @@ for layer in vgg16.layers:
 
 # Create a new head and initialize model
 num_classes = len(class_names)
+#model = Sequential([
+#    data_augmentation,
+#    vgg16,
+#    layers.Flatten(),
+#    layers.Dense(128, activation='relu'),
+#    layers.Dense(num_classes, name="outputs")
+#])
 model = Sequential([
     data_augmentation,
     vgg16,
+    layers.BatchNormalization(),
+    layers.LeakyReLU(),
     layers.Flatten(),
-    layers.Dense(128, activation='relu'),
-    layers.Dense(num_classes, name="outputs")
+    layers.Dense(128),
+    layers.BatchNormalization(),
+    layers.LeakyReLU(),
+    layers.Dense(num_classes, activation='softmax', name="outputs")
 ])
 # Compile model
 model.compile(optimizer='adam',
