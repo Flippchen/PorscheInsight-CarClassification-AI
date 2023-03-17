@@ -1,124 +1,58 @@
-import os
-
-import matplotlib.pyplot as plt
+# Import libraries
 import numpy as np
-import PIL
-import tensorflow as tf
-
-from tensorflow import keras
-from keras import layers
 from keras.models import Sequential
 from keras.applications import VGG16
 import pathlib
-
+from tools import *
 import warnings
 warnings.filterwarnings('ignore')
 
-# dataset_url = "file:///C:/Users/phili/Downloads/resized_DVM_v2.zip"
-# data_dir = tf.keras.utils.get_file('resized_DVM', origin=dataset_url, untar=True)
-# print(data_dir)
-data_dir = pathlib.Path("C:/Users\phili/.keras/datasets/resized_DVM/Porsche")
-print(data_dir)
-print(data_dir.is_dir())
-image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
-print(image_count)
-
-cars = list(data_dir.glob('*/*/*/*.jpg'))
-PIL.Image.open(str(cars[0]))
-
-batch_size = 32
+# Set variables and config
+AUTOTUNE = tf.data.AUTOTUNE
 img_height = 300
 img_width = 300
+name = "vgg16-pretrained"
+config = {
+    "path": "C:/Users\phili/.keras/datasets/resized_DVM/Porsche",
+    "batch_size": 32,
+    "img_height": img_height,
+    "img_width": img_width,
+}
 
-train_ds = tf.keras.utils.image_dataset_from_directory(
-    data_dir,
-    validation_split=0.2,
-    subset="training",
-    seed=123,
-    image_size=(img_height, img_width),
-    batch_size=batch_size)
-
-val_ds = tf.keras.utils.image_dataset_from_directory(
-    data_dir,
-    validation_split=0.2,
-    subset="validation",
-    seed=123,
-    image_size=(img_height, img_width),
-    batch_size=batch_size)
-
-class_names = train_ds.class_names
+# Load dataset and classes
+train_ds, val_ds, class_names = load_dataset(**config)
 print(class_names)
 
-plt.figure(figsize=(10, 10))
-# for images, labels in train_ds.take(1):
-#  for i in range(9):
-#    ax = plt.subplot(3, 3, i + 1)
-#    plt.imshow(images[i].numpy().astype("uint8"))
-#    plt.title(class_names[labels[i]])
-#    plt.axis("off")
-#
+# Show sample batch
+show_sample_batch(train_ds, class_names)
+show_batch_shape(train_ds)
 
-for image_batch, labels_batch in train_ds:
-    print(image_batch.shape)
-    print(labels_batch.shape)
-    break
-
-AUTOTUNE = tf.data.AUTOTUNE
-
+# Shuffle/cache and set prefetch buffer size
 train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
+# Normalize the data
 normalization_layer = layers.Rescaling(1. / 255)
-
 normalized_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
 image_batch, labels_batch = next(iter(normalized_ds))
 first_image = image_batch[0]
-# Notice the pixel values are now in `[0,1]`.
 print(np.min(first_image), np.max(first_image))
 
-num_classes = len(class_names)
 
-data_augmentation = keras.Sequential(
-  [
-    layers.RandomFlip("horizontal",
-                      input_shape=(img_height,
-                                  img_width,
-                                  3)),
-    layers.RandomRotation(0.1),
-    layers.RandomZoom(0.1),
-  ]
-)
-plt.figure(figsize=(10, 10))
-for images, _ in train_ds.take(1):
-  for i in range(9):
-    augmented_images = data_augmentation(images)
-    ax = plt.subplot(3, 3, i + 1)
-    plt.imshow(augmented_images[0].numpy().astype("uint8"))
-    plt.axis("off")
+# Create data augmentation layer and show augmented batch
+data_augmentation = create_augmentation_layer(img_height, img_width)
+show_augmented_batch(train_ds, data_augmentation)
 
 
-#model = Sequential([
-#  data_augmentation,
-#  layers.Rescaling(1./255),
-#  layers.Conv2D(16, 3, padding='same', activation='relu'),
-#  layers.MaxPooling2D(),
-#  layers.Conv2D(32, 3, padding='same', activation='relu'),
-#  layers.MaxPooling2D(),
-#  layers.Conv2D(64, 3, padding='same', activation='relu'),
-#  layers.MaxPooling2D(),
-#  layers.Dropout(0.2),
-#  layers.Flatten(),
-#  layers.Dense(128, activation='relu'),
-#  layers.Dense(num_classes, name="outputs")
-#])
-
-# load the pre-trained VGG16 model
+# Load the pre-trained VGG16 model
 vgg16 = VGG16(weights='imagenet', include_top=False, input_shape=(img_height,img_width,3))
 
-# set the trainable flag of the pre-trained model to False
+# Set the trainable flag of the pre-trained model to False
 for layer in vgg16.layers:
     layer.trainable = False
 
+# Create a new head and initialize model
+num_classes = len(class_names)
 model = Sequential([
     data_augmentation,
     vgg16,
@@ -126,13 +60,10 @@ model = Sequential([
     layers.Dense(128, activation='relu'),
     layers.Dense(num_classes, name="outputs")
 ])
+# Compile model
+model = compile_model(model, "adam", tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), ["accuracy"])
 
-model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
-
-model.summary()
-
+# Train model
 epochs = 20
 with tf.device('/GPU:1'):
     history = model.fit(
@@ -141,28 +72,7 @@ with tf.device('/GPU:1'):
       epochs=epochs
     )
 
-acc = history.history['accuracy']
-val_acc = history.history['val_accuracy']
+plot_model_score(history, epochs, name)
 
-loss = history.history['loss']
-val_loss = history.history['val_loss']
-
-epochs_range = range(epochs)
-
-plt.figure(figsize=(8, 8))
-plt.subplot(1, 2, 1)
-plt.plot(epochs_range, acc, label='Training Accuracy')
-plt.plot(epochs_range, val_acc, label='Validation Accuracy')
-plt.legend(loc='lower right')
-plt.title('Training and Validation Accuracy')
-
-plt.subplot(1, 2, 2)
-plt.plot(epochs_range, loss, label='Training Loss')
-plt.plot(epochs_range, val_loss, label='Validation Loss')
-plt.legend(loc='upper right')
-plt.title('Training and Validation Loss')
-fig1 = plt.gcf()
-plt.show()
-fig1.savefig('acc/loss-pretrained_model.png')
-
-model.save("keras_model.h5")
+# Save model
+model.save(f"{name}.h5")
