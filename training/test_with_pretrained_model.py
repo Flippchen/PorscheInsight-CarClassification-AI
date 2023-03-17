@@ -1,9 +1,11 @@
+# This file contains the code for training a model with data augmentation and a pretrained base.
 # Import libraries
 import numpy as np
 from keras.models import Sequential
 from keras.applications import VGG16
-import pathlib
 from tools import *
+
+# Ignore warnings
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -61,7 +63,10 @@ model = Sequential([
     layers.Dense(num_classes, name="outputs")
 ])
 # Compile model
-model = compile_model(model, "adam", tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True), ["accuracy"])
+model.compile(optimizer='adam',
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              metrics=['accuracy'])
+model.summary()
 
 # Train model
 epochs = 20
@@ -71,7 +76,7 @@ with tf.device('/GPU:1'):
       validation_data=val_ds,
       epochs=epochs
     )
-
+# Plot and save model score
 plot_model_score(history, epochs, name)
 
 # Save model
