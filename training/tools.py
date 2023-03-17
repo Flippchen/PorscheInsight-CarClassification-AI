@@ -63,6 +63,8 @@ def create_augmentation_layer(img_height: int, img_width: int):
             layers.RandomZoom(0.1),
         ]
     )
+
+
 def show_augmented_batch(train_ds, data_augmentation):
     plt.figure(figsize=(10, 10))
     for images, _ in train_ds.take(1):
@@ -72,3 +74,37 @@ def show_augmented_batch(train_ds, data_augmentation):
             plt.imshow(augmented_images[0].numpy().astype("uint8"))
             plt.axis("off")
         plt.show()
+
+
+def plot_model_score(history, epochs, name: str):
+
+    # Read history and plot model score
+    acc = history.history['accuracy']
+    val_acc = history.history['val_accuracy']
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+    epochs_range = range(epochs)
+
+    plt.figure(figsize=(8, 8))
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs_range, acc, label='Training Accuracy')
+    plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+    plt.legend(loc='lower right')
+    plt.title('Training and Validation Accuracy')
+
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs_range, loss, label='Training Loss')
+    plt.plot(epochs_range, val_loss, label='Validation Loss')
+    plt.legend(loc='upper right')
+    plt.title('Training and Validation Loss')
+    fig1 = plt.gcf()
+    plt.show()
+    fig1.savefig(f'acc/loss-{name}-model.png')
+
+
+def compile_model(model, optimizer, loss, metrics):
+    model.compile(optimizer=optimizer,
+                  loss=loss,
+                  metrics=metrics)
+    model.summary()
+    return model
