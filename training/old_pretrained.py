@@ -4,9 +4,6 @@ import numpy as np
 from keras.models import Sequential
 from keras.applications import VGG16
 from tools import *
-from keras.optimizers import Adam
-from keras.regularizers import l1_l2
-from keras.callbacks import ReduceLROnPlateau
 
 # Ignore warnings
 import warnings
@@ -56,29 +53,28 @@ vgg16 = VGG16(weights='imagenet', include_top=False, input_shape=(img_height,img
 for layer in vgg16.layers:
     layer.trainable = False
 
-# Fine-tuning: unfreeze some layers of VGG16
-for layer in vgg16.layers[-4:]:
-    layer.trainable = True
-
 # Create a new head and initialize model
 num_classes = len(class_names)
+#model = Sequential([
+#    data_augmentation,
+#    vgg16,
+#    layers.Flatten(),
+#    layers.Dense(128, activation='relu'),
+#    layers.Dense(num_classes, name="outputs")
+#])
 model = Sequential([
     data_augmentation,
     vgg16,
     layers.BatchNormalization(),
     layers.LeakyReLU(),
     layers.Flatten(),
-    layers.Dense(128, kernel_regularizer=l1_l2(l1=1e-5, l2=1e-4)),
-    layers.Dropout(0.5),
+    layers.Dense(128),
     layers.BatchNormalization(),
     layers.LeakyReLU(),
     layers.Dense(num_classes, activation='softmax', name="outputs")
 ])
-
-lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1, mode='auto', cooldown=0, min_lr=0)
-optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 # Compile model
-model.compile(optimizer=optimizer,
+model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 model.summary()
@@ -89,8 +85,7 @@ with tf.device('/GPU:1'):
     history = model.fit(
       train_ds,
       validation_data=val_ds,
-      epochs=epochs,
-      callbacks=[lr_scheduler]
+      epochs=epochs
     )
 # Plot and save model score
 plot_model_score(history, epochs, name)
