@@ -11,6 +11,7 @@ from keras.callbacks import ReduceLROnPlateau
 # Ignore warnings
 import warnings
 warnings.filterwarnings('ignore')
+suppress_tf_warnings()
 
 # Set variables and config
 AUTOTUNE = tf.data.AUTOTUNE
