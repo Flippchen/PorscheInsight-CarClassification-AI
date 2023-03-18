@@ -3,6 +3,8 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import keras
 from keras import layers
+import os
+import logging
 
 
 def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
@@ -98,3 +100,15 @@ def plot_model_score(history, epochs, name: str) -> None:
     fig1 = plt.gcf()
     plt.show()
     fig1.savefig(f'../results/acc-loss-{name}-model.png')
+
+
+def suppress_tf_warnings():
+    # Suppress TensorFlow INFO and WARNING logs
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+    os.environ["KMP_AFFINITY"] = "noverbose"
+
+    # Suppress Python logging warnings
+    logging.getLogger('tensorflow').setLevel(logging.ERROR)
+
+    # Suppress any deprecated function warnings
+    tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
