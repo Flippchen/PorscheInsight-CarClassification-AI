@@ -20,6 +20,8 @@ pip install keras
 | with augmentation    | 11,239,850 | 11,239,850      | 0 | 79               | 74              |
 | old_pretrained       | 20,027,082 | 5,311,114       | 14,715,968 | 74               | 72              |
 | VGG16 pretrained     | 23,851,784 | 23,817,352       |  |                  |                 |
-
+Have a look at the [models](models) folder to see the code and [results](results) folder to see the results.
 # Dataset
 The dataset is from [Github](https://github.com/Flippchen/porsche-pictures) and contains ~ 32.000 pictures of Porsche cars.
+Have a look at the data:
+![Sample images](results/sample_images.png "Sample images") 
