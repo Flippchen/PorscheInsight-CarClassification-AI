@@ -1,5 +1,5 @@
-# porsche-picture
-
+# PorscheInsight-CarClassification-AI
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Flippchen/PorscheInsight-CarClassification-AI/python.yaml?logoColor=blue&style=flat-square) ![GitHub repo size](https://img.shields.io/github/repo-size/Flippchen/PorscheInsight-CarClassification-AI?style=flat-square)
 ## Description
 This repository contains a scripts to train models to classify pictures of Porsche cars.
 It was a project for when I had free time. It is not ment to be used in production (yet).
