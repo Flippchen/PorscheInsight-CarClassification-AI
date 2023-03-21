@@ -87,7 +87,7 @@ model.compile(optimizer=optimizer,
 model.summary()
 
 # Train model
-epochs = 20
+epochs = 1
 with tf.device('/GPU:1'):
     history = model.fit(
         train_ds,
@@ -96,7 +96,8 @@ with tf.device('/GPU:1'):
         callbacks=[lr_scheduler]
     )
 # Plot and save model score
-plot_model_score(history, epochs, name)
+plot_model_score(history, epochs, name, more_classes)
 
 # Save model
-model.save(f"../best_model/{name}.h5")
+model.save(f"../models/more_classes/{name}.h5")
+

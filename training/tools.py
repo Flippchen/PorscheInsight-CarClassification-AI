@@ -80,7 +80,7 @@ def show_augmented_batch(train_ds, data_augmentation) -> None:
         plt.show()
 
 
-def plot_model_score(history, epochs, name: str) -> None:
+def plot_model_score(history, epochs, name: str, more_classes: bool) -> None:
     # Read history and plot model score
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
@@ -102,7 +102,10 @@ def plot_model_score(history, epochs, name: str) -> None:
     plt.title('Training and Validation Loss')
     fig1 = plt.gcf()
     plt.show()
-    fig1.savefig(f'../results/acc-loss-{name}-model.png')
+    if more_classes:
+        fig1.savefig(f'../models/more_classes/results/acc-loss-{name}-model.png')
+    else:
+        fig1.savefig(f'../models/few_classes/results/acc-loss-{name}-model.png')
 
 
 def suppress_tf_warnings():
