@@ -24,10 +24,10 @@ The first version of the model was trained to predict 10 classes. After the accu
 | VGG16 pretrained*     | 20,027,082    | 12,390,538        | 7,636,544            | 99               | 95              | 10                |
 The models with * were trained on the pre cleaned dataset.
 
-Have a look at the [models](models) folder to see the code and [results](results) folder to see the results.
+Have a look at the [models](models) folder to see the code and [results](models/ten_classes/results) folder to see the results.
 # Dataset
 The dataset is from [Github](https://github.com/Flippchen/porsche-pictures) and contains ~ 32.000 pictures of Porsche cars.
 Since the source of the dataset is public the quality and the arrangement of the images was also not great.
 After the data was cleaned, there are ~ 30.000 pictures left. Several pictures were removed because they were not of a Porsche car or the picture was not clear enough.
 Have a look at the data:
-![Sample images](results/sample_images.png "Sample images") 
+![Sample images](models/ten_classes/results/sample_images.png "Sample images") 
