@@ -7,7 +7,7 @@ img_width = 300
 
 model = tf.keras.models.load_model('../models/keras_model.h5')
 img = tf.keras.utils.load_img(
-    "../test_pic/panamera3.jpg", target_size=(img_height, img_width))
+    "test_pic/panamera3.jpg", target_size=(img_height, img_width))
 img_array = tf.keras.utils.img_to_array(img)
 img_array = tf.expand_dims(img_array, 0)  # Create a batch
 
