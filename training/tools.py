@@ -9,36 +9,11 @@ import logging
 
 def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
     data_dir = pathlib.Path(path)
+    if "more_classes" in path:
+        image_count = len(list(data_dir.glob('*/*/*.jpg')))
+    else:
+        image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
 
-    image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
-    print("Image count:", image_count)
-    # cars = list(data_dir.glob('*/*/*/*.jpg'))
-    # PIL.Image.open(str(cars[0]))
-    train_ds = tf.keras.utils.image_dataset_from_directory(
-        data_dir,
-        validation_split=0.2,
-        subset="training",
-        seed=123,
-        image_size=(img_height, img_width),
-        batch_size=batch_size)
-
-    val_ds = tf.keras.utils.image_dataset_from_directory(
-        data_dir,
-        validation_split=0.2,
-        subset="validation",
-        seed=123,
-        image_size=(img_height, img_width),
-        batch_size=batch_size)
-
-    class_names = train_ds.class_names
-
-    return train_ds, val_ds, class_names
-
-
-def load_dataset_more_classes(path: str, batch_size: int, img_height: int, img_width: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
-    data_dir = pathlib.Path(path)
-
-    image_count = len(list(data_dir.glob('*/*/*.jpg')))
     print("Image count:", image_count)
     # cars = list(data_dir.glob('*/*/*/*.jpg'))
     # PIL.Image.open(str(cars[0]))

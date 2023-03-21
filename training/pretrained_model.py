@@ -10,6 +10,7 @@ from keras.callbacks import ReduceLROnPlateau
 
 # Ignore warnings
 import warnings
+
 warnings.filterwarnings('ignore')
 suppress_tf_warnings()
 
@@ -18,15 +19,18 @@ AUTOTUNE = tf.data.AUTOTUNE
 img_height = 300
 img_width = 300
 name = "vgg16-pretrained-more-classes"
+# Set to True to use the more_classes dataset
+more_classes = True
+path_addon = "Porsche_more_classes" if more_classes else "Porsche"
 config = {
-    "path": "C:/Users/phili/.keras/datasets/resized_DVM/Porsche_more_classes",
+    "path": f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}",
     "batch_size": 32,
     "img_height": img_height,
     "img_width": img_width,
 }
 
 # Load dataset and classes
-train_ds, val_ds, class_names = load_dataset_more_classes(**config)
+train_ds, val_ds, class_names = load_dataset(**config)
 print(class_names)
 
 # Show sample batch
@@ -44,14 +48,12 @@ image_batch, labels_batch = next(iter(normalized_ds))
 first_image = image_batch[0]
 print(np.min(first_image), np.max(first_image))
 
-
 # Create data augmentation layer and show augmented batch
 data_augmentation = create_augmentation_layer(img_height, img_width)
 show_augmented_batch(train_ds, data_augmentation)
 
-
 # Load the pre-trained VGG16 model
-vgg16 = VGG16(weights='imagenet', include_top=False, input_shape=(img_height,img_width,3))
+vgg16 = VGG16(weights='imagenet', include_top=False, input_shape=(img_height, img_width, 3))
 
 # Set the trainable flag of the pre-trained model to False
 for layer in vgg16.layers:
@@ -88,10 +90,10 @@ model.summary()
 epochs = 20
 with tf.device('/GPU:1'):
     history = model.fit(
-      train_ds,
-      validation_data=val_ds,
-      epochs=epochs,
-      callbacks=[lr_scheduler]
+        train_ds,
+        validation_data=val_ds,
+        epochs=epochs,
+        callbacks=[lr_scheduler]
     )
 # Plot and save model score
 plot_model_score(history, epochs, name)
