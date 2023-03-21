@@ -26,8 +26,8 @@ The models with * were trained on the pre cleaned dataset.
 
 Have a look at the [models](models) folder to see the code and [results](models/few_classes/results) folder to see the results.
 # Dataset
-The dataset is from [Github](https://github.com/Flippchen/porsche-pictures) and contains ~ 32.000 pictures of Porsche cars.
+The dataset is from [Github](https://github.com/Flippchen/porsche-pictures) and contains ~32.000 pictures of potential Porsche cars.
 Since the source of the dataset is public the quality and the arrangement of the images was also not great.
-After the data was cleaned, there are ~ 30.000 pictures left. Several pictures were removed because they were not of a Porsche car or the picture was not clear enough.
+After the data was cleaned, there are ~30.300 pictures left. Several pictures were removed because they were not of a Porsche car or the picture was not clear enough.
 Have a look at the data:
 ![Sample images](models/few_classes/results/sample_images.png "Sample images") 
