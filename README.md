@@ -8,10 +8,9 @@ It was a project for when I had free time. It is not ment to be used in producti
 The project is still in a early stage and I will add more models and features in the future.
 
 ## Installation
-Install tensorflow and keras
+Install tensorflow, keras and the other dependencies with pip:
 ```bash
-pip install tensorflow
-pip install keras
+pip install -m requirements.txt
 ```
 ## Models
 The first version of the model was trained to predict 10 classes. After the accuracy was good enough I started training a model to predict 100 classes.
@@ -26,9 +25,19 @@ The first version of the model was trained to predict 10 classes. After the accu
 The models with * were trained on the pre cleaned dataset.
 
 Have a look at the [models](models) folder to see the code and [results](models/few_classes/results) folder to see the results.
+
+## Usage
+### Train a model
+To train a model you can use the [train](training) folder. You can choose the model, the dataset and the number of epochs.
+
+### Predict with a model (Inference)
+To predict with a model you can use the [test_model.py](testing/test_model.py) script. You can choose the model and the image you want to predict.
+I recommend to prepare the images with [prepare_images.oy](testing/prepare_images.py) before. Thus, an error-free and improved prediction is guaranteed.
+
 # Dataset
 The dataset is from [Github](https://github.com/Flippchen/porsche-pictures) and contains ~32.000 pictures of potential Porsche cars.
 Since the source of the dataset is public the quality and the arrangement of the images was also not great.
 After the data was cleaned, there are ~30.300 pictures left. Several pictures were removed because they were not of a Porsche car or the picture was not clear enough.
 Have a look at the data:
 ![Sample images](models/few_classes/results/sample_images.png "Sample images") 
+
