@@ -6,7 +6,7 @@ from keras.applications import VGG16
 from tools import *
 from keras.optimizers import Adam
 from keras.regularizers import l1_l2
-from keras.callbacks import ReduceLROnPlateau
+from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
 
 # Ignore warnings
 import warnings
@@ -78,7 +78,7 @@ model = Sequential([
     layers.Dense(num_classes, activation='softmax', name="outputs")
 ])
 
-lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1, mode='auto', cooldown=0, min_lr=0)
+# Define optimizer
 optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 # Compile model
 model.compile(optimizer=optimizer,
@@ -86,14 +86,18 @@ model.compile(optimizer=optimizer,
               metrics=['accuracy'])
 model.summary()
 
+# Define callbacks
+lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1, mode='auto', cooldown=0, min_lr=0)
+early_stopping = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto', restore_best_weights=True)
+model_checkpoint = ModelCheckpoint(filepath="../models/more_classes/best_model.h5", monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
 # Train model
-epochs = 50
+epochs = 1
 with tf.device('/GPU:1'):
     history = model.fit(
         train_ds,
         validation_data=val_ds,
         epochs=epochs,
-        callbacks=[lr_scheduler]
+        callbacks=[lr_scheduler, early_stopping, model_checkpoint]
     )
 # Plot and save model score
 plot_model_score(history, epochs, name, more_classes)
