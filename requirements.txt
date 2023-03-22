@@ -1,6 +1,10 @@
+# Trainig
 numpy==1.23.5
 tensorflow==2.10.0
 matplotlib==3.6.2
 Pillow~=9.3.0
-rembg~=2.0.30
 keras~=2.10.0
+# Inference
+rembg~=2.0.30
+# Export to onnx
+tf2onnx~=1.13.0
