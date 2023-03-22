@@ -87,7 +87,7 @@ model.compile(optimizer=optimizer,
 model.summary()
 
 # Train model
-epochs = 1
+epochs = 50
 with tf.device('/GPU:1'):
     history = model.fit(
         train_ds,
