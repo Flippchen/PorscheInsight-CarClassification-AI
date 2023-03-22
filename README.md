@@ -27,6 +27,7 @@ The first version of the model was trained to predict 10 classes. After the accu
 | old_pretrained*       | 20,027,082    | 5,311,114         | 14,715,968           | 74               | 72             | 10                |
 | VGG16 pretrained*     | 20,027,082    | 12,390,538        | 7,636,544            | 99               | 95             | 10                |
 | VGG16 pretrained      | 20,027,082    | 12,390,538        | 7,636,544            | 80               | 46             | 88                |
+
 The models with * were trained on the pre cleaned dataset.
 
 Have a look at the [models](models) folder to see the code and [results](models/few_classes/results) folder to see the results.
