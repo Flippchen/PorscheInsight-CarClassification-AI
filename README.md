@@ -5,8 +5,13 @@ This repository contains a scripts to train models to classify pictures of Porsc
 It was a project for when I had free time. It is not ment to be used in production (yet).
 
 ## Future
-The project is still in a early stage and I will add more models and features in the future.
-
+The project is still in an early stage and I will add more models and features in the future.
+### ToDo List
+- [x] Add ONNX support
+- [x] Implement better Testing
+- [ ] Evaluate feature importance/ feature engineering/ More data augmentation
+- [ ] Try a deeper/wider or different pretrained model to improve accuracy on the more classes dataset
+- [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
 ## Installation
 Install tensorflow, keras and the other dependencies with pip:
 ```bash
