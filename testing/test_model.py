@@ -1,25 +1,43 @@
+import os
+from class_names import FEW_CLASSES, MORE_CLASSES
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
+from training.tools import suppress_tf_warnings
+from export_helper import export
 
+
+# Define config
 img_height = 300
 img_width = 300
+# Set true if you want to test the model with more classes
+more_classes = True
+# Supress TF warnings
+suppress_tf_warnings()
+# Load model
+model = keras.models.load_model('../models/more_classes/vgg16-pretrained-more-classes.h5')
 
-model = tf.keras.models.load_model('../models/keras_model.h5')
-img = tf.keras.utils.load_img(
-    "test_pic/panamera3.jpg", target_size=(img_height, img_width))
-img_array = tf.keras.utils.img_to_array(img)
-img_array = tf.expand_dims(img_array, 0)  # Create a batch
+# Load images
+images = []
+img_names = []
+for image in os.listdir('test_pic'):
+    img_names.append(image)
+    img = tf.keras.utils.load_img(f"test_pic/{image}", target_size=(img_height, img_width))
+    img_array = tf.keras.utils.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0)  # Create a batch
+    images.append(img_array)
 
-predictions = model.predict(img_array)
-class_names = ['718 Boxster', '718 Cayman', '911', '918', 'Boxster', 'Carrera Gt', 'Cayenne', 'Cayman', 'Macan', 'Panamera']
-print(class_names)
-print(predictions)
-for pred in predictions:
-    score = tf.nn.softmax(pred)
-    print(class_names[np.argmax(score)], 100 * np.max(score))
+# Predict
+all_predictions = {}
+class_names = MORE_CLASSES if more_classes else FEW_CLASSES
 
-score = tf.nn.softmax(predictions[0])
-print(
-    "This image most likely belongs to {} with a {:.2f} percent confidence."
-    .format(class_names[np.argmax(score)], 100 * np.max(score)))
+for img_array, name in zip(images, img_names):
+    predictions = model.predict(img_array)
+
+    for pred in predictions:
+        score = tf.nn.softmax(pred)
+        print(f"Ground truth: {name} | Predicted: {class_names[np.argmax(score)]} | Confidence: {100 * np.max(score): .2f}%")
+        all_predictions[name] = [class_names[np.argmax(score)], 100 * np.max(score)]
+
+# Export predictions to CSV or text file
+export(all_predictions, export_to_csv=False)
