@@ -6,5 +6,6 @@ Pillow~=9.3.0
 keras~=2.10.0
 # Inference
 rembg~=2.0.30
+onnxruntime~=1.13.1
 # Export to onnx
 tf2onnx~=1.13.0
