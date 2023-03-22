@@ -23,7 +23,7 @@ name = "vgg16-pretrained-more-classes"
 # Set to True to use the more_classes dataset
 more_classes = True
 # Set to True to load trained model
-load_model = True
+load_model = False
 load_path = "../models/more_classes/vgg16-pretrained-more-classes.h5"
 # Config
 path_addon = "Porsche_more_classes" if more_classes else "Porsche"
