@@ -10,15 +10,17 @@ from export_helper import export
 img_height = 300
 img_width = 300
 img_folder = 'test_pic'
-model_path = '../models/model_variants/vgg16-pretrained-model-variants.h5'
+model_path = '../models/car_types/with_augmentation.h5'
 # Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
 # Set specific_model_variants to False if you want to test the model with broad Porsche model types.
-specific_model_variants = True
+specific_model_variants = False
 # Supress TF warnings
 suppress_tf_warnings()
 # Load model
-model = keras.models.load_model(model_path)
-
+model = keras.models.load_model(model_path) #,compile=False)
+#model.compile(optimizer='adam',
+#              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+#              metrics=['accuracy'])
 # Load images
 images = []
 img_names = []
@@ -42,4 +44,4 @@ for img_array, name in zip(images, img_names):
         all_predictions[name] = [class_names[np.argmax(score)], 100 * np.max(score)]
 
 # Export predictions to CSV or text file
-export(all_predictions, export_to_csv=False)
+#export(all_predictions, export_to_csv=False)
