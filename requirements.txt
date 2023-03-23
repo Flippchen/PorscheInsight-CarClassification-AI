@@ -9,3 +9,5 @@ rembg~=2.0.30
 onnxruntime~=1.13.1
 # Export to onnx
 tf2onnx~=1.13.0
+# Explaining the model
+shap~=0.41.0
