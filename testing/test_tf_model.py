@@ -1,5 +1,5 @@
 import os
-from class_names import FEW_CLASSES, MORE_CLASSES
+from class_names import CAR_TYPE, MODEL_VARIANT
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
@@ -10,12 +10,14 @@ from export_helper import export
 img_height = 300
 img_width = 300
 img_folder = 'test_pic'
-# Set true if you want to test the model with more classes
-more_classes = True
+model_path = '../models/model_variants/vgg16-pretrained-model-variants.h5'
+# Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
+# Set specific_model_variants to False if you want to test the model with broad Porsche model types.
+specific_model_variants = True
 # Supress TF warnings
 suppress_tf_warnings()
 # Load model
-model = keras.models.load_model('../models/more_classes/vgg16-pretrained-more-classes.h5')
+model = keras.models.load_model(model_path)
 
 # Load images
 images = []
@@ -29,7 +31,7 @@ for image in os.listdir(img_folder):
 
 # Predict
 all_predictions = {}
-class_names = MORE_CLASSES if more_classes else FEW_CLASSES
+class_names = MODEL_VARIANT if specific_model_variants else CAR_TYPE
 
 for img_array, name in zip(images, img_names):
     predictions = model.predict(img_array)

@@ -81,4 +81,4 @@ with tf.device('/GPU:1'):
 plot_model_score(history, epochs, name)
 
 # Save model
-model.save(f"../best_model/{name}.h5")
+model.save(f"../models/car_types/best_model/{name}.h5")

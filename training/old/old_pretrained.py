@@ -3,8 +3,8 @@
 import numpy as np
 from keras.models import Sequential
 from keras.applications import VGG16
-from tools import *
-
+from training.tools import *
+from keras import layers
 # Ignore warnings
 import warnings
 warnings.filterwarnings('ignore')

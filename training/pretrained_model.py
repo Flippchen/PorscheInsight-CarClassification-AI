@@ -18,15 +18,16 @@ suppress_tf_warnings()
 AUTOTUNE = tf.data.AUTOTUNE
 img_height = 300
 img_width = 300
-name = "vgg16-pretrained-more-classes"
+name = "vgg16-pretrained-deeper-model-variants"
 # Variables to control training flow
-# Set to True to use the more_classes dataset
-more_classes = True
+# Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
+# Set specific_model_variants to False if you want to test the model with broad Porsche model types.
+specific_model_variants = True
 # Set to True to load trained model
 load_model = False
-load_path = "../models/more_classes/vgg16-pretrained-more-classes.h5"
+load_path = "../models/model_variants/vgg16-pretrained-model-variants.h5"
 # Config
-path_addon = "Porsche_more_classes" if more_classes else "Porsche"
+path_addon = "Porsche_more_classes" if specific_model_variants else "Porsche"
 config = {
     "path": f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}",
     "batch_size": 32,
@@ -94,7 +95,7 @@ model.summary()
 # Define callbacks
 lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1, mode='auto', cooldown=0, min_lr=0)
 early_stopping = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto', restore_best_weights=True)
-model_checkpoint = ModelCheckpoint(filepath="../models/more_classes/best_model.h5", monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
+model_checkpoint = ModelCheckpoint(filepath="../models/model_variants/best_model.h5", monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
 # Train model
 epochs = 1
 with tf.device('/GPU:1'):
@@ -105,8 +106,8 @@ with tf.device('/GPU:1'):
         callbacks=[lr_scheduler, early_stopping, model_checkpoint]
     )
 # Plot and save model score
-plot_model_score(history, epochs, name, more_classes)
+plot_model_score(history, epochs, name, specific_model_variants)
 
 # Save model
-model.save(f"../models/more_classes/{name}.h5")
+model.save(f"../models/model_variants/{name}.h5")
 

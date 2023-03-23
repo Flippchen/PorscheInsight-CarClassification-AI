@@ -80,4 +80,4 @@ val_loss = history.history['val_loss']
 plot_model_score(history, epochs, name)
 
 # Save model
-model.save(f"../best_model/{name}.h5")
+model.save(f"../models/cat_types/best_model/{name}.h5")

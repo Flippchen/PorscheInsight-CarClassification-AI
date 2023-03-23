@@ -50,9 +50,10 @@ def get_top_class_and_percentage(predictions, class_labels):
 # Prepare inference
 img_height = 300
 img_width = 300
-# Set true if you want to test the model with more classes
-more_classes = True
-model_path = '../models/more_classes/vgg16-pretrained-more-classes.onnx'
+# Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
+# Set specific_model_variants to False if you want to test the model with broad Porsche model types.
+specific_model_variants = True
+model_path = '../models/model_variants/vgg16-pretrained-model-variants.onnx'
 img_folder = 'test_pic'
 
 # Load model
@@ -72,13 +73,13 @@ for image in os.listdir('test_pic'):
 
 # Predict
 all_predictions = {}
-class_names = MORE_CLASSES if more_classes else FEW_CLASSES
+class_names = MODEL_VARIANT if specific_model_variants else CAR_TYPE
 for img_array, name in zip(images, img_names):
     predictions = predict(session, img_array)
 
-    top_class, top_percentage = get_top_class_and_percentage(predictions, MORE_CLASSES)
+    top_class, top_percentage = get_top_class_and_percentage(predictions, MODEL_VARIANT)
     print(f"Ground truth: {name} | Predicted: {top_class} | Confidence: {100 * top_percentage: .2f}%")
     all_predictions[name] = [top_class, 100 * top_percentage]
 
 # Export predictions to CSV or text file
-export(all_predictions, export_to_csv=False, export_folder='results/onnx')
+export(all_predictions, export_to_csv=False, export_folder='results/onnx/')

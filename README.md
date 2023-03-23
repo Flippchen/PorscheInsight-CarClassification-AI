@@ -18,7 +18,9 @@ Install tensorflow, keras and the other dependencies with pip:
 pip install -m requirements.txt
 ```
 ## Models
-The first version of the model was trained to predict 10 classes. After the accuracy was good enough I started training a model to predict 100 classes.
+The first version of the model was trained to predict 10 classes, which correspond to broad Porsche car model types. These classes include popular models such as the 911, Cayman, and Panamera, among others. The accuracy of this model on the training set was 99%, and the accuracy on the validation set was 95%.
+
+After achieving satisfactory results with the 10-class model, a second model was trained to predict 88 classes, which correspond to specific Porsche car model variants and years. For example, this model can predict whether an image is a 911 from 2008 or a Cayenne from 1990. The accuracy of this model on the training set was 80%, and the accuracy on the validation set was 46%.
 
 | Model                 | Total params  | Trainable params  | Non-trainable params | Accuracy Train % | Accuracy Val % | Number of classes |
 |-----------------------|---------------|-------------------|----------------------|------------------|----------------|-------------------|
@@ -30,7 +32,7 @@ The first version of the model was trained to predict 10 classes. After the accu
 
 The models with * were trained on the pre cleaned dataset.
 
-Have a look at the [models](models) folder to see the code and [results](models/few_classes/results) folder to see the results.
+Have a look at the [models](models) folder to see the code and [results](models/car_types/results) folder to see the results.
 
 ## Usage
 ### Train a model
@@ -45,5 +47,5 @@ The dataset is from [Github](https://github.com/Flippchen/porsche-pictures) and 
 Since the source of the dataset is public the quality and the arrangement of the images was also not great.
 After the data was cleaned, there are ~30.300 pictures left. Several pictures were removed because they were not of a Porsche car or the picture was not clear enough.
 Have a look at the data:
-![Sample images](models/few_classes/results/sample_images.png "Sample images") 
+![Sample images](models/car_types/results/sample_images.png "Sample images") 
 
