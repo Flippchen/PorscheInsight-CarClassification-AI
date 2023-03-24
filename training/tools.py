@@ -58,7 +58,7 @@ def load_explainer_background(path: str, batch_size: int, img_height: int, img_w
         image_size=(img_height, img_width),
         batch_size=batch_size)
 
-    # Calculate number of takes based on the batch size
+    # Create warning if take is greater than the number of images in the dataset
     if take > (len(data) * batch_size):
         warnings.warn(f"{take} is greater than the number of images in the dataset. It will be set to maximum number of images in the dataset.")
     data = data.shuffle(shuffle).take(take)
