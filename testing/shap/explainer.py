@@ -3,26 +3,22 @@ import numpy as np
 from testing.class_names import MODEL_VARIANT, CAR_TYPE
 from training.tools import *
 
-
-# tf.compat.v1.disable_v2_behavior()
+# Load model
 suppress_tf_warnings()
-# model = keras.models.load_model("../../models/car_types/with_augmentation.h5", compile=False)
+
+# Load model (Compiling failed, so I compiled it manually)
 model = keras.models.load_model("../../models/model_variants/vgg16-pretrained-model-variants.h5", compile=False)
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
-
+# Set config
 img_height = 300
 img_width = 300
 img_folder = '../test_pic'
-# image = '911_1980.jpg'
-path_addon = "Porsche"
-
-
-# Define a function to preprocess the input image
-def preprocess_input(image):
-    return tf.keras.applications.vgg16.preprocess_input(image)
-
+# Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
+specific_model_variants = True
+path_addon = "Porsche_more_classes" if specific_model_variants else "Porsche"
+classes = MODEL_VARIANT if specific_model_variants else CAR_TYPE
 
 config = {
     "path": f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}",
@@ -31,25 +27,10 @@ config = {
     "img_width": img_width,
 }
 
-# Load dataset and classes
-train_ds, val_ds, class_names = load_dataset(**config)
-# Load a small set of images for the SHAP background dataset
-# You can use a small sample from your training or validation set
+# Load background dataset
+background_data = load_explainer_background(**config, shuffle=1000, take=1000)
 
-
-# sample = tf.keras.utils.load_img(f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}/911/1990/Green/Porsche$$911$$1990$$Green$$71_4$$1388$$image_1.jpg", target_size=(img_height, img_width))
-## background_data = preprocess_input(background_data)
-# img_array = tf.keras.utils.img_to_array(sample)
-## img_array = tf.expand_dims(img_array, 0)
-# background_data = np.expand_dims(img_array, axis=0)
-
-background_data = []
-sample = train_ds.shuffle(10000).take(1000)
-for img, label in sample.as_numpy_iterator():
-    # img = img / 255
-    background_data.append(img)
-
-# Load images
+# Load test images
 images = []
 img_names = []
 for image in os.listdir(img_folder):
@@ -59,14 +40,16 @@ for image in os.listdir(img_folder):
     img_array = np.expand_dims(img_array, 0)  # Create a batch
     images.append(img_array)
 
+# Create explainer
 explainer = shap.GradientExplainer(model, background_data)  # local_smoothing=0.1
-classes = MODEL_VARIANT
+
+# Explain and plot the results
 with tf.device('/CPU:0'):
     for image, name in zip(images, img_names):
         shap_values, indexes = explainer.shap_values(image, ranked_outputs=3)
         # get the names for the classes
         print(indexes)
-        image = image/255
+        image = image / 255
         index_names = np.vectorize(lambda x: classes[x])(indexes)
         shap.image_plot(shap_values, image, index_names, show=False)
         plt.suptitle("SHAP values for " + name)
