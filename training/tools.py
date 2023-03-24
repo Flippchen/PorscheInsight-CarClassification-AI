@@ -41,7 +41,7 @@ def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) ->
     return train_ds, val_ds, class_names
 
 
-def load_explainer_background(path: str, batch_size: int, img_height: int, img_width: int, shuffle:int = 10000,take:int = 1000) -> list[np.ndarray]:
+def load_explainer_background(path: str, batch_size: int, img_height: int, img_width: int, shuffle: int = 10000, take: int = 1000) -> list[np.ndarray]:
     data_dir = pathlib.Path(path)
     if "more_classes" in path:
         image_count = len(list(data_dir.glob('*/*/*.jpg')))
