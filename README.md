@@ -10,6 +10,7 @@ The project is still in an early stage and I will add more models and features i
 - [x] Add ONNX support
 - [x] Implement better Testing
 - [x] Implement shap for feature importance
+- [ ] Add confusion matrix
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Try a deeper/wider or different pretrained model to improve accuracy on the more classes dataset
 - [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
@@ -43,7 +44,13 @@ To train a model you can use the [train](training) folder. You can choose the mo
 ### Predict with a model (Inference)
 To predict with a model you can use the [test_model.py](testing/test_model.py) script. You can choose the model and the image you want to predict.
 I recommend to prepare the images with [prepare_images.oy](testing/prepare_images.py) before. Thus, an error-free and improved prediction is guaranteed.
-
+### Explain a model
+To explain a model you can use the [explainer.py](testing/shap/explainer.py) script. You can choose the model and the image(folder) you want to get explanations.
+I recommend to prepare the images with [prepare_images.oy](testing/prepare_images.py) before.
+### Sample images from my dataset
+![shap values for 911_1980](testing/shap/results/car_types/shap_values_911_1980.png "Shap values for 911_1980")
+![shap values for Cayman_2009](testing/shap/results/model_variants/shap_values_Cayman_2009.png "Shap values for Cayman_2009")
+### Convert a model to ONNX
 # Dataset
 The dataset is from [Github](https://github.com/Flippchen/porsche-pictures) and contains ~32.000 pictures of potential Porsche cars.
 Since the source of the dataset is public the quality and the arrangement of the images was also not great.

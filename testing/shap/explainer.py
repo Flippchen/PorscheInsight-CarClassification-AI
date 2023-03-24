@@ -7,7 +7,7 @@ from training.tools import *
 suppress_tf_warnings()
 
 # Load model (Compiling failed, so I compiled it manually)
-#model = keras.models.load_model("../../models/model_variants/vgg16-pretrained-model-variants.h5", compile=False)
+# model = keras.models.load_model("../../models/model_variants/vgg16-pretrained-model-variants.h5", compile=False)
 model = keras.models.load_model("../../models/car_types/best_model/vgg16-pretrained.h5", compile=False)
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
