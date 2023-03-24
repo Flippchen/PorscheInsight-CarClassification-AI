@@ -43,7 +43,8 @@ for image in os.listdir(img_folder):
 # Create explainer
 explainer = shap.GradientExplainer(model, background_data)  # local_smoothing=0.1
 
-# Explain and plot the results
+# Explain and plot the results ( You can change CPU to GPU if you have a good enough GPU,
+# on large models the GPU must have a big amount of memory)
 with tf.device('/CPU:0'):
     for image, name in zip(images, img_names):
         shap_values, indexes = explainer.shap_values(image, ranked_outputs=3)
@@ -53,4 +54,6 @@ with tf.device('/CPU:0'):
         index_names = np.vectorize(lambda x: classes[x])(indexes)
         shap.image_plot(shap_values, image, index_names, show=False)
         plt.suptitle("SHAP values for " + name)
+        fig1 = plt.gcf()
         plt.show()
+        fig1.savefig(f"results/shap_values_{name}.png")
