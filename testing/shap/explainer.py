@@ -7,7 +7,8 @@ from training.tools import *
 suppress_tf_warnings()
 
 # Load model (Compiling failed, so I compiled it manually)
-model = keras.models.load_model("../../models/model_variants/vgg16-pretrained-model-variants.h5", compile=False)
+#model = keras.models.load_model("../../models/model_variants/vgg16-pretrained-model-variants.h5", compile=False)
+model = keras.models.load_model("../../models/car_types/best_model/vgg16-pretrained.h5", compile=False)
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
@@ -16,7 +17,7 @@ img_height = 300
 img_width = 300
 img_folder = '../test_pic'
 # Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
-specific_model_variants = True
+specific_model_variants = False
 path_addon = "Porsche_more_classes" if specific_model_variants else "Porsche"
 classes = MODEL_VARIANT if specific_model_variants else CAR_TYPE
 
@@ -56,4 +57,9 @@ with tf.device('/CPU:0'):
         plt.suptitle("SHAP values for " + name)
         fig1 = plt.gcf()
         plt.show()
-        fig1.savefig(f"results/shap_values_{name}.png")
+        # Remove file extension from image name
+        name = name.split(".")[0]
+        if specific_model_variants:
+            fig1.savefig(f"results/model_variants/shap_values_{name}.png")
+        else:
+            fig1.savefig(f"results/car_types/shap_values_{name}.png")
