@@ -7,7 +7,7 @@ It was a project for when I had free time. It is not ment to be used in producti
 ## Future
 The project is still in an early stage and I will add more models and features in the future.
 ### ToDo List
-- [x] Add ONNX support
+- [x] Add ONNX export
 - [x] Implement better Testing
 - [x] Implement shap for feature importance
 - [ ] Add confusion matrix
@@ -51,6 +51,7 @@ I recommend to prepare the images with [prepare_images.oy](testing/prepare_image
 ![shap values for 911_1980](testing/shap/results/car_types/shap_values_911_1980.png "Shap values for 911_1980")
 ![shap values for Cayman_2009](testing/shap/results/model_variants/shap_values_Cayman_2009.png "Shap values for Cayman_2009")
 ### Convert a model to ONNX
+You can use the [convert_to_onnx.py](models/export_to_onnx.py) script to convert a keras(.h5) model to ONNX. You can choose the model you want to convert and a save path.
 # Dataset
 The dataset is from [Github](https://github.com/Flippchen/porsche-pictures) and contains ~32.000 pictures of potential Porsche cars.
 Since the source of the dataset is public the quality and the arrangement of the images was also not great.
