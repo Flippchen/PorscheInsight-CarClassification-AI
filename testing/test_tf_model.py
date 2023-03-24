@@ -16,9 +16,9 @@ model_path = '../models/car_types/with_augmentation.h5'
 specific_model_variants = False
 # Supress TF warnings
 suppress_tf_warnings()
-# Load model
-model = keras.models.load_model(model_path) #,compile=False)
-#model.compile(optimizer='adam',
+# Load model (If loading a model with specific model variants, set compile=False and compile the model manually)
+model = keras.models.load_model(model_path)  # ,compile=False)
+# model.compile(optimizer='adam',
 #              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
 #              metrics=['accuracy'])
 # Load images
@@ -44,4 +44,4 @@ for img_array, name in zip(images, img_names):
         all_predictions[name] = [class_names[np.argmax(score)], 100 * np.max(score)]
 
 # Export predictions to CSV or text file
-#export(all_predictions, export_to_csv=False)
+# export(all_predictions, export_to_csv=False)

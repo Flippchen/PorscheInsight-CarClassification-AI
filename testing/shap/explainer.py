@@ -1,10 +1,22 @@
 import shap
 import numpy as np
-import keras
-from training.tools import suppress_tf_warnings
-import tensorflow as tf
-from testing.class_names import CAR_TYPE,MODEL_VARIANT
+from testing.class_names import MODEL_VARIANT, CAR_TYPE
+from training.tools import *
+
+
+# tf.compat.v1.disable_v2_behavior()
 suppress_tf_warnings()
+# model = keras.models.load_model("../../models/car_types/with_augmentation.h5", compile=False)
+model = keras.models.load_model("../../models/model_variants/vgg16-pretrained-model-variants.h5", compile=False)
+model.compile(optimizer='adam',
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              metrics=['accuracy'])
+
+img_height = 300
+img_width = 300
+img_folder = '../test_pic'
+# image = '911_1980.jpg'
+path_addon = "Porsche"
 
 
 # Define a function to preprocess the input image
@@ -12,57 +24,50 @@ def preprocess_input(image):
     return tf.keras.applications.vgg16.preprocess_input(image)
 
 
-background_data = ...  # Replace this with your actual dataset
-background_data = preprocess_input(background_data)
+config = {
+    "path": f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}",
+    "batch_size": 32,
+    "img_height": img_height,
+    "img_width": img_width,
+}
 
-model = keras.models.load_model("../../models/model_variants/vgg16-pretrained-model-variants.h5")
-# Create a wrapper function for the model to handle preprocessing
-def wrapped_model(images):
-    images = preprocess_input(images)
-    return model(images)
+# Load dataset and classes
+train_ds, val_ds, class_names = load_dataset(**config)
+# Load a small set of images for the SHAP background dataset
+# You can use a small sample from your training or validation set
 
 
-# Initialize the SHAP explainer
-explainer = shap.DeepExplainer(wrapped_model, background_data)
+# sample = tf.keras.utils.load_img(f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}/911/1990/Green/Porsche$$911$$1990$$Green$$71_4$$1388$$image_1.jpg", target_size=(img_height, img_width))
+## background_data = preprocess_input(background_data)
+# img_array = tf.keras.utils.img_to_array(sample)
+## img_array = tf.expand_dims(img_array, 0)
+# background_data = np.expand_dims(img_array, axis=0)
 
-# Choose a specific image to explain
-image_to_explain = ...  # Replace this with an image from your dataset
-image_to_explain = np.expand_dims(image_to_explain, axis=0)
+background_data = []
+sample = train_ds.shuffle(10000).take(1000)
+for img, label in sample.as_numpy_iterator():
+    # img = img / 255
+    background_data.append(img)
 
-# Generate SHAP values for the selected image
-shap_values = explainer.shap_values(image_to_explain)
+# Load images
+images = []
+img_names = []
+for image in os.listdir(img_folder):
+    img_names.append(image)
+    img = tf.keras.utils.load_img(f"{img_folder}/{image}", target_size=(img_height, img_width))
+    img_array = tf.keras.utils.img_to_array(img)
+    img_array = np.expand_dims(img_array, 0)  # Create a batch
+    images.append(img_array)
 
-# Plot the SHAP values
-shap.image_plot(shap_values, image_to_explain, class_names=MODEL_VARIANT)
-
-## create a Background dataset (random data with the same shape as your input data)
-# background = np.random.rand(10, 300, 300, 3)
-#
-## create a Test dataset (one specific example you want to explain)
-# test = np.random.rand(1, 300, 300, 3)
-#
-## load your Keras model
-# model_path = "../../models/car_types/without-augmentation.h5"
-# model = keras.models.load_model(model_path)
-#
-## create a SHAP explainer object
-# explainer = shap.DeepExplainer(model, background)
-#
-## generate SHAP values for your Test dataset
-# shap_values = explainer.shap_values(test)
-#
-## visualize the SHAP values for your Test dataset
-# shap.image_plot(shap_values, test)
-# Initialize the SHAP explainer
-# shap.explainers._deep.deep_tf.op_handlers["AddV2"] = shap.explainers._deep.deep_tf.passthrough
-#explainer = shap.GradientExplainer(model, background_data)
-#img = tf.keras.utils.load_img(f"{img_folder}/{image}", target_size=(img_height, img_width))
-#img_array = tf.keras.utils.img_to_array(img)
-# img_array = tf.expand_dims(img_array, 0)  # Create a batch
-# img, label in train_ds.shuffle(1000).take(2).as_numpy_iterator():
-
-#image_to_explain = np.expand_dims(img, axis=0)
-# Generate SHAP values for the selected image
-#shap_values = explainer.shap_values(image_to_explain)
-# Plot the SHAP values
-#shap.image_plot(shap_values, image_to_explain)
+explainer = shap.GradientExplainer(model, background_data)  # local_smoothing=0.1
+classes = MODEL_VARIANT
+with tf.device('/CPU:0'):
+    for image, name in zip(images, img_names):
+        shap_values, indexes = explainer.shap_values(image, ranked_outputs=3)
+        # get the names for the classes
+        print(indexes)
+        image = image/255
+        index_names = np.vectorize(lambda x: classes[x])(indexes)
+        shap.image_plot(shap_values, image, index_names, show=False)
+        plt.suptitle("SHAP values for " + name)
+        plt.show()
