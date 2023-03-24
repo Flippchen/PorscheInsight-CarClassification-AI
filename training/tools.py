@@ -1,4 +1,7 @@
 import pathlib
+import warnings
+
+import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import keras
@@ -36,6 +39,36 @@ def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) ->
     class_names = train_ds.class_names
 
     return train_ds, val_ds, class_names
+
+
+def load_explainer_background(path: str, batch_size: int, img_height: int, img_width: int, shuffle:int = 10000,take:int = 1000) -> list[np.ndarray]:
+    data_dir = pathlib.Path(path)
+    if "more_classes" in path:
+        image_count = len(list(data_dir.glob('*/*/*.jpg')))
+    else:
+        image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
+
+    print("Image count:", image_count)
+
+    data = tf.keras.utils.image_dataset_from_directory(
+        data_dir,
+        validation_split=0.2,
+        subset="validation",
+        seed=123,
+        image_size=(img_height, img_width),
+        batch_size=batch_size)
+    print("Image count:", len(data))
+    # Calculate number of takes based on the batch size
+    take = take // batch_size
+    if take > len(data):
+        take = len(data)
+        warnings.warn(f"take is set to {take} because it is greater than the number of images in the dataset.")
+    data = data.shuffle(shuffle).take(take)
+    images = []
+    for image_batch, labels_batch in data:
+        images.append(image_batch)
+
+    return images
 
 
 def show_sample_batch(train_ds: tf.data.Dataset, class_names: list) -> None:
