@@ -29,7 +29,7 @@ config = {
 }
 
 # Load background dataset
-background_data = load_explainer_background(**config, shuffle=1000, take=1000)
+background_data = load_explainer_data(**config, shuffle=1000, take=1000)
 
 # Load test images
 images = []

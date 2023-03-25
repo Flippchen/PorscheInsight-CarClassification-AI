@@ -11,3 +11,6 @@ onnxruntime~=1.13.1
 tf2onnx~=1.13.0
 # Explaining the model
 shap~=0.41.0
+scikit-learn~=1.2.2
+# Confusion matrix
+seaborn~=0.12.2

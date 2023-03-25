@@ -4,6 +4,7 @@ import warnings
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import seaborn as sns
 import keras
 from keras import layers
 import os
@@ -41,7 +42,7 @@ def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) ->
     return train_ds, val_ds, class_names
 
 
-def load_explainer_background(path: str, batch_size: int, img_height: int, img_width: int, shuffle: int = 10000, take: int = 1000) -> list[np.ndarray]:
+def load_explainer_data(path: str, batch_size: int, img_height: int, img_width: int, shuffle: int = 10000, take: int = 1000) -> list[np.ndarray]:
     data_dir = pathlib.Path(path)
     if "more_classes" in path:
         image_count = len(list(data_dir.glob('*/*/*.jpg')))
@@ -67,6 +68,31 @@ def load_explainer_background(path: str, batch_size: int, img_height: int, img_w
         images.append(image_batch)
 
     return images
+
+
+def load_confusion_matrix_data(path: str, batch_size: int, img_height: int, img_width: int, shuffle: int = 10000, take: int = 1000) -> tf.data.Dataset:
+    data_dir = pathlib.Path(path)
+    if "more_classes" in path:
+        image_count = len(list(data_dir.glob('*/*/*.jpg')))
+    else:
+        image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
+
+    print("Image count:", image_count)
+
+    data = tf.keras.utils.image_dataset_from_directory(
+        data_dir,
+        validation_split=0.2,
+        subset="validation",
+        seed=123,
+        image_size=(img_height, img_width),
+        batch_size=batch_size)
+
+    # Create warning if take is greater than the number of images in the dataset
+    if take > (len(data) * batch_size):
+        warnings.warn(f"{take} is greater than the number of images in the dataset. It will be set to maximum number of images in the dataset.")
+    data = data.shuffle(shuffle).take(take)
+
+    return data
 
 
 def show_sample_batch(train_ds: tf.data.Dataset, class_names: list) -> None:
@@ -149,3 +175,21 @@ def suppress_tf_warnings():
 
     # Suppress any deprecated function warnings
     tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+
+
+def plot_confusion_matrix(cm: np.ndarray, class_names: list, specific_model_variants: bool) -> None:
+    # Convert the confusion matrix from an array to a list
+    cm_list = cm.tolist()
+
+    # Normalize the confusion matrix
+    cm_norm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
+
+    # Plot the confusion matrix
+    plt.figure(figsize=(10, 10))
+    sns.heatmap(cm_norm, annot=True, fmt=".2f", cmap="Blues", xticklabels=class_names, yticklabels=class_names)
+    plt.title("Confusion Matrix")
+    plt.xlabel("Predicted Class")
+    plt.ylabel("True Class")
+    fig1 = plt.gcf()
+    plt.show()
+    fig1.savefig(f"results/{'cm_specific_model_variants' if specific_model_variants else 'cm_car_type'}.png")
