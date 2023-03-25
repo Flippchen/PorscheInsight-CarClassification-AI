@@ -10,7 +10,7 @@ The project is still in an early stage and I will add more models and features i
 - [x] Add ONNX export
 - [x] Implement better Testing
 - [x] Implement shap for feature importance
-- [ ] Add confusion matrix
+- [x] Add confusion matrix
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Try a deeper/wider or different pretrained model to improve accuracy on the more classes dataset
 - [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
