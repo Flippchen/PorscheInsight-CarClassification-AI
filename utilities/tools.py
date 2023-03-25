@@ -93,7 +93,6 @@ def load_image_subset(path: str, batch_size: int, img_height: int, img_width: in
     if number_images > num_images_in_dataset:
         warnings.warn(f"{number_images} is greater than the number of images in the dataset. It will be set to maximum number of images in the dataset.")
 
-
     # Calculate the number of batches to take based on the take value
     take = (number_images + batch_size - 1) // batch_size
 
@@ -166,10 +165,8 @@ def plot_model_score(history, epochs, name: str, more_classes: bool) -> None:
     plt.title('Training and Validation Loss')
     fig1 = plt.gcf()
     plt.show()
-    if more_classes:
-        fig1.savefig(f'../models/more_classes/results/acc-loss-{name}-model.png')
-    else:
-        fig1.savefig(f'../models/few_classes/results/acc-loss-{name}-model.png')
+    fig1.savefig(f'../models/model_variants/results/acc-loss-{name}-model.png' if more_classes \
+                 else f'../models/car_types/results/acc-loss-{name}-model.png')
 
 
 def suppress_tf_warnings():
