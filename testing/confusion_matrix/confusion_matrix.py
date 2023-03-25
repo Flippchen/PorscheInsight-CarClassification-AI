@@ -5,6 +5,9 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.utils import to_categorical
 from training.tools import *
 from testing.class_names import MODEL_VARIANT, CAR_TYPE
+import seaborn as sns
+import matplotlib.pyplot as plt
+from testing.class_names import MODEL_VARIANT, CAR_TYPE
 suppress_tf_warnings()
 
 # Load your saved Keras model
@@ -27,8 +30,7 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
               metrics=['accuracy'])
 
-train, val, class_names = load_dataset(**config)
-
+train, val, classes = load_dataset(**config)
 
 # Extract images and labels from the dataset
 all_images = []
@@ -41,7 +43,7 @@ all_images = np.vstack(all_images)
 all_labels = np.hstack(all_labels)
 
 # Split your data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(all_images, all_labels, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(all_images, all_labels, test_size=0.01, random_state=42)
 
 # Evaluate the model on the test set
 with tf.device('/CPU:0'):
@@ -55,7 +57,22 @@ with tf.device('/CPU:0'):
     y_pred = np.argmax(y_pred_probs, axis=1)
 
 # Create the confusion matrix
-cm = confusion_matrix(X_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)
 
 print("Confusion Matrix:")
 print(cm)
+
+
+def plot_confusion_matrix(cm):
+    cm_list = cm.tolist()
+    class_names = MODEL_VARIANT if specific_model_variants else CAR_TYPE
+    plt.figure(figsize=(10, 10))
+    sns.heatmap(cm_list, annot=True, fmt="d", cmap="Blues", xticklabels=class_names, yticklabels=class_names)
+    plt.title("Confusion Matrix")
+    plt.xlabel("Predicted Class")
+    plt.ylabel("True Class")
+    plt.show()
+
+
+# Plot the confusion matrix
+plot_confusion_matrix(cm)
