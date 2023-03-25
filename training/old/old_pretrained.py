@@ -1,9 +1,8 @@
 # This file contains the code for training a model with data augmentation and a pretrained base.
 # Import libraries
-import numpy as np
 from keras.models import Sequential
 from keras.applications import VGG16
-from training.tools import *
+from utilities.tools import *
 from keras import layers
 # Ignore warnings
 import warnings

@@ -3,8 +3,7 @@ from class_names import CAR_TYPE, MODEL_VARIANT
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
-from training.tools import suppress_tf_warnings
-from export_helper import export
+from utilities.tools import suppress_tf_warnings
 
 # Define config
 img_height = 300

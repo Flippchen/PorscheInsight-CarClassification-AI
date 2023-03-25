@@ -1,7 +1,7 @@
 import os
 
 from testing.class_names import *
-from training.tools import suppress_tf_warnings
+from utilities.tools import suppress_tf_warnings
 import onnxruntime as ort
 import numpy as np
 import tensorflow as tf

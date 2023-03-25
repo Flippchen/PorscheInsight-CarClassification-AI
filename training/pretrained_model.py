@@ -1,12 +1,11 @@
 # This file contains the code for training a model with data augmentation and a pretrained base.
 # Import libraries
-import numpy as np
 from keras.models import Sequential
-from keras.applications import VGG16, EfficientNetB0
-from tools import *
+from keras.applications import EfficientNetB0
+from utilities.tools import *
 from keras.optimizers import Adam
 from keras.regularizers import l1_l2
-from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
+from keras.callbacks import EarlyStopping, ModelCheckpoint
 
 # Ignore warnings
 import warnings

@@ -1,8 +1,7 @@
 # This file contains the code for training a model without data augmentation.
 # Import libraries
-import numpy as np
 from keras.models import Sequential
-from tools import *
+from utilities.tools import *
 
 # Ignore warnings
 import warnings

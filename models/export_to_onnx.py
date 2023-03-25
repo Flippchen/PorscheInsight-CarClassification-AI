@@ -3,7 +3,7 @@
 import os
 import tensorflow as tf
 import tf2onnx
-from training.tools import suppress_tf_warnings
+from utilities.tools import suppress_tf_warnings
 
 # Supress TF warnings
 suppress_tf_warnings()

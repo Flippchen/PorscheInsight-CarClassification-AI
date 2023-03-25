@@ -1,7 +1,6 @@
 import shap
-import numpy as np
 from testing.class_names import MODEL_VARIANT, CAR_TYPE
-from training.tools import *
+from utilities.tools import *
 
 # Load model
 suppress_tf_warnings()
