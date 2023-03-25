@@ -24,14 +24,14 @@ The first version of the model was trained to predict 10 classes, which correspo
 
 After achieving satisfactory results with the 10-class model, a second model was trained to predict 88 classes, which correspond to specific Porsche car model variants and years. For example, this model can predict whether an image is a 911 from 2008 or a Cayenne from 1990. The accuracy of this model on the training set was 80%, and the accuracy on the validation set was 46%.
 
-| Model                 | Total params | Trainable params | Non-trainable params | Accuracy Train % | Accuracy Val % | Number of classes |
-|-----------------------|--------------|------------------|----------------------|------------------|----------------|-------------------|
-| without augmentation* | 11,239,850   | 11,239,850       | 0                    | 98               | 78             | 10                |
-| with augmentation*    | 11,239,850   | 11,239,850       | 0                    | 79               | 74             | 10                |
-| old_pretrained*       | 20,027,082   | 5,311,114        | 14,715,968           | 74               | 72             | 10                |
-| VGG16 pretrained*     | 20,027,082   | 12,390,538       | 7,636,544            | 99               | 95             | 10                |
-| VGG16 pretrained      | 20,027,082   | 12,390,538       | 7,636,544            | 80               | 46             | 88                |
-| Efficient(new head)   |              |                  |                      |                  |                |                   |
+| Model                 | Total params | Trainable params | Non-trainable params | Batch size | Accuracy Train %  | Accuracy Val % | Number of classes |
+|-----------------------|--------------|------------------|----------------------|------------|-------------------|----------------|-------------------|
+| without augmentation* | 11,239,850   | 11,239,850       | 0                    | 32         | 98                | 78             | 10                |
+| with augmentation*    | 11,239,850   | 11,239,850       | 0                    | 32         | 79                | 74             | 10                |
+| old_pretrained*       | 20,027,082   | 5,311,114        | 14,715,968           | 32         | 74                | 72             | 10                |
+| VGG16 pretrained*     | 20,027,082   | 12,390,538       | 7,636,544            | 32         | 99                | 95             | 10                |
+| VGG16 pretrained      | 20,027,082   | 12,390,538       | 7,636,544            | 32         | 80                | 46             | 88                |
+| Efficient(new head)   |              |                  |                      | 32         |                   |                |                   |
 
 The models with * were trained on the pre cleaned dataset.
 
@@ -49,6 +49,13 @@ I recommend to prepare the images with [prepare_images.oy](testing/prepare_image
 ### Explain a model
 To explain a model you can use the [explainer.py](testing/shap/explainer.py) script. You can choose the model and the image(folder) you want to get explanations.
 I recommend to prepare the images with [prepare_images.oy](testing/prepare_images.py) before.
+
+### Confusion matrix of a model
+The confusion matrix shows the performance of a classification model. It shows the number of correct and incorrect predictions made by a classifier.
+
+To get a confusion matrix of a model you can use the [confusion_matrix.py](testing/confusion_matrix/confusion_matrix.py) script. You can choose the model and the test set you want to get the confusion matrix from.
+![Confusion matrix for car types](testing/confusion_matrix/results/cm_car_type.png "Confusion matrix for cat types")
+
 ### Sample images from my dataset
 ![shap values for 911_1980](testing/shap/results/car_types/shap_values_911_1980.png "Shap values for 911_1980")
 ![shap values for Cayman_2009](testing/shap/results/model_variants/shap_values_Cayman_2009.png "Shap values for Cayman_2009")
