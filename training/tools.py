@@ -53,8 +53,6 @@ def load_explainer_data(path: str, batch_size: int, img_height: int, img_width: 
 
     data = tf.keras.utils.image_dataset_from_directory(
         data_dir,
-        validation_split=0.2,
-        subset="validation",
         seed=123,
         image_size=(img_height, img_width),
         batch_size=batch_size)
@@ -85,8 +83,6 @@ def load_image_subset(path: str, batch_size: int, img_height: int, img_width: in
 
     data = tf.keras.utils.image_dataset_from_directory(
         data_dir,
-        validation_split=0.2,
-        subset="validation",
         seed=123,
         image_size=(img_height, img_width),
         batch_size=batch_size)
@@ -196,9 +192,11 @@ def plot_confusion_matrix(cm: np.ndarray, class_names: list, specific_model_vari
     cm_norm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
 
     # Plot the confusion matrix
-    plt.figure(figsize=(10, 10))
+    fig_size = (25, 25) if specific_model_variants else (10, 10)
+    sns.set(font_scale=0.7) if specific_model_variants else sns.set(font_scale=1.0)
+    plt.figure(figsize=fig_size)
     sns.heatmap(cm_norm, annot=True, fmt=".2f", cmap="Blues", xticklabels=class_names, yticklabels=class_names)
-    plt.title("Confusion Matrix")
+    plt.title("Confusion Matrix for Specific Model Variants" if specific_model_variants else "Confusion Matrix for Car Type")
     plt.xlabel("Predicted Class")
     plt.ylabel("True Class")
     fig1 = plt.gcf()
