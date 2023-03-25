@@ -61,8 +61,3 @@ class_names = MODEL_VARIANT if specific_model_variants else CAR_TYPE
 
 # Plot the confusion matrix
 plot_confusion_matrix(cm, class_names, specific_model_variants)
-
-
-# TODO: Try on different model
-# TODO: Validate results
-# TODO: Edit readme

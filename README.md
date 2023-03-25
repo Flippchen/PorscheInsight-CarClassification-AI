@@ -55,6 +55,7 @@ The confusion matrix shows the performance of a classification model. It shows t
 
 To get a confusion matrix of a model you can use the [confusion_matrix.py](testing/confusion_matrix/confusion_matrix.py) script. You can choose the model and the test set you want to get the confusion matrix from.
 ![Confusion matrix for car types](testing/confusion_matrix/results/cm_car_type.png "Confusion matrix for cat types")
+The confusion matrix of teh bigger model is too big to show it here. You can find it in the [results](testing/confusion_matrix/results) folder.
 
 ### Sample images from my dataset
 ![shap values for 911_1980](testing/shap/results/car_types/shap_values_911_1980.png "Shap values for 911_1980")
