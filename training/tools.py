@@ -70,7 +70,7 @@ def load_explainer_data(path: str, batch_size: int, img_height: int, img_width: 
     return images
 
 
-def load_confusion_matrix_data(path: str, batch_size: int, img_height: int, img_width: int, shuffle: int = 10000, take: int = 1000) -> tf.data.Dataset:
+def load_image_subset(path: str, batch_size: int, img_height: int, img_width: int, shuffle: int = 10000, number_images: int = 1000) -> tf.data.Dataset:
     data_dir = pathlib.Path(path)
     if "more_classes" in path:
         image_count = len(list(data_dir.glob('*/*/*.jpg')))
@@ -87,9 +87,16 @@ def load_confusion_matrix_data(path: str, batch_size: int, img_height: int, img_
         image_size=(img_height, img_width),
         batch_size=batch_size)
 
+    # Calculate the number of images in the dataset after applying the batch_size
+    num_images_in_dataset = len(data) * batch_size
     # Create warning if take is greater than the number of images in the dataset
-    if take > (len(data) * batch_size):
-        warnings.warn(f"{take} is greater than the number of images in the dataset. It will be set to maximum number of images in the dataset.")
+    if number_images > num_images_in_dataset:
+        warnings.warn(f"{number_images} is greater than the number of images in the dataset. It will be set to maximum number of images in the dataset.")
+
+
+    # Calculate the number of batches to take based on the take value
+    take = (number_images + batch_size - 1) // batch_size
+
     data = data.shuffle(shuffle).take(take)
 
     return data
