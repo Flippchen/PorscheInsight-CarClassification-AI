@@ -19,3 +19,5 @@ model = Sequential([
     layers.LeakyReLU(),
     layers.Dense(num_classes, activation='softmax', name="outputs")
 ]) if not load_model else keras.models.load_model(load_path)
+
+# lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1, mode='auto', cooldown=0, min_lr=0)

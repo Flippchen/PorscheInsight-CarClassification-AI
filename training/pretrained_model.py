@@ -59,52 +59,34 @@ print(np.min(first_image), np.max(first_image))
 data_augmentation = create_augmentation_layer(img_height, img_width)
 show_augmented_batch(train_ds, data_augmentation)
 
-# Load the pre-trained VGG16/EfficientNet model
-# vgg16 = VGG16(weights='imagenet', include_top=False, input_shape=(img_height, img_width, 3))
+# Load the pre-trained EfficientNet model
 efficientnet = EfficientNetV2B1(weights='imagenet', include_top=False, input_shape=(img_height, img_width, 3))
+
 # Set the trainable flag of the pre-trained model to False
-# for layer in vgg16.layers:
-# layer.trainable = False
 for layer in efficientnet.layers:
     layer.trainable = False
 
 # Fine-tuning: unfreeze some layers of pretrained model
-# for layer in vgg16.layers[-4:]:
-# layer.trainable = True
 for layer in efficientnet.layers[-20:]:
     layer.trainable = True
 
 # Create a new head and initialize model
 num_classes = len(class_names)
-model = Sequential([
-    data_augmentation,
-    # vgg16,
-    efficientnet,
-    layers.BatchNormalization(),
-    layers.LeakyReLU(),
-    layers.Flatten(),
-    layers.Dense(128, kernel_regularizer=l1_l2(l1=1e-5, l2=1e-4)),
-    layers.Dropout(0.5),
-    layers.BatchNormalization(),
-    layers.LeakyReLU(),
-    layers.Dense(num_classes, activation='softmax', name="outputs")
-]) if not load_model else keras.models.load_model(load_path)
 
-# Create a new head and initialize model
-num_classes = len(class_names)
-# model = Sequential([
-#    data_augmentation,
-#    efficientnet,
-#    layers.GlobalAveragePooling2D(),
-#    layers.Dense(128, kernel_regularizer=l1_l2(l1=1e-5, l2=1e-4)),
-#    layers.BatchNormalization(),
-#    layers.LeakyReLU(),
-#    layers.Dropout(0.5),
-#    layers.Dense(num_classes, activation='softmax', name="outputs")
-# ]) if not load_model else keras.models.load_model(load_path)
+model = Sequential([
+   data_augmentation,
+   efficientnet,
+   layers.GlobalAveragePooling2D(),
+   layers.Dense(128, kernel_regularizer=l1_l2(l1=1e-5, l2=1e-4)),
+   layers.BatchNormalization(),
+   layers.LeakyReLU(),
+   layers.Dropout(0.5),
+   layers.Dense(num_classes, activation='softmax', name="outputs")
+]) if not load_model else keras.models.load_model(load_path)
 
 # Define optimizer
 optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
+
 # Define learning rate scheduler
 initial_learning_rate = 0.001
 lr_decay_steps = 1000
@@ -122,7 +104,6 @@ model.compile(optimizer=optimizer,
 model.summary()
 
 # Define callbacks
-# lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1, mode='auto', cooldown=0, min_lr=0)
 lr = tf.keras.callbacks.LearningRateScheduler(lr_scheduler)
 early_stopping = EarlyStopping(monitor='val_loss', patience=4, verbose=1, mode='auto', restore_best_weights=True)
 model_checkpoint = ModelCheckpoint(filepath=f"../models/model_variants/{name}_best_model.h5", monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
@@ -130,6 +111,7 @@ model_checkpoint = ModelCheckpoint(filepath=f"../models/model_variants/{name}_be
 # otherwise comment it out and also remove the callback from the model callbacks)
 webhook_url = os.environ.get('WEBHOOK_URL')
 discord_callback = DiscordCallback(webhook_url)
+
 # Train model
 epochs = 10
 with tf.device('/GPU:1'):
