@@ -1,8 +1,9 @@
 # This file contains the code for training a model with data augmentation and a pretrained base.
 # Import libraries
 from keras.models import Sequential
-from keras.applications import EfficientNetB0
+from keras.applications import EfficientNetV2B1
 from utilities.tools import *
+from utilities.discord_callback import DiscordCallback
 from keras.optimizers import Adam
 from keras.regularizers import l1_l2
 from keras.callbacks import EarlyStopping, ModelCheckpoint
@@ -59,7 +60,7 @@ show_augmented_batch(train_ds, data_augmentation)
 
 # Load the pre-trained VGG16/EfficientNet model
 # vgg16 = VGG16(weights='imagenet', include_top=False, input_shape=(img_height, img_width, 3))
-efficientnet = EfficientNetB0(weights='imagenet', include_top=False, input_shape=(img_height, img_width, 3))
+efficientnet = EfficientNetV2B1(weights='imagenet', include_top=False, input_shape=(img_height, img_width, 3))
 # Set the trainable flag of the pre-trained model to False
 # for layer in vgg16.layers:
 # layer.trainable = False
@@ -100,17 +101,18 @@ model = Sequential([
 ]) if not load_model else keras.models.load_model(load_path)
 
 # Define optimizer
-#optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
+optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
+# Define learning rate scheduler
 initial_learning_rate = 0.001
 lr_decay_steps = 1000
 lr_decay_rate = 0.96
-
 lr_scheduler = tf.keras.optimizers.schedules.ExponentialDecay(
     initial_learning_rate,
     decay_steps=lr_decay_steps,
     decay_rate=lr_decay_rate,
     staircase=True)
-optimizer = Adam(learning_rate=lr_scheduler, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
+
+
 # Compile model
 model.compile(optimizer=optimizer,
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -119,17 +121,19 @@ model.summary()
 
 # Define callbacks
 #lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, verbose=1, mode='auto', cooldown=0, min_lr=0)
-
+lr = tf.keras.callbacks.LearningRateScheduler(lr_scheduler)
 early_stopping = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto', restore_best_weights=True)
 model_checkpoint = ModelCheckpoint(filepath="../models/model_variants/best_model.h5", monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
+webhook_url = "YOUR WEBHOOK URL"
+discord_callback = DiscordCallback(webhook_url)
 # Train model
-epochs = 1
+epochs = 15
 with tf.device('/GPU:1'):
     history = model.fit(
         train_ds,
         validation_data=val_ds,
         epochs=epochs,
-        callbacks=[lr_scheduler, early_stopping, model_checkpoint]
+        callbacks=[lr,early_stopping, model_checkpoint, discord_callback]
     )
 # Plot and save model score
 plot_model_score(history, epochs, name, specific_model_variants)
@@ -137,7 +141,7 @@ plot_model_score(history, epochs, name, specific_model_variants)
 # Save model
 model.save(f"../models/model_variants/{name}.h5")
 
-# TODO: Try efficientNEtB0 instead of VGG16, different optimizer and head
+# TODO: Try efficientNEt instead of VGG16, different head
 # TODO: Try effiecientNEt on old head
 # TODO: Implement a DataGenerator
 # TODO: Different data augmentation (vertical, ..), Augmentation before training
