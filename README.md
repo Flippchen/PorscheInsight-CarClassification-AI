@@ -24,14 +24,15 @@ The first version of the model was trained to predict 10 classes, which correspo
 
 After achieving satisfactory results with the 10-class model, a second model was trained to predict 88 classes, which correspond to specific Porsche car model variants and years. For example, this model can predict whether an image is a 911 from 2008 or a Cayenne from 1990. The accuracy of this model on the training set was 80%, and the accuracy on the validation set was 46%.
 
-| Model                                | Total params | Trainable params | Non-trainable params | Batch size | Accuracy Train % | Accuracy Val % | Number of classes |
-|--------------------------------------|--------------|------------------|----------------------|------------|------------------|----------------|-------------------|
-| without augmentation*                | 11,239,850   | 11,239,850       | 0                    | 32         | 98               | 78             | 10                |
-| with augmentation*                   | 11,239,850   | 11,239,850       | 0                    | 32         | 79               | 74             | 10                |
-| old_pretrained*                      | 20,027,082   | 5,311,114        | 14,715,968           | 32         | 74               | 72             | 10                |
-| VGG16 pretrained*                    | 20,027,082   | 12,390,538       | 7,636,544            | 32         | 99               | 95             | 10                |
-| VGG16 pretrained                     | 20,027,082   | 12,390,538       | 7,636,544            | 32         | 80               | 46             | 88                |
-| efficientnetv2-b1(new head & faster) | 7,106,956    | 993,416          | 6,113,640            | 32         | 47               | 46             | 88                |
+| Model                                | Total params | Trainable params | Non-trainable params  | Batch size | Accuracy Train % | Accuracy Val % | Number of classes |
+|--------------------------------------|--------------|------------------|-----------------------|------------|------------------|----------------|-------------------|
+| without augmentation*                | 11,239,850   | 11,239,850       | 0                     | 32         | 98               | 78             | 10                |
+| with augmentation*                   | 11,239,850   | 11,239,850       | 0                     | 32         | 79               | 74             | 10                |
+| old_pretrained*                      | 20,027,082   | 5,311,114        | 14,715,968            | 32         | 74               | 72             | 10                |
+| VGG16 pretrained*                    | 20,027,082   | 12,390,538       | 7,636,544             | 32         | 99               | 95             | 10                |
+| VGG16 pretrained                     | 20,027,082   | 12,390,538       | 7,636,544             | 32         | 80               | 46             | 88                |
+| efficientnetv2-b1(new head & faster) | 7,106,956    | 993,416          | 6,113,640             | 32         | 47               | 46             | 88                |
+| efficientnetv2-b1 (old head)         | 23,332,236   | 17,216,136       | 6,116,100             | 32         | 49               | 46             | 88                |
 
 The models with * were trained on the pre cleaned dataset.
 

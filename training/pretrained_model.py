@@ -19,14 +19,14 @@ suppress_tf_warnings()
 AUTOTUNE = tf.data.AUTOTUNE
 img_height = 300
 img_width = 300
-name = "efficientnet-old-head-model-variants"
+name = "efficientnet-old-head-model-variants-full"
 # Variables to control training flow
 # Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
 # Set specific_model_variants to False if you want to test the model with broad Porsche model types.
 specific_model_variants = True
 # Set to True to load trained model
-load_model = False
-load_path = "../models/model_variants/vgg16-pretrained-model-variants.h5"
+load_model = True
+load_path = "../models/model_variants/efficientnet-old-head-model-variants.h5"
 # Config
 path_addon = "Porsche_more_classes" if specific_model_variants else "Porsche"
 config = {
@@ -131,7 +131,7 @@ model_checkpoint = ModelCheckpoint(filepath=f"../models/model_variants/{name}_be
 webhook_url = os.environ.get('WEBHOOK_URL')
 discord_callback = DiscordCallback(webhook_url)
 # Train model
-epochs = 15
+epochs = 10
 with tf.device('/GPU:1'):
     history = model.fit(
         train_ds,
@@ -145,7 +145,7 @@ plot_model_score(history, name, specific_model_variants)
 # Save model
 model.save(f"../models/model_variants/{name}.h5")
 
-# TODO: Try effiecientNEt on old head
+
 # TODO: Implement a DataGenerator
 # TODO: Different data augmentation (vertical, ..), Augmentation before training
 
