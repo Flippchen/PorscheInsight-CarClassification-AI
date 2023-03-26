@@ -143,13 +143,13 @@ def show_augmented_batch(train_ds, data_augmentation) -> None:
         plt.show()
 
 
-def plot_model_score(history, epochs, name: str, more_classes: bool) -> None:
+def plot_model_score(history, name: str, more_classes: bool) -> None:
     # Read history and plot model score
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
     loss = history.history['loss']
     val_loss = history.history['val_loss']
-    epochs_range = range(epochs)
+    epochs_range = range(len(acc))
 
     plt.figure(figsize=(8, 8))
     plt.subplot(1, 2, 1)
