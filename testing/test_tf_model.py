@@ -4,6 +4,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from utilities.tools import suppress_tf_warnings
+from export_helper import export
 
 # Define config
 img_height = 300
@@ -16,10 +17,11 @@ specific_model_variants = False
 # Supress TF warnings
 suppress_tf_warnings()
 # Load model (If loading a model with specific model variants, set compile=False and compile the model manually)
-model = keras.models.load_model(model_path)  # ,compile=False)
+model = keras.models.load_model(model_path)  # , compile=False)
 # model.compile(optimizer='adam',
-#              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-#              metrics=['accuracy'])
+#             loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+#             metrics=['accuracy'])
+#
 # Load images
 images = []
 img_names = []
@@ -39,8 +41,9 @@ for img_array, name in zip(images, img_names):
 
     for pred in predictions:
         score = tf.nn.softmax(pred)
+        print(np.argmax(score))
         print(f"Ground truth: {name} | Predicted: {class_names[np.argmax(score)]} | Confidence: {100 * np.max(score): .2f}%")
         all_predictions[name] = [class_names[np.argmax(score)], 100 * np.max(score)]
 
 # Export predictions to CSV or text file
-# export(all_predictions, export_to_csv=False)
+export(all_predictions, export_to_csv=False)
