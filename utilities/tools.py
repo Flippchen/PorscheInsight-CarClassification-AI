@@ -198,4 +198,4 @@ def plot_confusion_matrix(cm: np.ndarray, class_names: list, specific_model_vari
     plt.ylabel("True Class")
     fig1 = plt.gcf()
     plt.show()
-    fig1.savefig(f"results/{'cm_specific_model_variants'+ name if specific_model_variants else 'cm_car_type' + name}.png")
+    fig1.savefig(f"results/{'cm_specific_model_variants-'+ name if specific_model_variants else 'cm_car_type-' + name}.png")
