@@ -46,4 +46,4 @@ for img_array, name in zip(images, img_names):
         all_predictions[name] = [class_names[np.argmax(score)], 100 * np.max(score)]
 
 # Export predictions to CSV or text file
-export(all_predictions,export_folder="results/efficientnet", export_to_csv=False)
+export(all_predictions, export_folder="results/efficientnet", export_to_csv=False)
