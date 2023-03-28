@@ -181,7 +181,7 @@ def suppress_tf_warnings():
     tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 
-def plot_confusion_matrix(cm: np.ndarray, class_names: list, specific_model_variants: bool) -> None:
+def plot_confusion_matrix(cm: np.ndarray, class_names: list, specific_model_variants: bool, name: str) -> None:
     # Convert the confusion matrix from an array to a list
     cm_list = cm.tolist()
 
@@ -198,4 +198,4 @@ def plot_confusion_matrix(cm: np.ndarray, class_names: list, specific_model_vari
     plt.ylabel("True Class")
     fig1 = plt.gcf()
     plt.show()
-    fig1.savefig(f"results/{'cm_specific_model_variants' if specific_model_variants else 'cm_car_type'}.png")
+    fig1.savefig(f"results/{'cm_specific_model_variants'+ name if specific_model_variants else 'cm_car_type' + name}.png")
