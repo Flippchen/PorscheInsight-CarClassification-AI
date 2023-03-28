@@ -35,12 +35,13 @@ def load_and_remove_bg(path, size):
     return image
 
 
-def remove_bg_from_all_images():
-    for image in os.listdir('test_pic'):
+def remove_bg_from_all_images(folder: str):
+    for image in os.listdir(f'{folder}'):
         print("Removing background from", image)
-        img = load_and_remove_bg(f"test_pic/{image}", (300, 300))
-        img.save(f"test_pic/{image}")
+        img = load_and_remove_bg(f"{folder}/{image}", (300, 300))
+        img.save(f"{folder}/{image}")
 
 
 if __name__ == '__main__':
-    remove_bg_from_all_images()
+    folder_path = 'test_pic'
+    remove_bg_from_all_images(folder_path)
