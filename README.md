@@ -51,6 +51,8 @@ I recommend to prepare the images with [prepare_images.py](testing/prepare_image
 To explain a model you can use the [explainer.py](testing/shap/explainer.py) script. You can choose the model and the image(folder) you want to get explanations.
 I recommend to prepare the images with [prepare_images.py](testing/prepare_images.py) before.
 
+After using shap values on the new efficientnet model and the vgg16 model, both on the old head, I found out that the vgg16 model found "better" spots to distinguish between classes, at least sometimes.
+
 ### Confusion matrix of a model
 The confusion matrix shows the performance of a classification model. It shows the number of correct and incorrect predictions made by a classifier.
 
