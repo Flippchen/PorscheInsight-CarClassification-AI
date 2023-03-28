@@ -1,0 +1,3 @@
+Image Name: test-bg-718-boxter.jpg | Predicted Class: 718 Boxster | Confidence:  23.19%
+Image Name: test-bg-cayenne.webp | Predicted Class: Cayenne | Confidence:  23.05%
+Image Name: test-bg-panamera.jpg | Predicted Class: Panamera | Confidence:  22.37%

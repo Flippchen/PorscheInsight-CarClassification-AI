@@ -10,8 +10,8 @@ from export_helper import export
 img_height = 300
 img_width = 300
 img_folder = 'test_pic'
-model_path = '../models/car_types/with_augmentation.h5'
-export_folder = 'results/with_augmentation/'
+model_path = '../models/car_types/best_model/vgg16-pretrained.h5'
+export_folder = 'results/'
 # Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
 # Set specific_model_variants to False if you want to test the model with broad Porsche model types.
 specific_model_variants = False
