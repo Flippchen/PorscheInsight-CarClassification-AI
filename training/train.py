@@ -131,22 +131,3 @@ model.save(f"../models/model_variants/{name}.h5")
 # TODO: Implement a DataGenerator
 # TODO: Different data augmentation (vertical, ..), Augmentation before training
 
-# from tensorflow.keras.preprocessing.image import ImageDataGenerator
-#
-# train_datagen = ImageDataGenerator(
-#    rescale=1./255,
-#    rotation_range=20,
-#    width_shift_range=0.2,
-#    height_shift_range=0.2,
-#    shear_range=0.2,
-#    zoom_range=0.2,
-#    horizontal_flip=True,
-#    fill_mode='nearest')
-#
-# validation_datagen = ImageDataGenerator(rescale=1./255)
-#
-## Flow the data
-# train_generator = train_datagen.flow_from_directory(train_dir,
-#                                                    target_size=(img_height, img_width),
-#                                                    batch_size=batch_size,
-#                                                    class_mode='c
