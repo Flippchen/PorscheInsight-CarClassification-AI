@@ -3,7 +3,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 def train_data_generator(train_dir: str, img_height: int, img_width: int, batch_size: int):
     train_datagen = ImageDataGenerator(
-        rescale=1. / 255,
+        # Efficientnet does have a preprocessing layer
+        # rescale=1. / 255,
         rotation_range=20,
         width_shift_range=0.2,
         height_shift_range=0.2,
@@ -19,7 +20,10 @@ def train_data_generator(train_dir: str, img_height: int, img_width: int, batch_
 
 
 def val_data_generator(val_dir: str, img_height: int, img_width: int, batch_size: int):
-    validation_datagen = ImageDataGenerator(rescale=1. / 255)
+    validation_datagen = ImageDataGenerator(
+        # Efficientnet does have a preprocessing layer
+        # rescale=1. / 255
+    )
     validation_generator = validation_datagen.flow_from_directory(val_dir,
                                                                   target_size=(img_height, img_width),
                                                                   batch_size=batch_size,
@@ -31,4 +35,3 @@ def val_data_generator(val_dir: str, img_height: int, img_width: int, batch_size
 #                   epochs=50,
 #                   validation_data=validation_generator,
 #                   validation_steps=len(validation_generator))
-

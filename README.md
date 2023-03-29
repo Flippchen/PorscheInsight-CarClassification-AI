@@ -12,7 +12,6 @@ The project is still in an early stage and I will add more models and features i
 - [x] Implement shap for feature importance
 - [x] Add confusion matrix
 - [x] Try a deeper/wider or different pretrained model to improve accuracy on the more classes dataset
-- [x] Try with rescaling before feeding the images to the model
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
 ## Installation
