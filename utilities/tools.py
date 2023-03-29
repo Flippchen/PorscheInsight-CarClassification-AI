@@ -166,7 +166,7 @@ def plot_model_score(history, name: str, more_classes: bool) -> None:
     fig1 = plt.gcf()
     plt.show()
     fig1.savefig(f'../models/model_variants/results/acc-loss-{name}-model.png' if more_classes \
-                 else f'../models/car_types/results/acc-loss-{name}-model.png')
+                     else f'../models/car_types/results/acc-loss-{name}-model.png')
 
 
 def suppress_tf_warnings():
@@ -198,4 +198,9 @@ def plot_confusion_matrix(cm: np.ndarray, class_names: list, specific_model_vari
     plt.ylabel("True Class")
     fig1 = plt.gcf()
     plt.show()
-    fig1.savefig(f"results/{'cm_specific_model_variants-'+ name if specific_model_variants else 'cm_car_type-' + name}.png")
+    fig1.savefig(f"results/{'cm_specific_model_variants-' + name if specific_model_variants else 'cm_car_type-' + name}.png")
+
+
+def resize_dataset(data: tf.data.Dataset, img_height: int, img_width: int) -> tf.data.Dataset:
+    data = data.map(lambda x, y: (tf.image.resize(x, (img_height, img_width)), y))
+    return data

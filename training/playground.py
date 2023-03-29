@@ -31,3 +31,4 @@ def val_data_generator(val_dir: str, img_height: int, img_width: int, batch_size
 #                   epochs=50,
 #                   validation_data=validation_generator,
 #                   validation_steps=len(validation_generator))
+
