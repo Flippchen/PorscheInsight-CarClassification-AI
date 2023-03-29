@@ -1,15 +1,15 @@
 import os
-from class_names import CAR_TYPE, MODEL_VARIANT
+from utilities.class_names import CAR_TYPE, MODEL_VARIANT
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from utilities.tools import suppress_tf_warnings
-from export_helper import export
+from utilities.export_helper import export
 
 # Define config
 img_height = 300
 img_width = 300
-img_folder = 'test_pic'
+img_folder = 'test_images'
 model_path = '../models/car_types/best_model/vgg16-pretrained.h5'
 export_folder = 'results/'
 # Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.

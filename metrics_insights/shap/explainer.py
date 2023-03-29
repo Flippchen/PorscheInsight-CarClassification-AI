@@ -1,12 +1,12 @@
 import shap
-from testing.class_names import MODEL_VARIANT, CAR_TYPE
+from utilities.class_names import MODEL_VARIANT, CAR_TYPE
 from utilities.tools import *
 
 # Load model
 suppress_tf_warnings()
 
 # Load model (Compiling failed, so I compiled it manually)
-model = keras.models.load_model("../../models/model_variants/efficientnet-old-head-model-variants-full_best_model.h5", compile=False)
+model = keras.models.load_model("../../models/model_variants/best_model/efficientnet-old-head-model-variants-full_best_model.h5", compile=False)
 # model = keras.models.load_model("../../models/car_types/best_model/vgg16-pretrained.h5", compile=False)
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -14,7 +14,7 @@ model.compile(optimizer='adam',
 # Set config
 img_height = 300
 img_width = 300
-img_folder = '../test_pic'
+img_folder = '../test_images'
 save_extension = "efficientnet-old-head-"
 # Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
 specific_model_variants = True

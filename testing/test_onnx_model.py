@@ -1,11 +1,11 @@
 import os
 
-from testing.class_names import *
+from utilities.class_names import *
 from utilities.tools import suppress_tf_warnings
 import onnxruntime as ort
 import numpy as np
 import tensorflow as tf
-from export_helper import export
+from utilities.export_helper import export
 
 # Supress TF warnings
 suppress_tf_warnings()
@@ -53,8 +53,8 @@ img_width = 300
 # Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
 # Set specific_model_variants to False if you want to test the model with broad Porsche model types.
 specific_model_variants = True
-model_path = '../models/model_variants/vgg16-pretrained-model-variants.onnx'
-img_folder = 'test_pic'
+model_path = '../models/onnx/model_variants/vgg16-pretrained-model-variants.onnx'
+img_folder = 'test_images'
 
 # Load model
 session = load_onnx_model(model_path)
@@ -66,7 +66,7 @@ print("Output name and shape:", output_name, session.get_outputs()[0].shape)
 # Load images
 images = []
 img_names = []
-for image in os.listdir('test_pic'):
+for image in os.listdir('test_images'):
     img_names.append(image)
     img_array = input_data = preprocess_image_keras(f"{img_folder}/{image}", session.get_inputs()[0].shape)
     images.append(img_array)

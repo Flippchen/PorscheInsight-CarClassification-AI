@@ -36,7 +36,7 @@ After achieving satisfactory results with the 10-class model, a second model was
 
 The models with * were trained on the pre cleaned dataset.
 
-Have a look at the [models](models) folder to see the code and [results](models/car_types/results) folder to see the results.
+Have a look at the [releases](https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases) to see the models and [results](models/car_types/results) folder to see the results.
 
 ## Usage
 ### Train a model
@@ -48,7 +48,7 @@ If you want to predict with an onnx model you can use the [test_onnx_model.py](t
 
 I recommend to prepare the images with [prepare_images.py](testing/prepare_images.py) before. Thus, an error-free and improved prediction is guaranteed.
 ### Explain a model
-To explain a model you can use the [explainer.py](testing/shap/explainer.py) script. You can choose the model and the image(folder) you want to get explanations.
+To explain a model you can use the [explainer.py](metrics_insights/shap/explainer.py) script. You can choose the model and the image(folder) you want to get explanations.
 I recommend to prepare the images with [prepare_images.py](testing/prepare_images.py) before.
 
 After using shap values on the new efficientnet model and the vgg16 model, both on the old head, I found out that the vgg16 model found "better" spots to distinguish between classes, at least sometimes.
@@ -56,13 +56,14 @@ After using shap values on the new efficientnet model and the vgg16 model, both 
 ### Confusion matrix of a model
 The confusion matrix shows the performance of a classification model. It shows the number of correct and incorrect predictions made by a classifier.
 
-To get a confusion matrix of a model you can use the [confusion_matrix.py](testing/confusion_matrix/confusion_matrix.py) script. You can choose the model and the test set you want to get the confusion matrix from.
-![Confusion matrix for car types](testing/confusion_matrix/results/cm_car_type.png "Confusion matrix for cat types")
-The confusion matrix of teh bigger model is too big to show it here. You can find it in the [results](testing/confusion_matrix/results) folder.
+To get a confusion matrix of a model you can use the [confusion_matrix.py](metrics_insights/confusion_matrix/confusion_matrix.py) script. You can choose the model and the test set you want to get the confusion matrix from.
+![Confusion matrix for car types](metrics_insights/confusion_matrix/results/cm_car_type.png "Confusion matrix for cat types")
+
+The confusion matrix of teh bigger model is too big to show it here. You can find it in the [results](metrics_insights/confusion_matrix/results) folder.
 
 ### Sample images from my dataset
-![shap values for 911_1980](testing/shap/results/car_types/shap_values_911_1980.png "Shap values for 911_1980")
-![shap values for Cayman_2009](testing/shap/results/model_variants/shap_values_Cayman_2009.png "Shap values for Cayman_2009")
+![shap values for 911_1980](metrics_insights/shap/results/car_types/shap_values_911_1980.png "Shap values for 911_1980")
+![shap values for Cayman_2009](metrics_insights/shap/results/model_variants/shap_values_Cayman_2009.png "Shap values for Cayman_2009")
 ### Convert a model to ONNX
 You can use the [convert_to_onnx.py](models/export_to_onnx.py) script to convert a keras(.h5) model to ONNX. You can choose the model you want to convert and a save path.
 # Dataset
