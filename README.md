@@ -90,6 +90,9 @@ You can use the [convert_to_onnx.py](models/export_to_onnx.py) script to convert
 The dataset is from [Github](https://github.com/Flippchen/porsche-pictures) and contains ~32.000 pictures of potential Porsche cars.
 Since the source of the dataset is public the quality and the arrangement of the images was also not great.
 After the data was cleaned, there are ~30.300 pictures left. Several pictures were removed because they were not of a Porsche car or the picture was not clear enough.
-Have a look at the data:
-![Sample images](models/car_types/results/sample_images.png "Sample images") 
 
+<details>
+<summary><b>Have a look at the data:</b></summary>
+
+![Sample images](models/car_types/results/sample_images.png "Sample images") 
+</details>
