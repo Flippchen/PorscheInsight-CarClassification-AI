@@ -49,4 +49,4 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
 
 
 eel.init("web")
-eel.start("index.html", size=(800, 600))
+eel.start("index.html", size=(1000, 800))

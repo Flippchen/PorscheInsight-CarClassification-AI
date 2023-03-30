@@ -1,42 +1,81 @@
 body {
     font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: auto;
+    background-color: #f4f4f4;
+    color: #333;
     padding: 20px;
+}
+
+h1 {
     text-align: center;
+    margin-bottom: 40px;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.image-name {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .drop-zone {
-    width: 300px;
-    height: 300px;
-    border: 2px dashed #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 300px;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
     margin-bottom: 20px;
     cursor: pointer;
 }
 
-.drop-zone:hover {
-    border-color: #000;
+.drop-zone p {
+    margin: 0;
+}
+
+.drop-zone.with-image {
+    border: none;
 }
 
 .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
+}
+
+.controls label,
+.controls select,
+.controls button {
+    font-size: 14px;
 }
 
 .result {
     text-align: center;
+    font-size: 16px;
 }
-.drop-zone.with-image {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 10px;
+
+button {
+    background-color: #5c7aff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #4668d6;
 }
