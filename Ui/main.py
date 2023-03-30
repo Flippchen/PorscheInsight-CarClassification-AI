@@ -8,15 +8,43 @@ import keras
 from utilities.tools import suppress_tf_warnings, get_classes_for_model
 from testing.prepare_images import replace_background
 import tensorflow as tf
+import pooch
 
 suppress_tf_warnings()
 
+# Load local Keras models
+# models = {
+#    "car_type": keras.models.load_model("../models/car_types/best_model/vgg16-pretrained.h5"),
+#    "all_specific_model_variants": keras.models.load_model("../models/model_variants/best_model/efficientnet-old-head-model-variants-full_best_model.h5"),
+# }
 
-# Load your Keras models
+# Initiate models
 models = {
-    "car_type": keras.models.load_model("../models/car_types/best_model/vgg16-pretrained.h5"),
-    "all_specific_model_variants": keras.models.load_model("../models/model_variants/best_model/efficientnet-old-head-model-variants-full_best_model.h5"),
+    "car_type": None,
+    "all_specific_model_variants": None,
 }
+
+
+def load_model(model_name: str) -> keras.Model:
+    if model_name == "car_type":
+        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/vgg16-pretrained.h5"
+        md5 = "e7c79ac2d2855e7a65e2ec728fe1d178"
+    elif model_name == "all_specific_model_variants":
+        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-old-head-model-variants-full_best_model.h5"
+        md5 = "564a7d21468c6de78d7ac7a8b7896a28"
+    else:
+        raise ValueError("Model name not implemented")
+
+    # Download and cache the model using Pooch
+    model_path = pooch.retrieve(
+        url,
+        f"md5:{md5}",
+        fname=model_name + ".h5",
+        progressbar=True,
+    )
+    print("Model downloaded to: ", model_path)
+
+    return keras.models.load_model(model_path)
 
 
 def prepare_image(image_data: Image, target_size: Tuple):
@@ -36,6 +64,8 @@ def get_top_3_predictions(prediction: List, model_name: str) -> List[Tuple[str, 
 
 @eel.expose
 def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
+    if models[model_name] is None:
+        models[model_name] = load_model(model_name)
     # Decode image and open it
     image_data = base64.b64decode(image_data)
     image = Image.open(BytesIO(image_data))
