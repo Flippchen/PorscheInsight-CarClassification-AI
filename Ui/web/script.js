@@ -8,23 +8,32 @@ document.addEventListener("DOMContentLoaded", function () {
     const imageNameDiv = document.getElementById("image-name");
     let uploadedImage = null;
 
-    function displayImagePreview(image) {
+function displayImagePreview(image) {
     const reader = new FileReader();
     reader.onload = function (e) {
         const img = new Image();
         img.src = e.target.result;
-        img.width = 300;
-        img.height = 300;
 
+        img.onload = function () {
+            const maxHeight = 300;
+            const aspectRatio = img.width / img.height;
 
-        imageNameDiv.innerText = image.name;
-        imageNameDiv.style.fontWeight = "bold";
+            if (img.height > maxHeight) {
+                img.height = maxHeight;
+                img.width = maxHeight * aspectRatio;
+            }
 
-        dropZone.innerHTML = "";
-        dropZone.appendChild(img);
+            const imageNameDiv = document.getElementById("image-name");
+            imageNameDiv.innerText = image.name;
+            imageNameDiv.style.fontWeight = "bold";
+
+            dropZone.innerHTML = "";
+            dropZone.appendChild(img);
+        };
     };
     reader.readAsDataURL(image);
 }
+
 
     fileInput.addEventListener("change", function (e) {
         const file = e.target.files[0];
