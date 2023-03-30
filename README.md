@@ -13,7 +13,6 @@ The project is still in an early stage and I will add more models and features i
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
 - [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
-- [ ] Add a (web) app to use the models
 
 <details>
 <summary>Completed Tasks</summary>
@@ -23,6 +22,7 @@ The project is still in an early stage and I will add more models and features i
 - [x] Implement shap for feature importance
 - [x] Add confusion matrix
 - [x] Try a deeper/wider or different pretrained model to improve accuracy on the more classes dataset
+- [x] Add a (web) app to use the models
 </details>
 
 
@@ -72,7 +72,8 @@ To get a confusion matrix of a model you can use the [confusion_matrix.py](metri
 <details>
 <summary><b>Confusion Matrix</b></summary>
 
-![Confusion matrix for car types](metrics_insights/confusion_matrix/results/cm_car_type.png "Confusion matrix for cat types")
+<img alt="Confusion matrix for cat types" src="metrics_insights/confusion_matrix/results/cm_car_type.png"  width="700" height="700">
+
 </details>
 
 The confusion matrix of the specific model variants is too big to show it here. You can find it in the [results](metrics_insights/confusion_matrix/results) folder.
@@ -81,8 +82,9 @@ The confusion matrix of the specific model variants is too big to show it here. 
 <details>
 <summary><b>Explained images</b></summary>
 
-![shap values for 911_1980](metrics_insights/shap/results/car_types/shap_values_911_1980.png "Shap values for 911_1980")
-![shap values for Cayman_2009](metrics_insights/shap/results/model_variants/shap_values_Cayman_2009.png "Shap values for Cayman_2009")
+
+<img alt="Shap values for 911_1980" src="metrics_insights/shap/results/car_types/shap_values_911_1980.png"  width="700" height="280">
+<img alt="Shap values for Cayman_2009" src="metrics_insights/shap/results/model_variants/shap_values_Cayman_2009.png"  width="700" height="280">
 </details>
 
 
@@ -97,4 +99,5 @@ After the data was cleaned, there are ~30.300 pictures left. Several pictures we
 <summary><b>Have a look at the data:</b></summary>
 
 ![Sample images](models/car_types/results/sample_images.png "Sample images") 
+<img alt="Sample images from Dataset" src="models/car_types/results/sample_images.png"  width="700" height="700">
 </details>
