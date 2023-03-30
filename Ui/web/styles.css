@@ -34,3 +34,9 @@ body {
 .result {
     text-align: center;
 }
+.drop-zone.with-image {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 10px;
+}

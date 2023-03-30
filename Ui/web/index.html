@@ -11,6 +11,7 @@
 <body>
     <h1>Porsche Classifier</h1>
     <div class="container">
+        <div id="image-name" class="image-name"></div>
         <div id="drop-zone" class="drop-zone">
             <p>Drag and drop your image here, or click to select a file</p>
             <input type="file" id="file-input" accept="image/*" style="display:none" />
@@ -20,8 +21,9 @@
             <select id="model-selector">
                 <option value="car_type">car_type(vgg16)</option>
                 <option value="all_specific_model_variants">all_specific_variants(efficientnet)</option>
-                <!-- Add more options for your other models -->
             </select>
+            <button id="classify-btn">Classify</button>
+            <button id="remove-btn">Remove</button>
         </div>
         <div id="result" class="result">
             <p>Result will be displayed here</p>
