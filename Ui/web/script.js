@@ -23,7 +23,6 @@ function displayImagePreview(image) {
                 img.width = maxHeight * aspectRatio;
             }
 
-            const imageNameDiv = document.getElementById("image-name");
             imageNameDiv.innerText = image.name;
             imageNameDiv.style.fontWeight = "bold";
 
@@ -82,18 +81,24 @@ function displayImagePreview(image) {
     });
 
     async function classifyImage(image) {
-        const model = modelSelector.value;
-        const reader = new FileReader();
+    const model = modelSelector.value;
+    const reader = new FileReader();
 
-        reader.onload = async function (e) {
-            const imageDataUrl = e.target.result;
-            const base64Image = imageDataUrl.split(",")[1];
-            const prediction = await eel.classify_image(base64Image, model)();
-            displayResult(prediction);
-        };
+    // Show loading spinner
+    document.getElementById("loading-spinner").style.display = "flex";
 
-        reader.readAsDataURL(image);
-    }
+    reader.onload = async function (e) {
+        const imageDataUrl = e.target.result;
+        const base64Image = imageDataUrl.split(",")[1];
+        const prediction = await eel.classify_image(base64Image, model)();
+        displayResult(prediction);
+
+        // Hide loading spinner
+        document.getElementById("loading-spinner").style.display = "none";
+    };
+
+    reader.readAsDataURL(image);
+}
 
     function displayResult(prediction) {
         let resultHtml = "";
