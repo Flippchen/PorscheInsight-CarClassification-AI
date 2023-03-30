@@ -77,7 +77,7 @@ function displayImagePreview(image) {
 
     removeBtn.addEventListener("click", () => {
     uploadedImage = null;
-    fileInput.value = ""; // Add this line to reset the file input value
+    fileInput.value = "";
     dropZone.innerHTML = "<p>Drag and drop your image here, or click to select a file</p>";
     });
 
@@ -103,3 +103,14 @@ function displayImagePreview(image) {
         resultDiv.innerHTML = resultHtml;
     }
 });
+function showLoading() {
+    const loadingDiv = document.getElementById("loading");
+    loadingDiv.style.display = "block";
+}
+
+function hideLoading() {
+    const loadingDiv = document.getElementById("loading");
+    loadingDiv.style.display = "none";
+}
+eel.expose(showLoading);
+eel.expose(hideLoading);
