@@ -30,7 +30,7 @@ def prepare_image(image_data: Image, target_size: Tuple):
 def get_top_3_predictions(prediction: List, model_name: str) -> List[Tuple[str, float]]:
     top_3 = prediction[0].argsort()[-3:][::-1]
     classes = get_classes_for_model(model_name)
-    top_3 = [(classes[i], prediction[0][i] * 100) for i in top_3]
+    top_3 = [(classes[i], round(prediction[0][i] * 100, 2)) for i in top_3]
     return top_3
 
 
