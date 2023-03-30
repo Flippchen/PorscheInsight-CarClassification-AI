@@ -108,6 +108,5 @@ After the data was cleaned, there are ~30.300 pictures left. Several pictures we
 <details>
 <summary><b>Have a look at the data:</b></summary>
 
-![Sample images](models/car_types/results/sample_images.png "Sample images") 
 <img alt="Sample images from Dataset" src="models/car_types/results/sample_images.png"  width="700" height="700">
 </details>
