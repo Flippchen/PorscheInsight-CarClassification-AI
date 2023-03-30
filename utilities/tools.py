@@ -1,5 +1,6 @@
 import pathlib
 import warnings
+from typing import List
 
 import numpy as np
 import tensorflow as tf
@@ -9,6 +10,7 @@ import keras
 from keras import layers
 import os
 import logging
+from class_names import CAR_TYPE, MODEL_VARIANT
 
 
 def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
@@ -204,3 +206,14 @@ def plot_confusion_matrix(cm: np.ndarray, class_names: list, specific_model_vari
 def resize_dataset(data: tf.data.Dataset, img_height: int, img_width: int) -> tf.data.Dataset:
     data = data.map(lambda x, y: (tf.image.resize(x, (img_height, img_width)), y))
     return data
+
+
+def get_classes_for_model(name: str) -> List[str]:
+    if name == "car_type":
+        return CAR_TYPE
+    elif name == "specific_model_variants":
+        return MODEL_VARIANT
+    elif name == "specific_model_variants_2":
+        raise ValueError("Invalid model name")
+    else:
+        raise ValueError("Invalid model name")
