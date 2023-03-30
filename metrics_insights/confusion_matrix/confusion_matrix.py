@@ -2,15 +2,16 @@ from sklearn.metrics import confusion_matrix
 from tensorflow.keras.models import load_model
 from utilities.tools import *
 from utilities.class_names import MODEL_VARIANT, CAR_TYPE
+from utilities.tools import get_classes_for_model
 
 suppress_tf_warnings()
 
-# Load your saved Keras model and configure variables
-specific_model_variants = True
-saved_model_path = "../../models/model_variants/efficientnet-old-head-model-variants-full_best_model.h5" if specific_model_variants \
+# Set model Type to 'all_specific_model_variants' or 'car_type'
+model_type = 'all_specific_model_variants'
+saved_model_path = "../../models/model_variants/efficientnet-old-head-model-variants-full_best_model.h5" if model_type == "all_specific_model_variants" \
             else "../../models/car_types/best_model/vgg16-pretrained.h5"
 name = "efficientnet-old-head-model-variants-full"
-path_addon = "Porsche_more_classes" if specific_model_variants else "Porsche"
+path_addon = "Porsche_more_classes" if model_type == "all_specific_model_variants" else "Porsche"
 img_height = 300
 img_width = 300
 config = {
@@ -58,7 +59,7 @@ print("Confusion Matrix:")
 print(cm)
 
 # Get the names of the classes
-class_names = MODEL_VARIANT if specific_model_variants else CAR_TYPE
+class_names = get_classes_for_model(model_type)
 
 # Plot the confusion matrix
-plot_confusion_matrix(cm, class_names, specific_model_variants, name)
+plot_confusion_matrix(cm, class_names, model_type, name)

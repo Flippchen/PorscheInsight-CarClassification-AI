@@ -5,6 +5,7 @@ import tensorflow as tf
 from tensorflow import keras
 from utilities.tools import suppress_tf_warnings
 from utilities.export_helper import export
+from utilities.tools import get_classes_for_model
 
 # Define config
 img_height = 300
@@ -12,9 +13,8 @@ img_width = 300
 img_folder = 'test_images'
 model_path = '../models/car_types/best_model/vgg16-pretrained.h5'
 export_folder = 'results/'
-# Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
-# Set specific_model_variants to False if you want to test the model with broad Porsche model types.
-specific_model_variants = False
+# Set model Type to 'all_specific_model_variants' or 'car_type'
+model_type = 'all_specific_model_variants'
 # Supress TF warnings
 suppress_tf_warnings()
 # Load model (If loading a model fails, compile=False and compile it manually
@@ -34,7 +34,7 @@ for image in os.listdir(img_folder):
 
 # Predict
 all_predictions = {}
-class_names = MODEL_VARIANT if specific_model_variants else CAR_TYPE
+class_names = get_classes_for_model(model_type)
 
 for img_array, name in zip(images, img_names):
     predictions = model.predict(img_array)

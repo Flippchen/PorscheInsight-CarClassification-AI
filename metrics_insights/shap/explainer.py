@@ -1,7 +1,7 @@
 import shap
 from utilities.class_names import MODEL_VARIANT, CAR_TYPE
 from utilities.tools import *
-
+from utilities.tools import get_classes_for_model
 # Load model
 suppress_tf_warnings()
 
@@ -16,10 +16,10 @@ img_height = 300
 img_width = 300
 img_folder = '../test_images'
 save_extension = "efficientnet-old-head-"
-# Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
-specific_model_variants = True
-path_addon = "Porsche_more_classes" if specific_model_variants else "Porsche"
-classes = MODEL_VARIANT if specific_model_variants else CAR_TYPE
+# Set model Type to 'all_specific_model_variants' or 'car_type'
+model_type = 'all_specific_model_variants'
+path_addon = "Porsche_more_classes" if model_type== "all_specific_model_variants" else "Porsche"
+classes = get_classes_for_model(model_type)
 
 config = {
     "path": f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}",
@@ -59,7 +59,7 @@ with tf.device('/CPU:0'):
         plt.show()
         # Remove file extension from image name
         name = name.split(".")[0]
-        if specific_model_variants:
+        if model_type == "all_specific_model_variants":
             fig1.savefig(f"results/model_variants/shap_values-{save_extension}_{name}.png")
         else:
             fig1.savefig(f"results/car_types/shap_values-{save_extension}_{name}.png")

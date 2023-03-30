@@ -32,8 +32,10 @@ def load_model(model_name: str) -> keras.Model:
     elif model_name == "all_specific_model_variants":
         url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-old-head-model-variants-full_best_model.h5"
         md5 = "564a7d21468c6de78d7ac7a8b7896a28"
+    elif model_name == "specific_model_variants":
+        raise ValueError("Model not implemented")
     else:
-        raise ValueError("Model name not implemented")
+        raise ValueError("invalid Model name")
 
     # Show the loading notification
     eel.showLoading()

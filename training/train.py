@@ -21,14 +21,13 @@ img_height = 300
 img_width = 300
 name = "efficientnet-old-head-model-variants-full"
 # Variables to control training flow
-# Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
-# Set specific_model_variants to False if you want to test the model with broad Porsche model types.
-specific_model_variants = True
+# Set model Type to 'all_specific_model_variants' or 'car_type'
+model_type = 'all_specific_model_variants'
 # Set to True to load trained model
 load_model = True
 load_path = "../models/model_variants/efficientnet-old-head-model-variants.h5"
 # Config
-path_addon = "Porsche_more_classes" if specific_model_variants else "Porsche"
+path_addon = "Porsche_more_classes" if model_type == "all_specific_model_variants" else "Porsche"
 config = {
     "path": f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}",
     "batch_size": 32,
@@ -74,14 +73,14 @@ for layer in efficientnet.layers[-20:]:
 num_classes = len(class_names)
 
 model = Sequential([
-   data_augmentation,
-   efficientnet,
-   layers.GlobalAveragePooling2D(),
-   layers.Dense(128, kernel_regularizer=l1_l2(l1=1e-5, l2=1e-4)),
-   layers.BatchNormalization(),
-   layers.LeakyReLU(),
-   layers.Dropout(0.5),
-   layers.Dense(num_classes, activation='softmax', name="outputs")
+    data_augmentation,
+    efficientnet,
+    layers.GlobalAveragePooling2D(),
+    layers.Dense(128, kernel_regularizer=l1_l2(l1=1e-5, l2=1e-4)),
+    layers.BatchNormalization(),
+    layers.LeakyReLU(),
+    layers.Dropout(0.5),
+    layers.Dense(num_classes, activation='softmax', name="outputs")
 ]) if not load_model else keras.models.load_model(load_path)
 
 # Define optimizer
@@ -122,12 +121,9 @@ with tf.device('/GPU:1'):
         callbacks=[lr, early_stopping, model_checkpoint, discord_callback]
     )
 # Plot and save model score
-plot_model_score(history, name, specific_model_variants)
+plot_model_score(history, name, model_type)
 
 # Save model
 model.save(f"../models/model_variants/{name}.h5")
 
-
-# TODO: Implement a DataGenerator
 # TODO: Different data augmentation (vertical, ..), Augmentation before training
-

@@ -1,11 +1,11 @@
 import os
 
-from utilities.class_names import *
 from utilities.tools import suppress_tf_warnings
 import onnxruntime as ort
 import numpy as np
 import tensorflow as tf
 from utilities.export_helper import export
+from utilities.tools import get_classes_for_model
 
 # Supress TF warnings
 suppress_tf_warnings()
@@ -50,9 +50,8 @@ def get_top_class_and_percentage(predictions, class_labels):
 # Prepare inference
 img_height = 300
 img_width = 300
-# Set specific_model_variants to True if you want to test the model with specific Porsche model variants and years.
-# Set specific_model_variants to False if you want to test the model with broad Porsche model types.
-specific_model_variants = True
+# Set model Type to 'all_specific_model_variants' or 'car_type'
+model_type = 'all_specific_model_variants'
 model_path = '../models/onnx/model_variants/vgg16-pretrained-model-variants.onnx'
 img_folder = 'test_images'
 
@@ -73,11 +72,11 @@ for image in os.listdir('test_images'):
 
 # Predict
 all_predictions = {}
-class_names = MODEL_VARIANT if specific_model_variants else CAR_TYPE
+class_names = get_classes_for_model(model_type)
 for img_array, name in zip(images, img_names):
     predictions = predict(session, img_array)
 
-    top_class, top_percentage = get_top_class_and_percentage(predictions, MODEL_VARIANT)
+    top_class, top_percentage = get_top_class_and_percentage(predictions, class_names)
     print(f"Ground truth: {name} | Predicted: {top_class} | Confidence: {100 * top_percentage: .2f}%")
     all_predictions[name] = [top_class, 100 * top_percentage]
 

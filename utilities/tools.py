@@ -145,7 +145,11 @@ def show_augmented_batch(train_ds, data_augmentation) -> None:
         plt.show()
 
 
-def plot_model_score(history, name: str, more_classes: bool) -> None:
+def plot_model_score(history, name: str, model_type: str) -> None:
+    if model_type in ["all_specific_model_variants", "specific_model_variants"]:
+        save_path_switch = True
+    else:
+        save_path_switch = False
     # Read history and plot model score
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
@@ -167,7 +171,7 @@ def plot_model_score(history, name: str, more_classes: bool) -> None:
     plt.title('Training and Validation Loss')
     fig1 = plt.gcf()
     plt.show()
-    fig1.savefig(f'../models/model_variants/results/acc-loss-{name}-model.png' if more_classes \
+    fig1.savefig(f'../models/model_variants/results/acc-loss-{name}-model.png' if save_path_switch \
                      else f'../models/car_types/results/acc-loss-{name}-model.png')
 
 
@@ -183,7 +187,9 @@ def suppress_tf_warnings():
     tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 
-def plot_confusion_matrix(cm: np.ndarray, class_names: list, specific_model_variants: bool, name: str) -> None:
+def plot_confusion_matrix(cm: np.ndarray, class_names: list, model_type: str, name: str) -> None:
+    specific_model_variants = True if model_type == "all_specific_model_variants" else False
+
     # Convert the confusion matrix from an array to a list
     cm_list = cm.tolist()
 
