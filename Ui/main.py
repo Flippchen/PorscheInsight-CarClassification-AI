@@ -35,6 +35,9 @@ def load_model(model_name: str) -> keras.Model:
     else:
         raise ValueError("Model name not implemented")
 
+    # Show the loading notification
+    eel.showLoading()
+
     # Download and cache the model using Pooch
     model_path = pooch.retrieve(
         url,
@@ -43,6 +46,8 @@ def load_model(model_name: str) -> keras.Model:
         progressbar=True,
     )
     print("Model downloaded to: ", model_path)
+    # Hide the loading notification
+    eel.hideLoading()
 
     return keras.models.load_model(model_path)
 
