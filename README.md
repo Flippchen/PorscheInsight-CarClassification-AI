@@ -8,9 +8,11 @@ It was a project for when I had free time. It is not ment to be used in producti
 The project is still in an early stage and I will add more models and features in the future. Maybe I will also add a (web) app to use the models.
 ### ToDo List
 
+- [ ] Train on cleaned classes
+- [ ] Train on cleaned classes with Vision Transformer
 - [ ] Evaluate feature engineering/ More data augmentation
+- [ ] Add Taycans to images/models
 - [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
-- [ ] Add Taycans to models
 - [ ] Add a (web) app to use the models
 
 <details>
