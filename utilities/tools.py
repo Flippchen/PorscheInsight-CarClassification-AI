@@ -15,12 +15,12 @@ from utilities.class_names import CAR_TYPE, ALL_MODEL_VARIANTS, MODEL_VARIANTS
 
 def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
     data_dir = pathlib.Path(path)
-    if "more_classes" in path:
-        image_count = len(list(data_dir.glob('*/*/*.jpg')))
-    else:
-        image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
+    # if "more_classes" in path:
+    #    image_count = len(list(data_dir.glob('*/*/*.jpg')))
+    # else:
+    #    image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
 
-    print("Image count:", image_count)
+    # print("Image count:", image_count)
     # cars = list(data_dir.glob('*/*/*/*.jpg'))
     # PIL.Image.open(str(cars[0]))
     train_ds = tf.keras.utils.image_dataset_from_directory(
