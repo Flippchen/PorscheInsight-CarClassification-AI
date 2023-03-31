@@ -18,7 +18,6 @@ python Ui/main.py
 
 ### ToDos
 
-- [ ] Train on cleaned classes
 - [ ] Train on cleaned classes with Vision Transformer
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
@@ -33,6 +32,7 @@ python Ui/main.py
 - [x] Add confusion matrix
 - [x] Try a deeper/wider or different pretrained model to improve accuracy on the more classes dataset
 - [x] Add a (web) app to use the models
+- [X] Train on cleaned classes
 </details>
 
 
@@ -44,17 +44,20 @@ pip install -m requirements.txt
 ## Models
 The first version of the model was trained to predict 10 classes, which correspond to broad Porsche car model types. These classes include popular models such as the 911, Cayman, and Panamera, among others. The accuracy of this model on the training set was 99%, and the accuracy on the validation set was 95%.
 
-After achieving satisfactory results with the 10-class model, a second model was trained to predict 88 classes, which correspond to specific Porsche car model variants and years. For example, this model can predict whether an image is a 911 from 2008 or a Cayenne from 1990. The accuracy of this model on the training set was 80%, and the accuracy on the validation set was 46%.
+After achieving satisfactory results with the 10-class model, a second model was trained to predict 88 classes, which correspond to specific Porsche build years. For example, this model can predict whether an image is a 911 from 2008. The accuracy of this model on the training set was 80%, and the accuracy on the validation set was 46%.
 
-| Model                                | Total params | Trainable params | Non-trainable params  | Batch size | Accuracy Train % | Accuracy Val % | Number of classes |
-|--------------------------------------|--------------|------------------|-----------------------|------------|------------------|----------------|-------------------|
-| without augmentation*                | 11,239,850   | 11,239,850       | 0                     | 32         | 98               | 78             | 10                |
-| with augmentation*                   | 11,239,850   | 11,239,850       | 0                     | 32         | 79               | 74             | 10                |
-| old_pretrained*                      | 20,027,082   | 5,311,114        | 14,715,968            | 32         | 74               | 72             | 10                |
-| VGG16 pretrained*                    | 20,027,082   | 12,390,538       | 7,636,544             | 32         | 99               | 95             | 10                |
-| VGG16 pretrained                     | 20,027,082   | 12,390,538       | 7,636,544             | 32         | 80               | 46             | 88                |
-| efficientnetv2-b1(new head & faster) | 7,106,956    | 993,416          | 6,113,640             | 32         | 47               | 46             | 88                |
-| efficientnetv2-b1 (old head)         | 23,332,236   | 17,216,136       | 6,116,100             | 32         | 49               | 46             | 88                |
+For the third model I bundled several years together to imitate the Porsche car series like the 911 991 or 911 992. The model was trained to predict 30 classes, the accuracy on the validation set was 85%.
+
+| Model                                 | Total params | Trainable params | Non-trainable params  | Batch size | Accuracy Train % | Accuracy Val % | Number of classes |
+|---------------------------------------|--------------|------------------|-----------------------|------------|------------------|----------------|-------------------|
+| without augmentation*                 | 11,239,850   | 11,239,850       | 0                     | 32         | 98               | 78             | 10                |
+| with augmentation*                    | 11,239,850   | 11,239,850       | 0                     | 32         | 79               | 74             | 10                |
+| old_pretrained*                       | 20,027,082   | 5,311,114        | 14,715,968            | 32         | 74               | 72             | 10                |
+| VGG16 pretrained*                     | 20,027,082   | 12,390,538       | 7,636,544             | 32         | 99               | 95             | 10                |
+| VGG16 pretrained                      | 20,027,082   | 12,390,538       | 7,636,544             | 32         | 80               | 46             | 88                |
+| efficientnetv2-b1(new head & faster)  | 7,106,956    | 993,416          | 6,113,640             | 32         | 47               | 46             | 88                |
+| efficientnetv2-b1                     | 23,332,236   | 17,216,136       | 6,116,100             | 32         | 49               | 46             | 88                |
+| efficientnetv2-b1 (cleaned classes)   | 23,332,236   | 17,216,136       | 6,116,100             | 32         | 82               | 85             | 30                |
 
 The models with * were trained on the pre cleaned dataset.
 
