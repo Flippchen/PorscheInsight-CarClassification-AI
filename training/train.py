@@ -19,14 +19,14 @@ suppress_tf_warnings()
 AUTOTUNE = tf.data.AUTOTUNE
 img_height = 300
 img_width = 300
-name = "efficientnet-old-head-model-variants-full"
+name = "efficientnet-model-variants"
 # Variables to control training flow
 # Set model Type to 'all_specific_model_variants' or 'car_type or 'specific_model_variants'
 model_type = 'specific_model_variants'
 # Don't forget to change the save paths in the model checkpoint and model save
 save_path = f"../models/model_variants/"
 # Set to True to load trained model
-load_model = True
+load_model = False
 load_path = "../models/all_model_variants/efficientnet-old-head-model-variants.h5"
 # Config
 path_addon = get_data_path_addon(model_type)
