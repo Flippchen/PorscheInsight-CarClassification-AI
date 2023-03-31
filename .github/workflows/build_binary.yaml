@@ -50,7 +50,9 @@ jobs:
         pip install PyInstaller
 
     - name: Build binary with PyInstaller
-      run: python -m eel Ui/main.py Ui/web --onefile --noconsole
+      run: |
+        echo "C:\hostedtoolcache\windows\Python\3.9.10\x64\Scripts" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+        python -m eel Ui/main.py Ui/web --onefile --noconsole
 
     - name: Archive binary
       uses: actions/upload-artifact@v2
