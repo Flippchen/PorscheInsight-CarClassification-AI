@@ -22,6 +22,7 @@ suppress_tf_warnings()
 models = {
     "car_type": None,
     "all_specific_model_variants": None,
+    "specific_model_variants": None,
 }
 
 
@@ -33,7 +34,8 @@ def load_model(model_name: str) -> keras.Model:
         url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-old-head-model-variants-full_best_model.h5"
         md5 = "564a7d21468c6de78d7ac7a8b7896a28"
     elif model_name == "specific_model_variants":
-        raise ValueError("Model not implemented")
+        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-model-variants_best_model.h5"
+        md5 = "ead5b6ca6a89bb2b6df4dd1fc4f6a583"
     else:
         raise ValueError("invalid Model name")
 
