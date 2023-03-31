@@ -5,12 +5,11 @@ from utilities.tools import get_classes_for_model
 
 suppress_tf_warnings()
 
-# Set model Type to 'all_specific_model_variants' or 'car_type'
+# Set model Type to 'all_specific_model_variants' or 'car_type' or "specific_model_variants"
 model_type = 'all_specific_model_variants'
-saved_model_path = "../../models/model_variants/efficientnet-old-head-model-variants-full_best_model.h5" if model_type == "all_specific_model_variants" \
-            else "../../models/car_types/best_model/vgg16-pretrained.h5"
+saved_model_path = "../../models/all_model_variants/efficientnet-old-head-model-variants-full_best_model.h5"
 name = "efficientnet-old-head-model-variants-full"
-path_addon = "Porsche_more_classes" if model_type == "all_specific_model_variants" else "Porsche"
+path_addon = get_data_path_addon(model_type)
 img_height = 300
 img_width = 300
 config = {

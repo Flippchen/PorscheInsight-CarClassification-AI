@@ -15,7 +15,7 @@ suppress_tf_warnings()
 # Load local Keras models
 # models = {
 #    "car_type": keras.models.load_model("../models/car_types/best_model/vgg16-pretrained.h5"),
-#    "all_specific_model_variants": keras.models.load_model("../models/model_variants/best_model/efficientnet-old-head-model-variants-full_best_model.h5"),
+#    "all_specific_model_variants": keras.models.load_model("../models/all_model_variants/best_model/efficientnet-old-head-model-variants-full_best_model.h5"),
 # }
 
 # Initiate models

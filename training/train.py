@@ -21,13 +21,14 @@ img_height = 300
 img_width = 300
 name = "efficientnet-old-head-model-variants-full"
 # Variables to control training flow
-# Set model Type to 'all_specific_model_variants' or 'car_type'
-model_type = 'all_specific_model_variants'
+# Set model Type to 'all_specific_model_variants' or 'car_type or 'specific_model_variants'
+# Don't forget to change the save paths in the model checkpoint and model save
+model_type = 'specific_model_variants'
 # Set to True to load trained model
 load_model = True
-load_path = "../models/model_variants/efficientnet-old-head-model-variants.h5"
+load_path = "../models/all_model_variants/efficientnet-old-head-model-variants.h5"
 # Config
-path_addon = "Porsche_more_classes" if model_type == "all_specific_model_variants" else "Porsche"
+path_addon = get_data_path_addon(model_type)
 config = {
     "path": f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}",
     "batch_size": 32,

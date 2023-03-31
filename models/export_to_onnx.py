@@ -26,6 +26,6 @@ def convert_saved_model_to_onnx(saved_model_path, onnx_output_path):
 
 
 if __name__ == '__main__':
-    saved_model_path = 'model_variants/vgg16-pretrained-model-variants.h5'
+    saved_model_path = 'all_model_variants/vgg16-pretrained-model-variants.h5'
     onnx_output_path = 'onnx/model_variants/vgg16-pretrained-model-variants.onnx'
     convert_saved_model_to_onnx(saved_model_path, onnx_output_path)

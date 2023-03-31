@@ -94,7 +94,7 @@ The confusion matrix of the specific model variants is too big to show it here. 
 
 
 <img alt="Shap values for 911_1980" src="metrics_insights/shap/results/car_types/shap_values_911_1980.png"  width="700" height="280">
-<img alt="Shap values for Cayman_2009" src="metrics_insights/shap/results/model_variants/shap_values_Cayman_2009.png"  width="700" height="280">
+<img alt="Shap values for Cayman_2009" src="metrics_insights/shap/results/all_model_variants/shap_values_Cayman_2009.png"  width="700" height="280">
 </details>
 
 

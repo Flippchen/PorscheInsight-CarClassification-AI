@@ -146,10 +146,13 @@ def show_augmented_batch(train_ds, data_augmentation) -> None:
 
 
 def plot_model_score(history, name: str, model_type: str) -> None:
-    if model_type in ["all_specific_model_variants", "specific_model_variants"]:
-        save_path_switch = True
-    else:
-        save_path_switch = False
+    if model_type == "all_specific_model_variants":
+        plot_save_path = f'../models/all_model_variants/results/acc-loss-{name}-model.png'
+    elif model_type == "model_type":
+        plot_save_path = f'../models/car_types/results/acc-loss-{name}-model.png'
+    elif model_type == "specific_model_variants":
+        plot_save_path = f'../models/model_variants/results/acc-loss-{name}-model.png'
+
     # Read history and plot model score
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
@@ -171,8 +174,7 @@ def plot_model_score(history, name: str, model_type: str) -> None:
     plt.title('Training and Validation Loss')
     fig1 = plt.gcf()
     plt.show()
-    fig1.savefig(f'../models/model_variants/results/acc-loss-{name}-model.png' if save_path_switch \
-                     else f'../models/car_types/results/acc-loss-{name}-model.png')
+    fig1.savefig(plot_save_path)
 
 
 def suppress_tf_warnings():
@@ -188,7 +190,23 @@ def suppress_tf_warnings():
 
 
 def plot_confusion_matrix(cm: np.ndarray, class_names: list, model_type: str, name: str) -> None:
-    specific_model_variants = True if model_type == "all_specific_model_variants" else False
+    if model_type == "all_specific_model_variants":
+        title = f"Confusion Matrix for All Specific Model Variants"
+        plot_save_path = f'cm_all_specific_model_variants-{name}.png'
+        fig_size = (25, 25)
+        sns.set(font_scale=0.7)
+    elif model_type == "model_type":
+        title = f"Confusion Matrix for Car Type"
+        plot_save_path = f'cm_car_type-{name}.png'
+        fig_size = (10, 10)
+        sns.set(font_scale=1.0)
+    elif model_type == "specific_model_variants":
+        title = f"Confusion Matrix for Specific Model Variants"
+        plot_save_path = f'cm_specific_model_variants-{name}.png'
+        fig_size = (10, 10)
+        sns.set(font_scale=0.7)
+    else:
+        raise ValueError("Invalid model type")
 
     # Convert the confusion matrix from an array to a list
     cm_list = cm.tolist()
@@ -197,16 +215,14 @@ def plot_confusion_matrix(cm: np.ndarray, class_names: list, model_type: str, na
     cm_norm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
 
     # Plot the confusion matrix
-    fig_size = (25, 25) if specific_model_variants else (10, 10)
-    sns.set(font_scale=0.7) if specific_model_variants else sns.set(font_scale=1.0)
     plt.figure(figsize=fig_size)
     sns.heatmap(cm_norm, annot=True, fmt=".2f", cmap="Blues", xticklabels=class_names, yticklabels=class_names)
-    plt.title("Confusion Matrix for Specific Model Variants" if specific_model_variants else "Confusion Matrix for Car Type")
+    plt.title(title)
     plt.xlabel("Predicted Class")
     plt.ylabel("True Class")
     fig1 = plt.gcf()
     plt.show()
-    fig1.savefig(f"results/{'cm_specific_model_variants-' + name if specific_model_variants else 'cm_car_type-' + name}.png")
+    fig1.savefig(f"results/{plot_save_path}")
 
 
 def resize_dataset(data: tf.data.Dataset, img_height: int, img_width: int) -> tf.data.Dataset:
@@ -221,5 +237,16 @@ def get_classes_for_model(name: str) -> List[str]:
         return ALL_MODEL_VARIANTS
     elif name == "specific_model_variants":
         return MODEL_VARIANTS
+    else:
+        raise ValueError("Invalid model name")
+
+
+def get_data_path_addon(name: str) -> str:
+    if name == "car_type":
+        return "Porsche"
+    elif name == "all_specific_model_variants":
+        return "Porsche_more_classes"
+    elif name == "specific_model_variants":
+        return "Porsche_variants"
     else:
         raise ValueError("Invalid model name")

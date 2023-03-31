@@ -50,7 +50,7 @@ def get_top_class_and_percentage(predictions, class_labels):
 # Prepare inference
 img_height = 300
 img_width = 300
-# Set model Type to 'all_specific_model_variants' or 'car_type'
+# Set model Type to 'all_specific_model_variants' or 'car_type' or "specific_model_variants"
 model_type = 'all_specific_model_variants'
 model_path = '../models/onnx/model_variants/vgg16-pretrained-model-variants.onnx'
 img_folder = 'test_images'

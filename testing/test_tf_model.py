@@ -12,7 +12,7 @@ img_width = 300
 img_folder = 'test_images'
 model_path = '../models/car_types/best_model/vgg16-pretrained.h5'
 export_folder = 'results/'
-# Set model Type to 'all_specific_model_variants' or 'car_type'
+# Set model Type to 'all_specific_model_variants' or 'car_type' or "specific_model_variants"
 model_type = 'all_specific_model_variants'
 # Supress TF warnings
 suppress_tf_warnings()
