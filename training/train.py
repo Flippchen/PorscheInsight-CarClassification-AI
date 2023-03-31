@@ -114,7 +114,7 @@ webhook_url = os.environ.get('WEBHOOK_URL')
 discord_callback = DiscordCallback(webhook_url)
 
 # Train model
-epochs = 10
+epochs = 20
 with tf.device('/GPU:1'):
     history = model.fit(
         train_ds,
