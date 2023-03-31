@@ -17,5 +17,5 @@ seaborn~=0.12.2
 # Discord Callback
 requests~=2.28.1
 # Web UI
-Eel~=0.16.0
+eel~=0.16.0
 pooch~=1.6.0
