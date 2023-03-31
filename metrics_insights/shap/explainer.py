@@ -5,7 +5,7 @@ from utilities.tools import get_classes_for_model
 suppress_tf_warnings()
 
 # Load model (Compiling failed, so I compiled it manually)
-model = keras.models.load_model("../../models/all_model_variants/best_model/efficientnet-old-head-model-variants-full_best_model.h5", compile=False)
+model = keras.models.load_model("../../models/model_variants/best_model/efficientnet-model-variants_best_model.h5", compile=False)
 # model = keras.models.load_model("../../models/car_types/best_model/vgg16-pretrained.h5", compile=False)
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -13,10 +13,9 @@ model.compile(optimizer='adam',
 # Set config
 img_height = 300
 img_width = 300
-img_folder = '../test_images'
-save_extension = "efficientnet-old-head-"
+img_folder = '../../testing/test_images'
 # Set model Type to 'all_specific_model_variants' or 'car_type' or "specific_model_variants"
-model_type = 'all_specific_model_variants'
+model_type = 'specific_model_variants'
 path_addon = get_data_path_addon(model_type)
 classes = get_classes_for_model(model_type)
 
@@ -59,10 +58,10 @@ with tf.device('/CPU:0'):
         # Remove file extension from image name
         name = name.split(".")[0]
         if model_type == "all_specific_model_variants":
-            fig1.savefig(f"results/all_model_variants/shap_values-{save_extension}_{name}.png")
+            fig1.savefig(f"results/all_model_variants/shap_values_{name}.png")
         elif model_type == "specific_model_variants":
-            fig1.savefig(f"results/model_variants/shap_values-{save_extension}_{name}.png")
+            fig1.savefig(f"results/model_variants/shap_values_{name}.png")
         elif model_type == "car_type":
-            fig1.savefig(f"results/car_types/shap_values-{save_extension}_{name}.png")
+            fig1.savefig(f"results/car_types/shap_values_{name}.png")
         else:
             raise ValueError("Model type not supported")
