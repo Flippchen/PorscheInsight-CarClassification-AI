@@ -1,7 +1,6 @@
 from sklearn.metrics import confusion_matrix
 from tensorflow.keras.models import load_model
 from utilities.tools import *
-from utilities.class_names import MODEL_VARIANT, CAR_TYPE
 from utilities.tools import get_classes_for_model
 
 suppress_tf_warnings()

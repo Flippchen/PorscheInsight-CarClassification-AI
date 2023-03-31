@@ -1,5 +1,4 @@
 import shap
-from utilities.class_names import MODEL_VARIANT, CAR_TYPE
 from utilities.tools import *
 from utilities.tools import get_classes_for_model
 # Load model

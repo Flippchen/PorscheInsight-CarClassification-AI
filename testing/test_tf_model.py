@@ -1,5 +1,4 @@
 import os
-from utilities.class_names import CAR_TYPE, MODEL_VARIANT
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
