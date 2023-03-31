@@ -10,7 +10,7 @@ import keras
 from keras import layers
 import os
 import logging
-from utilities.class_names import CAR_TYPE, ALL_MODEL_VARIANT
+from utilities.class_names import CAR_TYPE, ALL_MODEL_VARIANTS, MODEL_VARIANTS
 
 
 def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
@@ -218,8 +218,8 @@ def get_classes_for_model(name: str) -> List[str]:
     if name == "car_type":
         return CAR_TYPE
     elif name == "all_specific_model_variants":
-        return ALL_MODEL_VARIANT
-    elif name == "specific_model_variants_2":
-        raise ValueError("Invalid model name")
+        return ALL_MODEL_VARIANTS
+    elif name == "specific_model_variants":
+        return MODEL_VARIANTS
     else:
         raise ValueError("Invalid model name")
