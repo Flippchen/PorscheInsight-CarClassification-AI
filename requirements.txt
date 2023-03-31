@@ -19,3 +19,5 @@ requests~=2.28.1
 # Web UI
 Eel~=0.16.0
 pooch~=1.6.0
+# Export to binary
+pyinstaller==5.9.0
