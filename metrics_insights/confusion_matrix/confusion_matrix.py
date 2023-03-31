@@ -6,9 +6,9 @@ from utilities.tools import get_classes_for_model
 suppress_tf_warnings()
 
 # Set model Type to 'all_specific_model_variants' or 'car_type' or "specific_model_variants"
-model_type = 'all_specific_model_variants'
-saved_model_path = "../../models/all_model_variants/efficientnet-old-head-model-variants-full_best_model.h5"
-name = "efficientnet-old-head-model-variants-full"
+model_type = 'specific_model_variants'
+saved_model_path = "../../models/model_variants/best_model/efficientnet-model-variants_best_model.h5"
+name = "efficientnet-model-variants"
 path_addon = get_data_path_addon(model_type)
 img_height = 300
 img_width = 300

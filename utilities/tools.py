@@ -76,12 +76,12 @@ def load_explainer_data(path: str, batch_size: int, img_height: int, img_width: 
 
 def load_image_subset(path: str, batch_size: int, img_height: int, img_width: int, shuffle: int = 10000, number_images: int = 1000) -> tf.data.Dataset:
     data_dir = pathlib.Path(path)
-    if "more_classes" in path:
-        image_count = len(list(data_dir.glob('*/*/*.jpg')))
-    else:
-        image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
+    # if "more_classes" in path:
+    #    image_count = len(list(data_dir.glob('*/*/*.jpg')))
+    # else:
+    #    image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
 
-    print("Image count:", image_count)
+    # print("Image count:", image_count)
 
     data = tf.keras.utils.image_dataset_from_directory(
         data_dir,
