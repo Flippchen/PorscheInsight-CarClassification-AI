@@ -10,10 +10,10 @@ from utilities.tools import get_classes_for_model
 img_height = 300
 img_width = 300
 img_folder = 'test_images'
-model_path = '../models/car_types/best_model/vgg16-pretrained.h5'
-export_folder = 'results/'
+model_path = '../models/model_variants/best_model/efficientnet-model-variants_best_model.h5'
+export_folder = 'results/efficientnet-model-variants/'
 # Set model Type to 'all_specific_model_variants' or 'car_type' or "specific_model_variants"
-model_type = 'all_specific_model_variants'
+model_type = 'specific_model_variants'
 # Supress TF warnings
 suppress_tf_warnings()
 # Load model (If loading a model fails, compile=False and compile it manually

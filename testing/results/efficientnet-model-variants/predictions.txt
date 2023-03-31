@@ -1,0 +1,13 @@
+Image Name: 911_1980.jpg | Predicted Class: 911_964 | Confidence:  5.69%
+Image Name: 911_2019.jpg | Predicted Class: 911_991_Facelift | Confidence:  5.92%
+Image Name: Boxter_2018.jpg | Predicted Class: Cayman_982C | Confidence:  5.30%
+Image Name: Boxter_2018_2.jpg | Predicted Class: Boxster_982 | Confidence:  8.43%
+Image Name: Cayenne_2017.jpg | Predicted Class: Cayenne_958_Facelift | Confidence:  5.60%
+Image Name: Cayenne_2020.webp | Predicted Class: Cayenne_9YA | Confidence:  5.35%
+Image Name: Cayman_2009.jpg | Predicted Class: Cayman_987_Facelift | Confidence:  5.88%
+Image Name: Macan_2017.jpg | Predicted Class: Macan_95B | Confidence:  8.57%
+Image Name: Panamera_2018.jpg | Predicted Class: Panamera_971 | Confidence:  8.57%
+Image Name: Panamera_2019.jpg | Predicted Class: Panamera_971 | Confidence:  8.57%
+Image Name: Panamera_2019_2.jpg | Predicted Class: Panamera_971 | Confidence:  8.42%
+Image Name: Panamera_2020.jpg | Predicted Class: Panamera_971 | Confidence:  7.37%
+Image Name: Panamera_2021.jpg | Predicted Class: Panamera_970 | Confidence:  5.27%
