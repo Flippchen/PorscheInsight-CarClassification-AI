@@ -38,20 +38,20 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v2
 
-    - name: Set up Python 3.10
+    - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: 3.10
+        python-version: 3.9
 
     - name: Install dependencies
       run: |
-        C:\hostedtoolcache\windows\Python\3.1.4\x64\python.exe -m pip install --upgrade pip
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install PyInstaller
         pip install eel
 
     - name: Build binary with PyInstaller
-      run: C:\hostedtoolcache\windows\Python\3.1.4\x64\python.exe -m eel web_app/main.py web_app/web --onefile --noconsole
+      run: python -m eel web_app/main.py web_app/web --onefile --noconsole
 
     - name: Archive binary
       uses: actions/upload-artifact@v2
