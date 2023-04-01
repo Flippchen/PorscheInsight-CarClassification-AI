@@ -52,7 +52,7 @@ img_height = 300
 img_width = 300
 # Set model Type to 'all_specific_model_variants' or 'car_type' or "specific_model_variants"
 model_type = 'all_specific_model_variants'
-model_path = '../models/onnx/model_variants/vgg16-pretrained-model-variants.onnx'
+model_path = '../models/onnx/all_model_variants/vgg16-pretrained-model-variants.onnx'
 img_folder = 'test_images'
 
 # Load model
