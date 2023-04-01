@@ -6,19 +6,11 @@ import eel
 import base64
 from io import BytesIO
 from PIL import Image
-import keras
 from utilities.tools import suppress_tf_warnings, get_classes_for_model
 from testing.prepare_images import replace_background
-import tensorflow as tf
 import pooch
 
 suppress_tf_warnings()
-
-# Load local Keras models
-# models = {
-#    "car_type": keras.models.load_model("../models/car_types/best_model/vgg16-pretrained.h5"),
-#    "all_specific_model_variants": keras.models.load_model("../models/all_model_variants/best_model/efficientnet-old-head-model-variants-full_best_model.h5"),
-# }
 
 # Initiate models
 models = {
@@ -30,35 +22,34 @@ models = {
 
 def load_model(model_name: str) -> ort.InferenceSession:
     if model_name == "car_type":
-        model_path = "../models/car_types/best_model/vgg16-pretrained.onnx"
-        raise ValueError("Invalid model name")
+        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/vgg16-pretrained-car-types.onnx"
+        md5 = "7c42a075ab9ca1a2a198e5cd241a06f7"
     elif model_name == "all_specific_model_variants":
-        model_path = "../models/onnx/model_variants/vgg16-pretrained-model-variants.onnx"
+        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-old-head-all-model-variants-full_best_model.onnx"
+        md5 = "c54797cf92974c9ec962842e7ecd515c"
     elif model_name == "specific_model_variants":
-        model_path = "../models/specific_model_variants/best_model/efficientnet-model-variants_best_model.onnx"
-        raise ValueError("Invalid model name")
+        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-model-variants_best_model.onnx"
+        md5 = "3de16b8cf529dc90f66c962a1c93a904"
     else:
         raise ValueError("Invalid model name")
 
+
+
+    # Show the loading notification
+    eel.showLoading()
+
+    # Download and cache the model using Pooch
+    model_path = pooch.retrieve(
+        url,
+        f"md5:{md5}",
+        fname=model_name + ".onnx",
+        progressbar=True,
+    )
+    print("Model downloaded to: ", model_path)
+    # Hide the loading notification
+    eel.hideLoading()
+
     return ort.InferenceSession(model_path)
-
-    ## Show the loading notification
-    # eel.showLoading()
-
-
-#
-## Download and cache the model using Pooch
-# model_path = pooch.retrieve(
-#    url,
-#    f"md5:{md5}",
-#    fname=model_name + ".h5",
-#    progressbar=True,
-# )
-# print("Model downloaded to: ", model_path)
-## Hide the loading notification
-# eel.hideLoading()
-#
-# return keras.models.load_model(model_path)
 
 
 def prepare_image(image_data: Image, target_size: Tuple):
