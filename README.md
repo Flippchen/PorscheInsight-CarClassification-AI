@@ -11,7 +11,7 @@ The project is still in an early stage and I will add more models and features i
 The Web UI is a simple local website that enables users to upload images of Porsche cars and get classification results from the models. The app is built using Eel, which allows Python and HTML/JS to communicate with each other.
 ### Usage
 ```bash
-python Ui/main.py
+python web_app/main.py
 ```
 ### Screenshot
 <img alt="Screenshot of the Web UI" src="web_app/example_web_ui.png"  width="600" height="400">
