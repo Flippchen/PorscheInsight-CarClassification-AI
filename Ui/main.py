@@ -28,10 +28,10 @@ models = {
 
 def load_model(model_name: str) -> keras.Model:
     if model_name == "car_type":
-        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/vgg16-pretrained.h5"
+        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/vgg16-pretrained-car-types.h5"
         md5 = "e7c79ac2d2855e7a65e2ec728fe1d178"
     elif model_name == "all_specific_model_variants":
-        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-old-head-model-variants-full_best_model.h5"
+        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-old-head-model-all-variants-full_best_model.h5"
         md5 = "564a7d21468c6de78d7ac7a8b7896a28"
     elif model_name == "specific_model_variants":
         url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-model-variants_best_model.h5"
