@@ -14,7 +14,7 @@ The Web UI is a simple local website that enables users to upload images of Pors
 python Ui/main.py
 ```
 ### Screenshot
-<img alt="Screenshot of the Web UI" src="Ui/example_web_ui.png"  width="600" height="400">
+<img alt="Screenshot of the Web UI" src="web_app/example_web_ui.png"  width="600" height="400">
 
 ### ToDos
 
