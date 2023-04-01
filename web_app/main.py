@@ -2,6 +2,10 @@ import numpy as np
 import onnxruntime as ort
 from typing import List, Tuple
 
+import sys, io
+sys.stdout = io.StringIO()
+sys.stderr = io.StringIO()
+
 import eel
 import base64
 from io import BytesIO
