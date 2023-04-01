@@ -6,11 +6,10 @@ import eel
 import base64
 from io import BytesIO
 from PIL import Image
-from utilities.tools import suppress_tf_warnings, get_classes_for_model
+from utilities.tools import get_classes_for_model
 from testing.prepare_images import replace_background
 import pooch
 
-suppress_tf_warnings()
 
 # Initiate models
 models = {
