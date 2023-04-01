@@ -33,8 +33,6 @@ def load_model(model_name: str) -> ort.InferenceSession:
     else:
         raise ValueError("Invalid model name")
 
-
-
     # Show the loading notification
     eel.showLoading()
 
@@ -76,7 +74,6 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
     image = Image.open(BytesIO(image_data))
     # Prepare image and predict
     input_size = models[model_name].get_inputs()[0].shape[1:3]
-    print(input_size)
     prepared_image = prepare_image(image, input_size)
     input_name = models[model_name].get_inputs()[0].name
     prediction = models[model_name].run(None, {input_name: prepared_image})

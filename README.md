@@ -20,7 +20,6 @@ python Ui/main.py
 
 - [ ] Train on cleaned classes with Vision Transformer
 - [ ] Evaluate feature engineering/ More data augmentation
-- [ ] Add onnx models to web UI 
 - [ ] Add Taycans to images/models
 - [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
 
@@ -34,6 +33,7 @@ python Ui/main.py
 - [x] Try a deeper/wider or different pretrained model to improve accuracy on the more classes dataset
 - [x] Add a (web) app to use the models
 - [X] Train on cleaned classes
+- [x] Add onnx models to web UI to speedup and reduce size
 </details>
 
 
