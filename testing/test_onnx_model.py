@@ -5,7 +5,7 @@ import onnxruntime as ort
 import numpy as np
 import tensorflow as tf
 from utilities.export_helper import export
-from utilities.tools import get_classes_for_model
+from utilities.class_names import get_classes_for_model
 
 # Supress TF warnings
 suppress_tf_warnings()

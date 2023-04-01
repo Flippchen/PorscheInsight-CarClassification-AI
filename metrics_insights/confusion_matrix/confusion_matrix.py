@@ -1,7 +1,7 @@
 from sklearn.metrics import confusion_matrix
 from tensorflow.keras.models import load_model
 from utilities.tools import *
-from utilities.tools import get_classes_for_model
+from utilities.class_names import get_classes_for_model
 
 suppress_tf_warnings()
 

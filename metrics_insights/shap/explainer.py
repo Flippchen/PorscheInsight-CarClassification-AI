@@ -1,6 +1,7 @@
 import shap
 from utilities.tools import *
-from utilities.tools import get_classes_for_model
+from utilities.class_names import get_classes_for_model
+
 # Load model
 suppress_tf_warnings()
 

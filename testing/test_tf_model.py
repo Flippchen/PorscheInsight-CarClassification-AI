@@ -4,7 +4,7 @@ import tensorflow as tf
 from tensorflow import keras
 from utilities.tools import suppress_tf_warnings
 from utilities.export_helper import export
-from utilities.tools import get_classes_for_model
+from utilities.class_names import get_classes_for_model
 
 # Define config
 img_height = 300

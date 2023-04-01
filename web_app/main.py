@@ -10,7 +10,7 @@ import eel
 import base64
 from io import BytesIO
 from PIL import Image
-from utilities.tools import get_classes_for_model
+from utilities.class_names import get_classes_for_model
 from testing.prepare_images import replace_background
 import pooch
 
