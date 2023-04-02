@@ -24,7 +24,7 @@ jobs:
         pip install PyInstaller
 
     - name: Build binary with PyInstaller
-      run: python -m eel web_app/main.py web_app/web --exclude tensorflow --exclude keras
+      run: python -m eel web_app/main.py web_app/web --onefile --exclude tensorflow --exclude keras
 
     - name: Archive binary
       uses: actions/upload-artifact@v2
