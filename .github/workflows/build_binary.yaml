@@ -52,7 +52,7 @@ jobs:
 
     - name: Build binary with PyInstaller
       #run: python -m eel web_app/main.py web_app/web --exclude tensorflow --exclude keras
-      run: pyinstaller --ad-data "web_app/web:web" --exclude tensorflow --exclude keras web_app/main.py
+      run: pyinstaller --ad-data "web_app/web;web" --exclude tensorflow --exclude keras web_app/main.py
 
     - name: Archive binary
       uses: actions/upload-artifact@v2
