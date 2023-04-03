@@ -51,11 +51,8 @@ jobs:
         pip install eel
 
     - name: Build binary with PyInstaller
-      run: |
-        ONNXRUNTIME_PROVIDERS_SHARED=$(find $VIRTUAL_ENV -name "onnxruntime_providers_shared.dll")
-        DDDDOCR_COMMON=$(find $VIRTUAL_ENV -name "common.onnx")
-        python -m eel web_app/main.py web_app/web --exclude tensorflow --exclude keras --add-data "$ONNXRUNTIME_PROVIDERS_SHARED;onnxruntime/capi" --add-data "$DDDDOCR_COMMON;ddddocr"
-
+      run: pyinstaller --add-data "web_app/web;web_app/web" --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\eel\eel.js;eel" --exclude keras --exclude tensorflow web_app/main.py
+      #python -m eel web_app/main.py web_app/web --exclude tensorflow --exclude keras
     - name: Archive binary
       uses: actions/upload-artifact@v2
       with:
