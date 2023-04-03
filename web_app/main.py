@@ -50,7 +50,7 @@ def load_model(model_name: str) -> ort.InferenceSession:
     # Hide the loading notification
     eel.hideLoading()
 
-    return ort.InferenceSession(model_path)
+    return ort.InferenceSession(model_path, providers=['CPUExecutionProvider'])
 
 
 def prepare_image(image_data: Image, target_size: Tuple):
