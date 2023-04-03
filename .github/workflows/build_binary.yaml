@@ -50,6 +50,12 @@ jobs:
         pip install PyInstaller
         pip install eel
 
+    - name: Find paths and package with PyInstaller
+      run: |
+          pip install pyinstaller
+          ONNXRUNTIME_PROVIDERS_SHARED=$(find $VIRTUAL_ENV -name "onnxruntime_providers_shared.dll")
+          DDDDOCR_COMMON=$(find $VIRTUAL_ENV -name "common.onnx")
+          pyinstaller -F ave_token.py --add-data "$ONNXRUNTIME_PROVIDERS_SHARED;onnxruntime/capi" --add-data "$DDDDOCR_COMMON;ddddocr"
     - name: Build binary with PyInstaller
       run: python -m eel web_app/main.py web_app/web --exclude tensorflow --exclude keras
 
