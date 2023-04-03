@@ -1,4 +1,4 @@
-name: Build and Export Binary
+name: WhyWhy
 
 on:
   workflow_dispatch:
