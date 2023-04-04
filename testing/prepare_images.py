@@ -5,9 +5,9 @@ from rembg import remove
 from PIL.Image import Image as PILImage
 
 
-def replace_background(im: bytes | PILImage, post_process_mask=False) -> PILImage:
-    if not isinstance(im, PILImage):
-        im = Image.open(io.BytesIO(im))
+def replace_background(im: PILImage, post_process_mask=False) -> PILImage:
+    # if not isinstance(im, PILImage):
+    #   im = Image.open(io.BytesIO(im))
 
     im = remove(im, post_process_mask=post_process_mask)
 
