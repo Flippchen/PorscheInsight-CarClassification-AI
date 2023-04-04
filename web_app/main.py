@@ -1,3 +1,5 @@
+import traceback
+
 try:
     import numpy as np
     import onnxruntime as ort
@@ -93,3 +95,5 @@ except Exception as e:
     print(e)
     with open('error.txt', 'w') as f:
         f.write(str(e))
+        traceback.print_exc(file=f)
+        f.write('\n')
