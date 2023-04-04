@@ -33,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: car-classifier-linux
-        path: dist/
+        path: web_app/dist/
 
   build-windows:
     runs-on: windows-latest
@@ -63,4 +63,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: car-classifier-windows
-        path: dist/
+        path: web_app/dist/
