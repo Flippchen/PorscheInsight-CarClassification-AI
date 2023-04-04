@@ -20,14 +20,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r build_requirements.txt
         pip install PyInstaller
 
     - name: Build binary with PyInstaller
       run: |
         cd web_app/
-        pyinstaller --add-data "web;web" --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\eel\eel.js;eel" --exclude keras --exclude tensorflow main.py
-     #python -m eel web_app/main.py web_app/web --exclude tensorflow --exclude keras
+        python -m eel main.py web 
 
     - name: Archive binary
       uses: actions/upload-artifact@v2
@@ -49,14 +48,14 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r build_requirements.txt
         pip install PyInstaller
         pip install eel
 
     - name: Build binary with PyInstaller
       run: |
         cd web_app/
-        python -m eel main.py web --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\rembg;rembg" --add-data "..\utilities\class_names.py;utilities" --add-data "..\testing\prepare_images.py;testing" --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\cv2;cv2" --exclude tensorflow --exclude keras
+        python -m eel main.py web --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\rembg;rembg" --add-data "..\utilities\class_names.py;utilities" --add-data "..\testing\prepare_images.py;testing"
       #pyinstaller --add-data "web;web" --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\eel\eel.js;eel" --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\rembg;rembg" --add-data "..\utilities\class_names.py;utilities" --add-data "..\testing\prepare_images.py;testing" --exclude keras --exclude tensorflow main.py
 
 
