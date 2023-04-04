@@ -56,7 +56,7 @@ jobs:
     - name: Build binary with PyInstaller
       run: |
         cd web_app/
-        pyinstaller --add-data "web;web" --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\eel\eel.js;eel" --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\onnxruntime\onnxruntime_providers_shared.dll;onnxruntime\capi" --exclude keras --exclude tensorflow main.py
+        pyinstaller --add-data "web;web" --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\eel\eel.js;eel" --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\onnxruntime\onnxruntime_providers_shared.dll;onnxruntime\capi" --add-data "..\utilities\class_names.py;utilities --add-data "..\testing\prepare_images.py;testing" --exclude keras --exclude tensorflow main.py
       #python -m eel web_app/main.py web_app/web --exclude tensorflow --exclude keras
 
     - name: Archive binary
