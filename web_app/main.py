@@ -1,6 +1,3 @@
-import traceback
-
-
 import numpy as np
 import onnxruntime as ort
 from typing import List, Tuple
