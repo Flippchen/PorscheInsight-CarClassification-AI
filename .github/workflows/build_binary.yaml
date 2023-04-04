@@ -24,7 +24,10 @@ jobs:
         pip install PyInstaller
 
     - name: Build binary with PyInstaller
-      run: python -m eel web_app/main.py web_app/web --exclude tensorflow --exclude keras
+      run: |
+        cd web_app/
+        pyinstaller --add-data "web;web" --add-data "c:\hostedtoolcache\windows\python\3.9.13\x64\lib\site-packages\eel\eel.js;eel" --exclude keras --exclude tensorflow main.py
+     #python -m eel web_app/main.py web_app/web --exclude tensorflow --exclude keras
 
     - name: Archive binary
       uses: actions/upload-artifact@v2
