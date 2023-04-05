@@ -56,7 +56,6 @@ def load_model(model_name: str) -> ort.InferenceSession:
 def prepare_image(image_data: Image, target_size: Tuple):
     image = resize_and_pad_image(image_data, target_size)
     image = replace_background(image, session=session)
-    image.show()
     img_array = np.array(image).astype('float32')
     img_array = np.expand_dims(img_array, 0)
     return img_array
