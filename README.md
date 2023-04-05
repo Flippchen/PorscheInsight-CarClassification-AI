@@ -17,8 +17,6 @@ python web_app/main.py
 <img alt="Screenshot of the Web UI" src="web_app/example_web_ui.png"  width="600" height="400">
 
 ### ToDos
-- [ ] Isnet model for bg remove
-- [ ] Bundle in one Binary
 - [ ] Train on cleaned classes with Vision Transformer
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
@@ -36,6 +34,8 @@ python web_app/main.py
 - [x] Add a (web) app to use the models
 - [X] Train on cleaned classes
 - [x] Add onnx models to web UI to speedup and reduce size
+- [x] Isnet model for bg remove
+- [x] Bundle in one Binary
 </details>
 
 
