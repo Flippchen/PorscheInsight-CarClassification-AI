@@ -1,7 +1,7 @@
 import numpy as np
 import onnxruntime as ort
 from typing import List, Tuple
-
+# Needs to be imported before eel to not crash when using --noconsole
 import sys, io
 sys.stdout = io.StringIO()
 sys.stderr = io.StringIO()
