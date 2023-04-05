@@ -9,10 +9,15 @@ The project is still in an early stage and I will add more models and features i
 
 ## Web UI
 The Web UI is a simple local website that enables users to upload images of Porsche cars and get classification results from the models. The app is built using Eel, which allows Python and HTML/JS to communicate with each other.
+### Installation
+```bash
+pip install -m build_requirements.txt
+```
 ### Usage
 ```bash
 python web_app/main.py
 ```
+or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClassification-AI/actions).
 ### Screenshot
 <img alt="Screenshot of the Web UI" src="web_app/example_web_ui.png"  width="600" height="400">
 
