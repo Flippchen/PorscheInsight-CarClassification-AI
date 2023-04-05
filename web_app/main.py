@@ -13,7 +13,7 @@ from PIL import Image
 from utilities.class_names import get_classes_for_model
 from testing.prepare_images import replace_background
 import pooch
-
+from rembg import new_session
 
 # Initiate models
 models = {
@@ -22,7 +22,7 @@ models = {
     "specific_model_variants": None,
 }
 
-
+session = new_session("isnet-general-use")
 def load_model(model_name: str) -> ort.InferenceSession:
     if model_name == "car_type":
         url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/vgg16-pretrained-car-types.onnx"
@@ -55,7 +55,8 @@ def load_model(model_name: str) -> ort.InferenceSession:
 
 def prepare_image(image_data: Image, target_size: Tuple):
     image = image_data.resize(target_size)
-    image = replace_background(image)
+    image = replace_background(image,session=session)
+    image.show()
     img_array = np.array(image).astype('float32')
     img_array = np.expand_dims(img_array, 0)
     return img_array

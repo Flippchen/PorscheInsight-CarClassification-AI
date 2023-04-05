@@ -1,15 +1,15 @@
 import io
 import os
 from PIL import Image
-from rembg import remove
+from rembg import remove, new_session
 from PIL.Image import Image as PILImage
 
 
-def replace_background(im: PILImage, post_process_mask=False) -> PILImage:
+def replace_background(im: PILImage, post_process_mask=False, session=None) -> PILImage:
     # if not isinstance(im, PILImage):
     #   im = Image.open(io.BytesIO(im))
-
-    im = remove(im, post_process_mask=post_process_mask)
+    session = session or new_session("u2netp")
+    im = remove(im, post_process_mask=post_process_mask, session=session)
 
     new_im = Image.new('RGBA', im.size, 'WHITE')
     new_im.paste(im, mask=im)

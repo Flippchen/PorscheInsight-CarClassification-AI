@@ -5,7 +5,7 @@ matplotlib==3.6.2
 Pillow~=9.3.0
 keras~=2.10.0
 # Inference
-rembg~=2.0.30
+rembg==2.0.32
 onnxruntime==1.14.1
 # Export to onnx
 tf2onnx~=1.13.0
