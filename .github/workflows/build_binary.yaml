@@ -26,7 +26,7 @@ jobs:
     - name: Build binary with PyInstaller
       run: |
         cd web_app/
-        python -m eel main.py web --add-data "../utilities/class_names.py:utilities" --add-data "../testing/prepare_images.py:testing" --collect-submodules rembg
+        python -m eel main.py web --add-data "../utilities/class_names.py:utilities" --add-data "../testing/prepare_images.py:testing" --collect-submodules rembg --onefile --noconsole
 
     - name: Archive binary
       uses: actions/upload-artifact@v2
