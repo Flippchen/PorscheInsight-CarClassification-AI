@@ -1,6 +1,6 @@
 import io
 import os
-from PIL import Image
+from PIL import Image, ImageOps
 from rembg import remove, new_session
 from PIL.Image import Image as PILImage
 
@@ -27,9 +27,39 @@ def resize_image(image, size):
     return image.resize(size)
 
 
+def resize_and_pad_image(image: PILImage, target_size: tuple):
+    # Calculate the aspect ratio of the image
+    aspect_ratio = float(image.width) / float(image.height)
+
+    # Calculate the dimensions of the new image
+    if aspect_ratio > 1:
+        new_width = target_size[0]
+        new_height = int(target_size[1] / aspect_ratio)
+    else:
+        new_width = int(target_size[0] * aspect_ratio)
+        new_height = target_size[1]
+
+    # Resize the image while maintaining its aspect ratio
+    resized_image = image.resize((new_width, new_height), Image.ANTIALIAS)
+
+    # Calculate padding
+    padding_width = target_size[0] - new_width
+    padding_height = target_size[1] - new_height
+
+    # Calculate left and top padding to center the image
+    left_padding = padding_width // 2
+    top_padding = padding_height // 2
+
+    # Pad the image to make it a square and center it
+    padded_image = ImageOps.expand(resized_image, (left_padding, top_padding, padding_width - left_padding, padding_height - top_padding), fill=(0, 0, 0))
+
+    return padded_image
+
+
 def load_and_remove_bg(path, size):
     image = Image.open(path)
-    image = resize_image(image, size)
+    # image = resize_image(image, size)
+    image = resize_and_pad_image(image, size)
     image = replace_background(image)
 
     return image
