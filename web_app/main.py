@@ -23,6 +23,8 @@ models = {
 }
 
 session = new_session("isnet-general-use")
+
+
 def load_model(model_name: str) -> ort.InferenceSession:
     if model_name == "car_type":
         url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/vgg16-pretrained-car-types.onnx"
@@ -88,4 +90,3 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
 
 eel.init("web")
 eel.start("index.html", size=(1000, 800), mode="default")
-
