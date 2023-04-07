@@ -5,8 +5,7 @@ This repository contains a scripts to train models to classify pictures of Porsc
 It was a project for when I had free time. It is not ment to be used in production (yet).
 
 ## Future
-The project is still in an early stage and I will add more models and features in the future. Maybe I will also add a (web) app to use the models.
-
+The project is still in an early stage and I will add more models and features in the future.
 ## Web UI
 The Web UI is a simple local website that enables users to upload images of Porsche cars and get classification results from the models. The app is built using Eel, which allows Python and HTML/JS to communicate with each other.
 ### Installation
@@ -25,7 +24,6 @@ or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClas
 - [ ] Train on cleaned classes with Vision Transformer
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
-- [ ] Add django web app
 - [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
 
 <details>
@@ -41,6 +39,7 @@ or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClas
 - [x] Add onnx models to web UI to speedup and reduce size
 - [x] Isnet model for bg remove
 - [x] Bundle in one Binary
+- [x] Add django web app
 </details>
 
 
