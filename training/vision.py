@@ -1,7 +1,7 @@
 # This file contains the code for training a model with data augmentation and a pretrained base.
 # Import libraries
 from keras.models import Sequential
-from keras.applications.vit import VisionTransformer
+from vit_keras import vit, utils
 from utilities.tools import *
 from utilities.discord_callback import DiscordCallback
 from keras.optimizers import Adam
@@ -17,8 +17,8 @@ suppress_tf_warnings()
 
 # Set variables and config
 AUTOTUNE = tf.data.AUTOTUNE
-img_height = 300
-img_width = 300
+img_height = 300 + 20
+img_width = 300 + 20
 name = "vit-model-variants"
 # Variables to control training flow
 # Set model Type to 'all_specific_model_variants' or 'car_type or 'specific_model_variants'
@@ -27,7 +27,7 @@ model_type = 'specific_model_variants'
 save_path = f"../models/model_variants/"
 # Set to True to load trained model
 load_model = False
-load_path = "../models/all_model_variants/vit-old-head-model-variants.h5"
+load_path = "../models/all_model_variants/vit-model-variants.h5"
 # Config
 path_addon = get_data_path_addon(model_type)
 config = {
@@ -53,22 +53,30 @@ val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 data_augmentation = create_augmentation_layer(img_height, img_width)
 show_augmented_batch(train_ds, data_augmentation)
 
+# Create a new head and initialize model
+num_classes = len(class_names)
 # Load the pre-trained Vision Transformer model
-vit = VisionTransformer(weights='imagenet', include_top=False, input_shape=(img_height, img_width, 3))
-
+vit = vit.vit_b16(
+    image_size=img_height,
+    activation='softmax',
+    pretrained=True,  # Use pre-trained weights
+    include_top=False,  # Exclude the classification head
+    pretrained_top=False,
+    classes=num_classes,
+)
 # Set the trainable flag of the pre-trained model to False
 for layer in vit.layers:
     layer.trainable = False
 
 # Fine-tuning: unfreeze some layers of pretrained model
-for layer in vit.layers[-20:]:
-    layer.trainable = True
+#for layer in vit.layers[-20:]:
+#    layer.trainable = True
 
-# Create a new head and initialize model
-num_classes = len(class_names)
+
 
 model = Sequential([
     data_augmentation,
+    layers.Rescaling(1. / 255),
     vit,
     layers.GlobalAveragePooling2D(),
     layers.Dense(128, kernel_regularizer=l1_l2(l1=1e-5, l2=1e-4)),
