@@ -69,9 +69,8 @@ for layer in vit.layers:
     layer.trainable = False
 
 # Fine-tuning: unfreeze some layers of pretrained model
-#for layer in vit.layers[-20:]:
+# for layer in vit.layers[-20:]:
 #    layer.trainable = True
-
 
 
 model = Sequential([
@@ -116,7 +115,7 @@ discord_callback = DiscordCallback(webhook_url)
 
 # Train model
 epochs = 20
-with tf.device('/GPU:1'):
+with tf.device('/GPU:0'):
     history = model.fit(
         train_ds,
         validation_data=val_ds,
@@ -128,4 +127,3 @@ plot_model_score(history, name, model_type)
 
 # Save model
 model.save(f"{save_path}{name}.h5")
-
