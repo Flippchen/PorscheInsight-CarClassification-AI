@@ -77,7 +77,7 @@ model = Sequential([
     data_augmentation,
     layers.Rescaling(1. / 255),
     vit,
-    layers.GlobalAveragePooling2D(),
+    layers.Flatten(),
     layers.Dense(128, kernel_regularizer=l1_l2(l1=1e-5, l2=1e-4)),
     layers.BatchNormalization(),
     layers.LeakyReLU(),
