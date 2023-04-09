@@ -1,3 +1,5 @@
+# Is used to verify that the GPU is available and to set the GPU to be used
+
 import tensorflow as tf
 from tensorflow.python.client import device_lib
 
