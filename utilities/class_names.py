@@ -8,6 +8,18 @@ MODEL_VARIANTS = ['911_930', '911_964', '911_991', '911_991_Facelift', '911_992'
 
 
 def get_classes_for_model(name: str) -> List[str]:
+    """
+    Args:
+        name (str): The name of the model for which the class names are required.
+                    Accepted values are "car_type", "all_specific_model_variants",
+                    and "specific_model_variants".
+
+    Returns:
+        List[str]: A list of strings containing class names for a specified model.
+
+    Raises:
+        ValueError: If an invalid model name is provided as input.
+    """
     if name == "car_type":
         return CAR_TYPE
     elif name == "all_specific_model_variants":
