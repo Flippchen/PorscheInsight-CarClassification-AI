@@ -1,8 +1,9 @@
-# Description: Create more classes for the Porsche dataset
+#Description: This script creates additional classes for the Porsche dataset by combining model and year information.
+#It copies the data from the source directory to a new target directory, creating a new folder structure in the process.
 import os
 import shutil
 
-# Set the source path and target path
+# Set the source path and target path for the dataset
 src_path = "C:/Users/phili/.keras/datasets/resized_DVM/Porsche"
 dst_path = "C:/Users/phili/.keras/datasets/resized_DVM/Porsche_more_classes"
 
