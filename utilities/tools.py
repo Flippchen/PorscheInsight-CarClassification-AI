@@ -11,6 +11,13 @@ import logging
 
 
 def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
+    """
+    :param path: Path to the Dataset folder
+    :param batch_size: Integer which defines how many Images are in one Batch
+    :param img_height: Height of the images to be loaded with
+    :param img_width: Width of the images to be loaded with
+    :return: Tuple of train, val Dataset and Class names
+    """
     data_dir = pathlib.Path(path)
     # if "more_classes" in path:
     #    image_count = len(list(data_dir.glob('*/*/*.jpg')))
@@ -42,6 +49,15 @@ def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) ->
 
 
 def load_explainer_data(path: str, batch_size: int, img_height: int, img_width: int, shuffle: int = 10000, number_images: int = 1000) -> list[np.ndarray]:
+    """
+    :param path: Path to the dataset folder
+    :param batch_size: Defines how many images are in one batch
+    :param img_height: Height of the images to be loaded with
+    :param img_width: Width of the images to be loaded with
+    :param shuffle: How many times the dataset get shuffled before return
+    :param number_images: How many images to return
+    :return: List of numpy representations of images
+    """
     data_dir = pathlib.Path(path)
     if "more_classes" in path:
         image_count = len(list(data_dir.glob('*/*/*.jpg')))
@@ -72,6 +88,15 @@ def load_explainer_data(path: str, batch_size: int, img_height: int, img_width: 
 
 
 def load_image_subset(path: str, batch_size: int, img_height: int, img_width: int, shuffle: int = 10000, number_images: int = 1000) -> tf.data.Dataset:
+    """
+    :param path: Path to dataset folder
+    :param batch_size: How many images are in one batch
+    :param img_height: Height of the images to be loaded with
+    :param img_width: Width of the images to be loaded with
+    :param shuffle: How many times the dataset gets shuffled before return
+    :param number_images: Number of images to be returned
+    :return: Subset of Dataset
+    """
     data_dir = pathlib.Path(path)
     # if "more_classes" in path:
     #    image_count = len(list(data_dir.glob('*/*/*.jpg')))
