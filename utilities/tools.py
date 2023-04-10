@@ -120,12 +120,20 @@ def load_image_subset(path: str, batch_size: int, img_height: int, img_width: in
     # Calculate the number of batches to take based on the take value
     take = (number_images + batch_size - 1) // batch_size
 
+    # Shuffle and take the subset
     data = data.shuffle(shuffle).take(take)
 
     return data
 
 
 def show_sample_batch(train_ds: tf.data.Dataset, class_names: list) -> None:
+    """
+    Plots a sample batch of images from the dataset
+
+    :param train_ds: Dataset to show a sample batch from
+    :param class_names: Class names of the dataset
+    :return: None
+    """
     plt.figure(figsize=(10, 10))
     for images, labels in train_ds.take(1):
         for i in range(9):
@@ -137,6 +145,12 @@ def show_sample_batch(train_ds: tf.data.Dataset, class_names: list) -> None:
 
 
 def show_batch_shape(train_ds: tf.data.Dataset) -> None:
+    """
+    Prints the shape of the first batch of the dataset
+
+    :param train_ds: Dataset to show the shape of the first batch from
+    :return:
+    """
     for image_batch, labels_batch in train_ds:
         print(image_batch.shape)
         print(labels_batch.shape)
@@ -144,6 +158,13 @@ def show_batch_shape(train_ds: tf.data.Dataset) -> None:
 
 
 def create_augmentation_layer(img_height: int, img_width: int) -> keras.Sequential:
+    """
+    Creates a data augmentation layer
+
+    :param img_height: Height of the images to be loaded with
+    :param img_width: Width of the images to be loaded with
+    :return: Sequential layer with data augmentation
+    """
     return keras.Sequential(
         [
             layers.RandomFlip("horizontal",
@@ -157,6 +178,13 @@ def create_augmentation_layer(img_height: int, img_width: int) -> keras.Sequenti
 
 
 def show_augmented_batch(train_ds, data_augmentation) -> None:
+    """
+    Shows a sample batch of augmented images
+
+    :param train_ds: Dataset to show a sample batch from
+    :param data_augmentation: Data augmentation layers
+    :return:
+    """
     plt.figure(figsize=(10, 10))
     for images, _ in train_ds.take(1):
         for i in range(9):
@@ -168,6 +196,14 @@ def show_augmented_batch(train_ds, data_augmentation) -> None:
 
 
 def plot_model_score(history, name: str, model_type: str) -> None:
+    """
+    Plots the accuracy and loss of the model
+
+    :param history: History of the model
+    :param name: Name of the training
+    :param model_type: Name of the model type
+    :return:
+    """
     if model_type == "all_specific_model_variants":
         plot_save_path = f'../models/all_model_variants/results/acc-loss-{name}-model.png'
     elif model_type == "model_type":
@@ -201,6 +237,11 @@ def plot_model_score(history, name: str, model_type: str) -> None:
 
 
 def suppress_tf_warnings():
+    """
+    Suppresses TensorFlow warnings
+
+    :return:
+    """
     # Suppress TensorFlow INFO and WARNING logs
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     os.environ["KMP_AFFINITY"] = "noverbose"
@@ -213,6 +254,15 @@ def suppress_tf_warnings():
 
 
 def plot_confusion_matrix(cm: np.ndarray, class_names: list, model_type: str, name: str) -> None:
+    """
+    Plots the confusion matrix
+
+    :param cm: Confusion matrix
+    :param class_names: Class names of the model
+    :param model_type: Name of the model type
+    :param name: Name to save the plot with
+    :return:
+    """
     if model_type == "all_specific_model_variants":
         title = f"Confusion Matrix for All Specific Model Variants"
         plot_save_path = f'cm_all_specific_model_variants-{name}.png'
@@ -249,11 +299,25 @@ def plot_confusion_matrix(cm: np.ndarray, class_names: list, model_type: str, na
 
 
 def resize_dataset(data: tf.data.Dataset, img_height: int, img_width: int) -> tf.data.Dataset:
+    """
+    Resizes the dataset
+
+    :param data: Dataset to resize
+    :param img_height: Height to resize to
+    :param img_width: Width to resize to
+    :return: Resized dataset
+    """
     data = data.map(lambda x, y: (tf.image.resize(x, (img_height, img_width)), y))
     return data
 
 
 def get_data_path_addon(name: str) -> str:
+    """
+    Returns the data path addon for the model type
+
+    :param name: Model type name
+    :return: Path addon
+    """
     if name == "car_type":
         return "Porsche"
     elif name == "all_specific_model_variants":
