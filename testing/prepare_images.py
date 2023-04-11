@@ -3,12 +3,18 @@ import os
 from PIL import Image, ImageOps
 from rembg import remove, new_session
 from PIL.Image import Image as PILImage
+from functools import cache
+
+
+@cache
+def get_session():
+    return new_session("isnet-general-use")
 
 
 def replace_background(im: PILImage, post_process_mask=False, session=None) -> PILImage:
     # if not isinstance(im, PILImage):
     #   im = Image.open(io.BytesIO(im))
-    session = session or new_session("u2netp")
+    session = session or get_session()
     im = remove(im, post_process_mask=post_process_mask, session=session)
 
     new_im = Image.new('RGBA', im.size, 'WHITE')
