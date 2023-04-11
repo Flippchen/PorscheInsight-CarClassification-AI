@@ -4,6 +4,8 @@ tensorflow==2.10.0
 matplotlib==3.6.2
 Pillow~=9.3.0
 keras~=2.10.0
+# Vision Transformer
+vit-keras==0.1.0
 # Inference
 rembg==2.0.32
 onnxruntime==1.14.1
