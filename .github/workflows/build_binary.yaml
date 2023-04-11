@@ -4,10 +4,7 @@ on:
   workflow_dispatch:
     push:
       branches:
-        - dev
-      pull_request:
-        branches:
-          - dev
+        - main
   release:
     types: [published]
 
