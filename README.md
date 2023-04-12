@@ -6,6 +6,8 @@ It was a project for when I had free time. It is not ment to be used in producti
 
 ## Future
 The project is still in an early stage and I will add more models and features in the future.
+
+PlayeStore App is comming soon!
 ## Web UI
 The Web UI is a simple local website that enables users to upload images of Porsche cars and get classification results from the models. The app is built using Eel, which allows Python and HTML/JS to communicate with each other.
 ### Installation
