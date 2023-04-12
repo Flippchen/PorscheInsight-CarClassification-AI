@@ -42,6 +42,7 @@ or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClas
 - [x] Bundle in one Binary
 - [x] Add django web app
 - [x] Train on cleaned classes with Vision Transformer
+- [x] Add Android App
 </details>
 
 
