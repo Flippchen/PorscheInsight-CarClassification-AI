@@ -17,8 +17,8 @@ suppress_tf_warnings()
 
 # Set variables and config
 AUTOTUNE = tf.data.AUTOTUNE
-img_height = 300 + 20
-img_width = 300 + 20
+img_height = 224
+img_width = 224
 name = "vit-model-variants"
 # Variables to control training flow
 # Set model Type to 'all_specific_model_variants' or 'car_type or 'specific_model_variants'
