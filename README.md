@@ -1,15 +1,15 @@
 # PorscheInsight-CarClassification-AI
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Flippchen/PorscheInsight-CarClassification-AI/python.yaml?logoColor=blue&style=flat-square) ![GitHub repo size](https://img.shields.io/github/repo-size/Flippchen/PorscheInsight-CarClassification-AI?style=flat-square)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Flippchen/PorscheInsight-CarClassification-AI?include_prereleases&style=flat-square) ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Flippchen/PorscheInsight-CarClassification-AI/python.yaml?logoColor=blue&style=flat-square) ![GitHub repo size](https://img.shields.io/github/repo-size/Flippchen/PorscheInsight-CarClassification-AI?style=flat-square)
+
+<a href='https://play.google.com/store/apps/details?id=com.flippchen.porsche_classifier'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="70"/></a>
 ## Description
-This repository contains a scripts to train models to classify pictures of Porsche cars.
-It was a project for when I had free time. It is not ment to be used in production (yet).
+This repository contains scripts to train models to classify pictures of Porsche cars.
+It is not ment to be used in production (yet).
 
-## Future
-The project is still in an early stage and I will add more models and features in the future.
-
-PlayeStore App is comming soon!
 ## Web UI
+
 The Web UI is a simple local website that enables users to upload images of Porsche cars and get classification results from the models. The app is built using Eel, which allows Python and HTML/JS to communicate with each other.
+For a free online version of the Web UI, check out [PorscheInsight](https://classify.autos).
 ### Installation
 ```bash
 pip install -m build_requirements.txt
