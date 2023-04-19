@@ -47,6 +47,11 @@ or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClas
 
 
 ## Installation
+### Requirements
+- Python >3.8, <3.11
+- [optional] CUDA 11.1
+- [optional] cuDNN 8.0.5
+
 Install tensorflow, keras and the other dependencies with pip:
 ```bash
 pip install -m requirements.txt
