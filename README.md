@@ -84,7 +84,7 @@ If you want to predict with an onnx model you can use the [test_onnx_model.py](t
 
 I recommend to prepare the images with [prepare_images.py](testing/prepare_images.py) before. Thus, an error-free and improved prediction is guaranteed.
 ### Explain a model
-To explain a model you can use the [explainer.py](metrics_insights/shap/explainer.py) script. You can choose the model and the image(folder) you want to get explanations.
+To explain a model you can use the [explainer.py](model_insights/shap/explainer.py) script. You can choose the model and the image(folder) you want to get explanations.
 I recommend to prepare the images with [prepare_images.py](testing/prepare_images.py) before.
 
 After using shap values on the new efficientnet model and the vgg16 model, both on the old head, I found out that the vgg16 model found "better" spots to distinguish between classes, at least sometimes.
@@ -92,23 +92,23 @@ After using shap values on the new efficientnet model and the vgg16 model, both 
 ### Confusion matrix of a model
 The confusion matrix shows the performance of a classification model. It shows the number of correct and incorrect predictions made by a classifier.
 
-To get a confusion matrix of a model you can use the [confusion_matrix.py](metrics_insights/confusion_matrix/confusion_matrix.py) script. You can choose the model and the test set you want to get the confusion matrix from.
+To get a confusion matrix of a model you can use the [confusion_matrix.py](model_insights/confusion_matrix/confusion_matrix.py) script. You can choose the model and the test set you want to get the confusion matrix from.
 <details>
 <summary><b>Confusion Matrix</b></summary>
 
-<img alt="Confusion matrix for cat types" src="metrics_insights/confusion_matrix/results/cm_car_type.png"  width="700" height="700">
+<img alt="Confusion matrix for cat types" src="model_insights/confusion_matrix/results/cm_car_type.png"  width="700" height="700">
 
 </details>
 
-The confusion matrix of the specific model variants is too big to show it here. You can find it in the [results](metrics_insights/confusion_matrix/results) folder.
+The confusion matrix of the specific model variants is too big to show it here. You can find it in the [results](model_insights/confusion_matrix/results) folder.
 
 ### Sample images from the shap values
 <details>
 <summary><b>Explained images</b></summary>
 
 
-<img alt="Shap values for 911_1980" src="metrics_insights/shap/results/car_types/shap_values_911_1980.png"  width="700" height="280">
-<img alt="Shap values for Cayman_2009" src="metrics_insights/shap/results/all_model_variants/shap_values_Cayman_2009.png"  width="700" height="280">
+<img alt="Shap values for 911_1980" src="model_insights/shap/results/car_types/shap_values_911_1980.png"  width="700" height="280">
+<img alt="Shap values for Cayman_2009" src="model_insights/shap/results/all_model_variants/shap_values_Cayman_2009.png"  width="700" height="280">
 </details>
 
 
