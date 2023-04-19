@@ -24,6 +24,7 @@ or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClas
 
 ### ToDos
 - [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
+- [ ] Add docker support
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
 
