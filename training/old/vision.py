@@ -24,7 +24,7 @@ name = "vit-model-variants"
 # Set model Type to 'all_specific_model_variants' or 'car_type or 'specific_model_variants'
 model_type = 'specific_model_variants'
 # Don't forget to change the save paths in the model checkpoint and model save
-save_path = f"../models/model_variants/"
+save_path = f"../../models/model_variants/"
 # Set to True to load trained model
 load_model = False
 load_path = "../models/all_model_variants/vit-model-variants.h5"
