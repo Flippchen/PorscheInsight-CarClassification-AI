@@ -20,7 +20,7 @@ python web_app/main.py
 ```
 or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClassification-AI/actions).
 ### Screenshot
-<img alt="Screenshot of the Web UI" src="web_app/example_web_ui.png"  width="600" height="400">
+<img alt="Screenshot of the Web UI" src="assets/web_app/example_web_ui.png"  width="600" height="400">
 
 ### ToDos
 - [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
