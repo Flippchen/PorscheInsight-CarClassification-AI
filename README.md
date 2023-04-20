@@ -24,6 +24,8 @@ or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClas
 
 ### ToDos
 - [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
+- [ ] Add release 1.0.0
+- [ ] Add docker support
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
 
@@ -47,6 +49,11 @@ or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClas
 
 
 ## Installation
+### Requirements
+- Python >3.8, <3.11
+- [optional] CUDA 11.1
+- [optional] cuDNN 8.0.5
+
 Install tensorflow, keras and the other dependencies with pip:
 ```bash
 pip install -m requirements.txt

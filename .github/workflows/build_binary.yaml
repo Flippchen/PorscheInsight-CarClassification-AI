@@ -81,7 +81,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r build_requirements.txt
+          pip install -r web_app/build_requirements.txt
           pip install PyInstaller
           pip install eel
 
