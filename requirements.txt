@@ -10,7 +10,7 @@ vit-keras==0.1.0
 rembg==2.0.32
 onnxruntime==1.14.1
 # Export to onnx
-tf2onnx~=1.13.0
+tf2onnx~=1.14.0
 # Explaining the model
 shap~=0.41.0
 scikit-learn~=1.2.2
