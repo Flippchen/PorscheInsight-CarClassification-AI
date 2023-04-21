@@ -46,6 +46,7 @@ show_sample_batch(train_ds, class_names)
 show_batch_shape(train_ds)
 
 # Shuffle/cache and set prefetch buffer size
+
 train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 

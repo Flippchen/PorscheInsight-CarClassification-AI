@@ -6,6 +6,8 @@ ALL_MODEL_VARIANTS = ['718 Boxster_2016', '718 Boxster_2017', '718 Boxster_2018'
 
 MODEL_VARIANTS = ['911_930', '911_964', '911_991', '911_991_Facelift', '911_992', '911_996_Facelift', '911_997', '911_997_Facelift', '918_Spyderr_1_Generation', 'Boxster_981', 'Boxster_982', 'Boxster_986', 'Boxster_987_Facelift', 'Boxter_986_Facelift', 'Boxter_987', 'Carrera_GT_980', 'Cayenne_955', 'Cayenne_955_Facelift', 'Cayenne_958', 'Cayenne_958_Facelift', 'Cayenne_9YA', 'Cayman_981C', 'Cayman_982C', 'Cayman_987C', 'Cayman_987_Facelift', 'Macan_95B', 'Macan_95B_Facelift', 'Panamera_970', 'Panamera_970_Facelift', 'Panamera_971']
 
+PRE_FILTER = ['other', 'other_car_brand', 'porsche']
+
 
 def get_classes_for_model(name: str) -> List[str]:
     """
@@ -26,5 +28,7 @@ def get_classes_for_model(name: str) -> List[str]:
         return ALL_MODEL_VARIANTS
     elif name == "specific_model_variants":
         return MODEL_VARIANTS
+    elif name == "pre_filter":
+        return PRE_FILTER
     else:
         raise ValueError("Invalid model name")
