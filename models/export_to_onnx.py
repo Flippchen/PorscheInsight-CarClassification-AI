@@ -26,6 +26,6 @@ def convert_saved_model_to_onnx(saved_model_path, onnx_output_path):
 
 
 if __name__ == '__main__':
-    saved_model_path = 'all_model_variants/best_model/efficientnet-old-head-model-variants-full_best_model.h5'
-    onnx_output_path = 'onnx/all_model_variants/efficientnet-old-head-model-variants-full_best_model.onnx'
+    saved_model_path = 'pre_filter/best_model/efficientnet-pre-filter_best_model.h5'
+    onnx_output_path = 'onnx/pre_filter/efficientnet-pre-filter_best_model.onnx'
     convert_saved_model_to_onnx(saved_model_path, onnx_output_path)
