@@ -20,12 +20,18 @@ pip install -m build_requirements.txt
 ```bash
 python web_app/main.py
 ```
-or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClassification-AI/actions).
+or download the [executable](https://github.com/Flippchen/PorscheInsight-CarClassification-AI/actions).
+
 ### Screenshot
 <img alt="Screenshot of the Web UI" src="assets/web_app/example_web_ui.png"  width="600" height="400">
 
+### Architecture
+The Web UI consists of two models. The first model (pre_filter) classifies whether a porsche is present on the image and if so the image is passed to the second model which classifies the car based on the user input.
+
+<img alt="Architecture of the Web UI" src="assets/architecture.png"  height="400">
+
 ### ToDos
-- [ ] Implement new Architecture: One model classifies the car type and another model classifies the year of the car
+- [ ] Implement new architecture to online version
 - [ ] Add release 1.0.0
 - [ ] Add docker support
 - [ ] Evaluate feature engineering/ More data augmentation
@@ -47,6 +53,7 @@ or download it from [GitHub](https://github.com/Flippchen/PorscheInsight-CarClas
 - [x] Add django web app
 - [x] Train on cleaned classes with Vision Transformer
 - [x] Add Android App
+- [x] Implement new Architecture: One model classifies if a car is present and a second model classifies the car
 </details>
 
 
