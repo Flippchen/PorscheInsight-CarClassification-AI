@@ -136,3 +136,5 @@ After the data was cleaned, there are ~30.300 pictures left. Several pictures we
 
 <img alt="Sample images from Dataset" src="models/car_types/results/sample_images.png"  width="700" height="700">
 </details>
+
+For the training of the <b>pre_filter</b> model a mixture of the [porsche-pictures](https://github.com/Flippchen/porsche-pictures) dataset, other Open Source datasets like [cifar-10](https://www.cs.toronto.edu/~kriz/cifar.html) were used.
