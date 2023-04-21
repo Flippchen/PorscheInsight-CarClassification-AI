@@ -22,7 +22,7 @@ img_width = 300
 name = "efficientnet-pre-filter"
 # Variables to control training flow
 # Set model Type to 'all_specific_model_variants' or 'car_type or 'specific_model_variants'
-model_type = 'pre-filter'
+model_type = 'pre_filter'
 # Don't forget to change the save paths in the model checkpoint and model save
 save_path = f"../models/pre_filter/"
 # Set to True to load trained model
@@ -128,4 +128,3 @@ plot_model_score(history, name, model_type)
 # Save model
 model.save(f"{save_path}{name}.h5")
 
-# TODO: Different data augmentation (vertical, ..), Augmentation before training

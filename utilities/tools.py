@@ -324,5 +324,7 @@ def get_data_path_addon(name: str) -> str:
         return "Porsche_more_classes"
     elif name == "specific_model_variants":
         return "Porsche_variants"
+    elif name == "pre_filter":
+        return "pre_filter"
     else:
         raise ValueError("Invalid model name")
