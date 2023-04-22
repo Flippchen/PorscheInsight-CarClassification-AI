@@ -31,6 +31,7 @@ The Web UI employs a two-step process involving two models. Initially, the pre_f
 <img alt="Architecture of the Web UI" src="assets/architecture.png"  height="400">
 
 ### ToDos
+- [ ] Re-Train pre_filter with porsche images with bg
 - [ ] Add docker support
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
