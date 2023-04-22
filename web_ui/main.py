@@ -95,6 +95,10 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
     image_data = base64.b64decode(image_data)
     image = Image.open(BytesIO(image_data))
 
+    # Convert image to RGB if not already
+    if image.mode != "RGB":
+        image = image.convert("RGB")
+
     # Get correct input size for model
     input_size = models[model_name].get_inputs()[0].shape[1:3]
 
