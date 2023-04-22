@@ -79,6 +79,10 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
     # Decode image and open it
     image_data = base64.b64decode(image_data)
     image = Image.open(BytesIO(image_data))
+    # Convert image to RGB if it is not
+    if image.mode != "RGB":
+        image = image.convert("RGB")
+
     # Prepare image and predict
     prepared_image = prepare_image(image, models[model_name].input_shape[1:3])
     prediction = models[model_name].predict(prepared_image)
