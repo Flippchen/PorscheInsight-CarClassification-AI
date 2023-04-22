@@ -210,6 +210,8 @@ def plot_model_score(history, name: str, model_type: str) -> None:
         plot_save_path = f'../models/car_types/results/acc-loss-{name}-model.png'
     elif model_type == "specific_model_variants":
         plot_save_path = f'../models/model_variants/results/acc-loss-{name}-model.png'
+    elif model_type == "pre_filter":
+        plot_save_path = f'../models/pre_filter/results/acc-loss-{name}-model.png'
     else:
         raise ValueError("model_type must be one of 'all_specific_model_variants', 'model_type' or 'specific_model_variants'")
     # Read history and plot model score
@@ -324,5 +326,7 @@ def get_data_path_addon(name: str) -> str:
         return "Porsche_more_classes"
     elif name == "specific_model_variants":
         return "Porsche_variants"
+    elif name == "pre_filter":
+        return "pre_filter"
     else:
         raise ValueError("Invalid model name")

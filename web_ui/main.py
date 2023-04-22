@@ -3,6 +3,7 @@ import onnxruntime as ort
 from typing import List, Tuple
 # Needs to be imported before eel to not crash when using --noconsole
 import sys, io
+
 sys.stdout = io.StringIO()
 sys.stderr = io.StringIO()
 
@@ -20,6 +21,7 @@ models = {
     "car_type": None,
     "all_specific_model_variants": None,
     "specific_model_variants": None,
+    "pre_filter": None,
 }
 
 session = new_session("isnet-general-use")
@@ -35,6 +37,9 @@ def load_model(model_name: str) -> ort.InferenceSession:
     elif model_name == "specific_model_variants":
         url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-model-variants_best_model.onnx"
         md5 = "3de16b8cf529dc90f66c962a1c93a904"
+    elif model_name == "pre_filter":
+        url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/efficientnet-pre-filter_best_model.onnx"
+        md5 = "b70e531f5545afc66551c58f85d6694a"
     else:
         raise ValueError("Invalid model name")
 
@@ -55,9 +60,10 @@ def load_model(model_name: str) -> ort.InferenceSession:
     return ort.InferenceSession(model_path, providers=['CPUExecutionProvider'])
 
 
-def prepare_image(image_data: Image, target_size: Tuple):
+def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool) -> np.ndarray:
     image = resize_and_pad_image(image_data, target_size)
-    image = replace_background(image, session=session)
+    if remove_background:
+        image = replace_background(image, session=session)
     img_array = np.array(image).astype('float32')
     img_array = np.expand_dims(img_array, 0)
     return img_array
@@ -70,22 +76,44 @@ def get_top_3_predictions(prediction: np.ndarray, model_name: str) -> List[Tuple
     return top_3
 
 
-@eel.expose
-def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
+def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
     if models[model_name] is None:
         models[model_name] = load_model(model_name)
+    input_name = models[model_name].get_inputs()[0].name
+    prediction = models[model_name].run(None, {input_name: image_data})
+    fitler_names = get_top_3_predictions(prediction[0], "pre_filter")
+    return fitler_names
+
+
+@eel.expose
+def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
+    # Load model if not loaded yet
+    if models[model_name] is None:
+        models[model_name] = load_model(model_name)
+
     # Decode image and open it
     image_data = base64.b64decode(image_data)
     image = Image.open(BytesIO(image_data))
-    # Prepare image and predict
-    input_size = models[model_name].get_inputs()[0].shape[1:3]
-    prepared_image = prepare_image(image, input_size)
-    input_name = models[model_name].get_inputs()[0].name
-    prediction = models[model_name].run(None, {input_name: prepared_image})
-    # Get top 3 predictions
-    top_3 = get_top_3_predictions(prediction[0], model_name)
 
-    return top_3
+    # Get correct input size for model
+    input_size = models[model_name].get_inputs()[0].shape[1:3]
+
+    # Prepare image for filtering and predict
+    filter_image = prepare_image(image, input_size, remove_background=False)
+    filter_predictions = get_pre_filter_prediction(filter_image, "pre_filter")
+
+    # If the pre_filter predicts porsche or other_car_brand, predict the correct model
+    # FIXME: If image contains a porsche the prediction can be false negative because the background was not removed
+    if filter_predictions[0][0] == "porsche":
+        prepared_image = prepare_image(image, input_size, remove_background=True)
+        input_name = models[model_name].get_inputs()[0].name
+        prediction = models[model_name].run(None, {input_name: prepared_image})
+        # Get top 3 predictions
+        top_3 = get_top_3_predictions(prediction[0], model_name)
+
+        return top_3
+
+    return filter_predictions
 
 
 eel.init("web")
