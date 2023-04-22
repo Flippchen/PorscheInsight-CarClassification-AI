@@ -40,14 +40,48 @@ h1 {
 
 /* Style the loading and spinner */
 .loading {
-  margin-bottom: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .loading-spinner {
-  display: none;
-  margin-bottom: 1rem;
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
 }
-
+.spinner {
+    border: 12px solid #f3f3f3;
+    border-top: 12px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 /* Style the drop zone */
 .drop-zone {
   border: 2px dashed #132f68;
@@ -107,7 +141,7 @@ button:hover {
 /* Style the result */
 .result {
   padding: 1rem;
-  border-radius: 2px;
+  border-radius: 3px;
   background-color: #f2f2f2;
   text-align: center;
 }
