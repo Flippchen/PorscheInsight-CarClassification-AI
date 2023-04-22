@@ -5,8 +5,47 @@ document.addEventListener("DOMContentLoaded", function () {
     const classifyBtn = document.getElementById("classify-btn");
     const removeBtn = document.getElementById("remove-btn");
     const resultDiv = document.getElementById("result");
+    const darkModeBtn = document.getElementById("dark-mode-btn");
+    const darkModeStylesheet = document.getElementById("dark-mode-stylesheet");
     const imageNameDiv = document.getElementById("image-name");
     let uploadedImage = null;
+
+if (localStorage.getItem("darkMode") === "enabled") {
+  enableDarkMode();
+}
+
+// Toggle dark mode on button click
+darkModeBtn.addEventListener("click", () => {
+  if (localStorage.getItem("darkMode") === "enabled") {
+    disableDarkMode();
+  } else {
+    enableDarkMode();
+  }
+});
+
+function enableDarkMode() {
+  darkModeStylesheet.disabled = false;
+  document.body.classList.add("dark-mode");
+  document.querySelector(".container").classList.add("dark-mode");
+  document.querySelector(".drop-zone").classList.add("dark-mode");
+  document.querySelector(".result").classList.add("dark-mode");
+  document.getElementById("model-selector").classList.add("dark-mode");
+  document.getElementById("dark-mode-btn").classList.add("dark-mode");
+  document.querySelector("h1").classList.add("dark-mode");
+  localStorage.setItem("darkMode", "enabled");
+}
+
+function disableDarkMode() {
+  darkModeStylesheet.disabled = true;
+  document.body.classList.remove("dark-mode");
+  document.querySelector(".container").classList.remove("dark-mode");
+  document.querySelector(".drop-zone").classList.remove("dark-mode");
+  document.querySelector(".result").classList.remove("dark-mode");
+  document.getElementById("model-selector").classList.remove("dark-mode");
+  document.getElementById("dark-mode-btn").classList.remove("dark-mode");
+  document.querySelector("h1").classList.remove("dark-mode");
+  localStorage.setItem("darkMode", "disabled");
+}
 
 function displayImagePreview(image) {
     const reader = new FileReader();
