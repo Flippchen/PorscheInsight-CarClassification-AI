@@ -1,0 +1,47 @@
+/* darkmode.css */
+
+/* Dark mode body and container */
+body.dark-mode {
+  background-color: #282c34;
+}
+
+h1.dark-mode {
+  color: #93c5fd;
+}
+
+.container.dark-mode {
+  background-color: #3c4049;
+  color: #ffffff;
+}
+
+/* Dark mode drop zone */
+.drop-zone.dark-mode {
+  border-color: #6c757d;
+}
+
+/* Dark mode result */
+.result.dark-mode {
+  background-color: #3c4049;
+}
+
+/* Dark mode buttons */
+button.dark-mode {
+  background-color: #6c757d;
+  color: #ffffff;
+}
+
+button.dark-mode:hover {
+  background-color: #8da3ab;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode input and select */
+input[type="text"].dark-mode,
+input[type="password"].dark-mode,
+#model-selector.dark-mode {
+  background-color: #3c4049;
+  color: #ffffff;
+  border: 1px solid #6c757d;
+}
