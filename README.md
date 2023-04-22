@@ -23,7 +23,7 @@ python web_app/main.py
 or download the [executable](https://github.com/Flippchen/PorscheInsight-CarClassification-AI/actions).
 
 ### Screenshot
-<img alt="Screenshot of the Web UI" src="assets/web_app/example_web_ui.png"  width="600" height="400">
+<img alt="Screenshot of the Web UI" src="assets/web_app/example_new_ui.png"  height="450">
 
 ### Architecture
 The Web UI employs a two-step process involving two models. Initially, the pre_filter model determines if an image contains a Porsche. If a Porsche is detected, the image proceeds to the second model, which classifies the car according to the user's input.
