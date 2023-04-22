@@ -31,7 +31,7 @@ header {
 
 /* Style the headers */
 h1 {
-  font-size: 2rem;
+  font-size: 3rem;
   margin-bottom: 2rem;
   color: #132f68;
   text-align: end; /* Align the header to the center */
@@ -107,7 +107,7 @@ button:hover {
 /* Style the result */
 .result {
   padding: 1rem;
-  border-radius: 5px;
+  border-radius: 2px;
   background-color: #f2f2f2;
   text-align: center;
 }
