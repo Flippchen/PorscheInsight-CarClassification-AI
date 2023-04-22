@@ -31,7 +31,6 @@ The Web UI employs a two-step process involving two models. Initially, the pre_f
 <img alt="Architecture of the Web UI" src="assets/architecture.png"  height="400">
 
 ### ToDos
-- [ ] Add release 1.0.0
 - [ ] Add docker support
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
@@ -54,6 +53,7 @@ The Web UI employs a two-step process involving two models. Initially, the pre_f
 - [x] Add Android App
 - [x] Implement new Architecture: One model classifies if a car is present and a second model classifies the car
 - [x] Implement new architecture to online version
+- [x] Add release 1.0.0
 </details>
 
 
