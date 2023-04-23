@@ -140,12 +140,21 @@ function displayImagePreview(image) {
 }
 
     function displayResult(prediction) {
-        let resultHtml = "";
-        for (const [className, percentage] of prediction) {
-            resultHtml += `<p><strong>${className}</strong>: ${percentage.toFixed(2)}%</p>`;
-        }
-        resultDiv.innerHTML = resultHtml;
+    let resultHtml = "";
+    for (const [className, percentage] of prediction) {
+        resultHtml += `
+            <div class="percentage-bar-container">
+                <strong class="class-name">${className}</strong>
+                <div class="percentage-bar" data-percentage="${percentage}">
+                    <div class="percentage-bar-inner" style="width: ${percentage}%;"></div>
+                </div>
+                <span class="percentage-value">${percentage.toFixed(2)}%</span>
+            </div>
+        `;
     }
+    resultDiv.innerHTML = resultHtml;
+}
+
 });
 function showLoading() {
     const loadingDiv = document.getElementById("loading");
