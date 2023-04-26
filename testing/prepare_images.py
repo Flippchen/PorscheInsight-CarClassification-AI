@@ -16,6 +16,7 @@ def replace_background(im: PILImage, post_process_mask=False, session=None) -> P
     #   im = Image.open(io.BytesIO(im))
     session = session or get_session()
     im = remove(im, post_process_mask=post_process_mask, session=session)
+    im = resize_cutout(im)
 
     new_im = Image.new('RGBA', im.size, 'WHITE')
     new_im.paste(im, mask=im)
@@ -29,11 +30,43 @@ def replace_background(im: PILImage, post_process_mask=False, session=None) -> P
     return image
 
 
+def get_bounding_box(im: PILImage) -> tuple:
+    # Get the data of the image
+    im_data = im.getdata()
+
+    # Get the dimensions of the image
+    width, height = im.size
+
+    # Find the bounding box
+    left, top, right, bottom = width, height, 0, 0
+    for y in range(height):
+        for x in range(width):
+            if im_data[y * width + x][3] > 0:  # If the pixel is not fully transparent
+                left = min(left, x)
+                top = min(top, y)
+                right = max(right, x)
+                bottom = max(bottom, y)
+
+    return left, top, right, bottom
+
+
+def resize_cutout(im: PILImage, size: tuple = (300, 300)) -> PILImage:
+    # Get the bounding box of the non-transparent content
+    left, top, right, bottom = get_bounding_box(im)
+
+    # Crop the image to the bounding box
+    im_cropped = im.crop((left, top, right, bottom))
+
+    im_resized = resize_and_pad_image(im_cropped, size, fill_color=(255, 255, 255, 255))
+
+    return im_resized
+
+
 def resize_image(image, size):
     return image.resize(size)
 
 
-def resize_and_pad_image(image: PILImage, target_size: tuple):
+def resize_and_pad_image(image: PILImage, target_size: tuple, fill_color=(0, 0, 0, 0)):
     # Calculate the aspect ratio of the image
     aspect_ratio = float(image.width) / float(image.height)
 
@@ -57,7 +90,7 @@ def resize_and_pad_image(image: PILImage, target_size: tuple):
     top_padding = padding_height // 2
 
     # Pad the image to make it a square and center it
-    padded_image = ImageOps.expand(resized_image, (left_padding, top_padding, padding_width - left_padding, padding_height - top_padding), fill=(0, 0, 0))
+    padded_image = ImageOps.expand(resized_image, (left_padding, top_padding, padding_width - left_padding, padding_height - top_padding), fill=fill_color)
 
     return padded_image
 
