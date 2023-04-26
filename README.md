@@ -32,6 +32,7 @@ The Web UI employs a two-step process involving two models. Initially, the pre_f
 
 ### ToDos
 - [ ] Re-Train pre_filter with car/porsche images with bg
+- [ ] Retrain car type model with efficientnet model
 - [ ] Add docker support
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
