@@ -57,7 +57,7 @@ def resize_cutout(im: PILImage, size: tuple = (300, 300)) -> PILImage:
     # Crop the image to the bounding box
     im_cropped = im.crop((left, top, right, bottom))
 
-    im_resized = resize_and_pad_image(im_cropped, size)
+    im_resized = resize_and_pad_image(im_cropped, size, fill_color=(255, 255, 255, 255))
 
     return im_resized
 
@@ -66,7 +66,7 @@ def resize_image(image, size):
     return image.resize(size)
 
 
-def resize_and_pad_image(image: PILImage, target_size: tuple):
+def resize_and_pad_image(image: PILImage, target_size: tuple, fill_color=(0, 0, 0, 0)):
     # Calculate the aspect ratio of the image
     aspect_ratio = float(image.width) / float(image.height)
 
@@ -90,7 +90,7 @@ def resize_and_pad_image(image: PILImage, target_size: tuple):
     top_padding = padding_height // 2
 
     # Pad the image to make it a square and center it
-    padded_image = ImageOps.expand(resized_image, (left_padding, top_padding, padding_width - left_padding, padding_height - top_padding), fill=(255, 255, 255))
+    padded_image = ImageOps.expand(resized_image, (left_padding, top_padding, padding_width - left_padding, padding_height - top_padding), fill=fill_color)
 
     return padded_image
 
