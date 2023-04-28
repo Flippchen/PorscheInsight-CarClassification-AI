@@ -3,8 +3,16 @@
 
 <a href='https://play.google.com/store/apps/details?id=com.flippchen.porsche_classifier'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="70"/></a>
 ## Description
-This repository contains scripts to train models to classify pictures of Porsche cars.
-It is not ment to be used in production (yet).
+This repository contains scripts to train models to classify pictures of Porsche cars. It is still in an early stage.
+
+The following different model types are available:
+
+| 🚗 Model       | 📝 Description                                                                                                                                                                                                                                                                                                                                                 |
+|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| pre_filter     | This model is responsible for identifying whether an image contains a Porsche car or not. It is the first step in the classification process, and if the model determines the image to be a Porsche, it proceeds to the next models for further classification.The model is used for the new architecture in the [web_ui](web_ui).                             |
+| model type     | This model predicts 10 broad Porsche car model types, such as 911, Cayman, and Panamera, among others. It is the second step in the classification process and helps to categorize the cars based on popular models.                                                                                                                                           | 
+| car series     | Trained to predict 30 classes, this model groups several years together to imitate Porsche car series like the 911 991 or 911 992. It is a more detailed classification that focuses on car series rather than specific years.                                                                                                                                 |
+| all car series | This model classifies images into 88 classes, corresponding to specific Porsche build years. It is the most detailed classification level, predicting not only the car model type but also the specific build year, e.g., a 911 from 2008. This model is suitable for users who want to identify and classify Porsche cars down to the finest level of detail. |
 
 ## Web UI
 
@@ -70,13 +78,6 @@ Install tensorflow, keras and the other dependencies with pip:
 pip install -m requirements.txt
 ```
 ## Models
-The first version of the model was trained to predict 10 classes, which correspond to broad Porsche car model types. These classes include popular models such as the 911, Cayman, and Panamera, among others. The accuracy of this model on the training set was 99%, and the accuracy on the validation set was 95%.
-
-After achieving satisfactory results with the 10-class model, a second model was trained to predict 88 classes, which correspond to specific Porsche build years. For example, this model can predict whether an image is a 911 from 2008. The accuracy of this model on the training set was 80%, and the accuracy on the validation set was 46%.
-
-For the third model I bundled several years together to imitate the Porsche car series like the 911 991 or 911 992. The model was trained to predict 30 classes, the accuracy on the validation set was 85%.
-
-The fourth model was trained to predict 3 classes (porsche, other_car_brand and other). The model is used for the new architecture in the [web_app](web_ui).
 
 | Model                                   | Total params  | Trainable params | Non-trainable params  | Batch size | Accuracy Train % | Accuracy Val % | Number of classes |
 |-----------------------------------------|---------------|------------------|-----------------------|------------|------------------|----------------|-------------------|
