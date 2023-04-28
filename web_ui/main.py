@@ -104,7 +104,6 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
     input_size = models[model_name].get_inputs()[0].shape[1:3]
 
     # Prepare image for filtering and predict
-    #FIXME: IF remove bg auf False better predictions but not for the other class
     filter_image = prepare_image(image, input_size, remove_background=False)
     filter_predictions = get_pre_filter_prediction(filter_image, "pre_filter")
 
