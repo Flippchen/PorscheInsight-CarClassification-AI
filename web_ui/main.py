@@ -24,7 +24,7 @@ models = {
     "pre_filter": None,
 }
 
-session = new_session("isnet-general-use")
+session = new_session("u2net")
 
 
 def load_model(model_name: str) -> ort.InferenceSession:
@@ -61,9 +61,10 @@ def load_model(model_name: str) -> ort.InferenceSession:
 
 
 def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool) -> np.ndarray:
-    image = resize_and_pad_image(image_data, target_size)
     if remove_background:
-        image = replace_background(image, session=session)
+        image = replace_background(image_data, session=session)
+    else:
+        image = resize_and_pad_image(image_data, target_size)
     img_array = np.array(image).astype('float32')
     img_array = np.expand_dims(img_array, 0)
     return img_array
@@ -107,7 +108,6 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
     filter_predictions = get_pre_filter_prediction(filter_image, "pre_filter")
 
     # If the pre_filter predicts porsche or other_car_brand, predict the correct model
-    # FIXME: If image contains a porsche the prediction can be false negative because the background was not removed
     if filter_predictions[0][0] == "porsche":
         prepared_image = prepare_image(image, input_size, remove_background=True)
         input_name = models[model_name].get_inputs()[0].name
