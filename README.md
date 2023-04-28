@@ -78,18 +78,19 @@ For the third model I bundled several years together to imitate the Porsche car 
 
 The fourth model was trained to predict 3 classes (porsche, other_car_brand and other). The model is used for the new architecture in the [web_app](web_ui).
 
-| Model                                | Total params  | Trainable params | Non-trainable params  | Batch size | Accuracy Train % | Accuracy Val % | Number of classes |
-|--------------------------------------|---------------|------------------|-----------------------|------------|------------------|----------------|-------------------|
-| without augmentation*                | 11,239,850    | 11,239,850       | 0                     | 32         | 98               | 78             | 10                |
-| with augmentation*                   | 11,239,850    | 11,239,850       | 0                     | 32         | 79               | 74             | 10                |
-| old_pretrained*                      | 20,027,082    | 5,311,114        | 14,715,968            | 32         | 74               | 72             | 10                |
-| VGG16 pretrained*                    | 20,027,082    | 12,390,538       | 7,636,544             | 32         | 99               | 95             | 10                |
-| VGG16 pretrained                     | 20,027,082    | 12,390,538       | 7,636,544             | 32         | 80               | 46             | 88                |
-| efficientnetv2-b1(new head & faster) | 7,106,956     | 993,416          | 6,113,640             | 32         | 47               | 46             | 88                |
-| efficientnetv2-b1                    | 7,099,474     | 1985,934         | 6,113,540             | 32         | 49               | 46             | 88                |
-| efficientnetv2-b1 (cleaned classes)  | 7,099,474     | 985,934          | 6,113,540             | 32         | 82               | 85             | 30                |
-| vit_b16 (cleaned classes)            | 85,901,470    | 102,558          | 85,798,912            | 32         | 45               | 49             | 30                |
-| efficientnetv2-b1-pre-filter         | 7,095,991     | 982,451          | 6,113,540             | 32         | 98               | 99             | 3                 |
+| Model                                   | Total params  | Trainable params | Non-trainable params  | Batch size | Accuracy Train % | Accuracy Val % | Number of classes |
+|-----------------------------------------|---------------|------------------|-----------------------|------------|------------------|----------------|-------------------|
+| without augmentation*                   | 11,239,850    | 11,239,850       | 0                     | 32         | 98               | 78             | 10                |
+| with augmentation*                      | 11,239,850    | 11,239,850       | 0                     | 32         | 79               | 74             | 10                |
+| old_pretrained*                         | 20,027,082    | 5,311,114        | 14,715,968            | 32         | 74               | 72             | 10                |
+| VGG16 pretrained*                       | 20,027,082    | 12,390,538       | 7,636,544             | 32         | 99               | 95             | 10                |
+| VGG16 pretrained                        | 20,027,082    | 12,390,538       | 7,636,544             | 32         | 80               | 46             | 88                |
+| efficientnetv2-b1(new head & faster)    | 7,106,956     | 993,416          | 6,113,640             | 32         | 47               | 46             | 88                |
+| efficientnetv2-b1                       | 7,099,474     | 1985,934         | 6,113,540             | 32         | 49               | 46             | 88                |
+| efficientnetv2-b1 (cleaned classes)     | 7,099,474     | 985,934          | 6,113,540             | 32         | 82               | 85             | 30                |
+| vit_b16 (cleaned classes)               | 85,901,470    | 102,558          | 85,798,912            | 32         | 45               | 49             | 30                |
+| efficientnetv2-b1-pre-filter            | 7,095,991     | 982,451          | 6,113,540             | 32         | 98               | 99             | 3                 |
+| efficientnetv2-b1-pre-filter-refactored | 7,095,991     | 982,451          | 6,113,540             | 32         | 97               | 98             | 3                 |
 
 The models with * were trained on the pre cleaned dataset.
 
