@@ -19,7 +19,7 @@ suppress_tf_warnings()
 AUTOTUNE = tf.data.AUTOTUNE
 img_height = 300
 img_width = 300
-name = "efficientnet-pre-filter"
+name = "efficientnet-pre-filter-refactored-dataset"
 # Variables to control training flow
 # Set model Type to 'all_specific_model_variants' or 'car_type or 'specific_model_variants'
 model_type = 'pre_filter'
