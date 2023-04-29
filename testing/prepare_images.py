@@ -18,7 +18,7 @@ def replace_background(im: PILImage, post_process_mask=False, session=None) -> P
     im = remove(im, post_process_mask=post_process_mask, session=session)
     im = resize_cutout(im)
 
-    new_im = Image.new('RGBA', im.size, 'WHITE')
+    new_im = Image.new('RGBA', im.size, 'BLACK')
     new_im.paste(im, mask=im)
 
     bio = io.BytesIO()
@@ -57,7 +57,7 @@ def resize_cutout(im: PILImage, size: tuple = (300, 300)) -> PILImage:
     # Crop the image to the bounding box
     im_cropped = im.crop((left, top, right, bottom))
 
-    im_resized = resize_and_pad_image(im_cropped, size, fill_color=(255, 255, 255, 255))
+    im_resized = resize_and_pad_image(im_cropped, size, )#fill_color=(255, 255, 255, 255)
 
     return im_resized
 
