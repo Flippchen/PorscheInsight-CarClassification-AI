@@ -82,8 +82,8 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
         models[model_name] = load_model(model_name)
     input_name = models[model_name].get_inputs()[0].name
     prediction = models[model_name].run(None, {input_name: image_data})
-    fitler_names = get_top_3_predictions(prediction[0], "pre_filter")
-    return fitler_names
+    filter_names = get_top_3_predictions(prediction[0], "pre_filter")
+    return filter_names
 
 
 @eel.expose
