@@ -28,6 +28,22 @@ header {
   max-width: 600px;
   margin: 2rem auto;
 }
+body, header, button, select, .result {
+  transition: all 0.3s ease;
+}
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+.drop-zone:hover {
+  border-color: #1b4796;
+}
+
 
 /* Style the headers */
 h1 {
@@ -144,6 +160,17 @@ button:hover {
   background-color: #f2f2f2;
   text-align: center;
 }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
