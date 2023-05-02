@@ -39,9 +39,8 @@ The Web UI employs a two-step process involving two models. Initially, the pre_f
 <img alt="Architecture of the Web UI" src="assets/architecture.png"  height="400">
 
 ### ToDos
-- [ ] Re-Train pre_filter with car/porsche images with bg
+- [ ] Improve pre_filter model
 - [ ] Retrain car type model with efficientnet model
-- [ ] Add docker support
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
 
@@ -64,6 +63,7 @@ The Web UI employs a two-step process involving two models. Initially, the pre_f
 - [x] Implement new Architecture: One model classifies if a car is present and a second model classifies the car
 - [x] Implement new architecture to online version
 - [x] Add release 1.0.0
+- [x] Add docker support (AWS Lambda)
 </details>
 
 
