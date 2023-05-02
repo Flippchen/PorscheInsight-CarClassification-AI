@@ -36,7 +36,13 @@ or download the [executable](https://github.com/Flippchen/PorscheInsight-CarClas
 ### Architecture
 The Web UI employs a two-step process involving two models. Initially, the pre_filter model determines if an image contains a Porsche. If a Porsche is detected, the image proceeds to the second model, which classifies the car according to the user's input.
 
+
+
+To see the architecture of the Web UI, click the arrow below.
+<details>
+<summary>App UI</summary>
 <img alt="Architecture of the Web UI" src="assets/architecture.png"  height="400">
+</details>
 
 ### ToDos
 - [ ] Improve pre_filter model
