@@ -11,67 +11,67 @@ document.addEventListener("DOMContentLoaded", function () {
     const imageNameDiv = document.getElementById("image-name");
     let uploadedImage = null;
 
-if (localStorage.getItem("darkMode") === "enabled") {
-  enableDarkMode();
-}
+    if (localStorage.getItem("darkMode") === "enabled") {
+        enableDarkMode();
+    }
 
 // Toggle dark mode on button click
-darkModeBtn.addEventListener("click", () => {
-  if (localStorage.getItem("darkMode") === "enabled") {
-    disableDarkMode();
-  } else {
-    enableDarkMode();
-  }
-});
+    darkModeBtn.addEventListener("click", () => {
+        if (localStorage.getItem("darkMode") === "enabled") {
+            disableDarkMode();
+        } else {
+            enableDarkMode();
+        }
+    });
 
-function enableDarkMode() {
-  darkModeStylesheet.disabled = false;
-  document.body.classList.add("dark-mode");
-  document.querySelector(".container").classList.add("dark-mode");
-  document.querySelector(".drop-zone").classList.add("dark-mode");
-  document.querySelector(".result").classList.add("dark-mode");
-  document.getElementById("model-selector").classList.add("dark-mode");
-  document.getElementById("dark-mode-btn").classList.add("dark-mode");
-  document.querySelector("h1").classList.add("dark-mode");
-  localStorage.setItem("darkMode", "enabled");
-}
+    function enableDarkMode() {
+        darkModeStylesheet.disabled = false;
+        document.body.classList.add("dark-mode");
+        document.querySelector(".container").classList.add("dark-mode");
+        document.querySelector(".drop-zone").classList.add("dark-mode");
+        document.querySelector(".result").classList.add("dark-mode");
+        document.getElementById("model-selector").classList.add("dark-mode");
+        document.getElementById("dark-mode-btn").classList.add("dark-mode");
+        document.querySelector("h1").classList.add("dark-mode");
+        localStorage.setItem("darkMode", "enabled");
+    }
 
-function disableDarkMode() {
-  darkModeStylesheet.disabled = true;
-  document.body.classList.remove("dark-mode");
-  document.querySelector(".container").classList.remove("dark-mode");
-  document.querySelector(".drop-zone").classList.remove("dark-mode");
-  document.querySelector(".result").classList.remove("dark-mode");
-  document.getElementById("model-selector").classList.remove("dark-mode");
-  document.getElementById("dark-mode-btn").classList.remove("dark-mode");
-  document.querySelector("h1").classList.remove("dark-mode");
-  localStorage.setItem("darkMode", "disabled");
-}
+    function disableDarkMode() {
+        darkModeStylesheet.disabled = true;
+        document.body.classList.remove("dark-mode");
+        document.querySelector(".container").classList.remove("dark-mode");
+        document.querySelector(".drop-zone").classList.remove("dark-mode");
+        document.querySelector(".result").classList.remove("dark-mode");
+        document.getElementById("model-selector").classList.remove("dark-mode");
+        document.getElementById("dark-mode-btn").classList.remove("dark-mode");
+        document.querySelector("h1").classList.remove("dark-mode");
+        localStorage.setItem("darkMode", "disabled");
+    }
 
-function displayImagePreview(image) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const img = new Image();
-        img.src = e.target.result;
+    function displayImagePreview(image) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = new Image();
+            img.src = e.target.result;
 
-        img.onload = function () {
-            const maxHeight = 300;
-            const aspectRatio = img.width / img.height;
+            img.onload = function () {
+                const maxHeight = 300;
+                const aspectRatio = img.width / img.height;
 
-            if (img.height > maxHeight) {
-                img.height = maxHeight;
-                img.width = maxHeight * aspectRatio;
-            }
+                if (img.height > maxHeight) {
+                    img.height = maxHeight;
+                    img.width = maxHeight * aspectRatio;
+                }
 
-            imageNameDiv.innerText = image.name;
-            imageNameDiv.style.fontWeight = "bold";
+                imageNameDiv.innerText = image.name;
+                imageNameDiv.style.fontWeight = "bold";
 
-            dropZone.innerHTML = "";
-            dropZone.appendChild(img);
+                dropZone.innerHTML = "";
+                dropZone.appendChild(img);
+            };
         };
-    };
-    reader.readAsDataURL(image);
-}
+        reader.readAsDataURL(image);
+    }
 
 
     fileInput.addEventListener("change", function (e) {
@@ -115,40 +115,40 @@ function displayImagePreview(image) {
     });
 
     removeBtn.addEventListener("click", () => {
-    uploadedImage = null;
-    fileInput.value = "";
-    dropZone.innerHTML = "<p>Drag and drop your image here, or click to select a file</p>";
-    resultMessage.style.display = "block";
-    resultDiv.style.display = "none";
+        uploadedImage = null;
+        fileInput.value = "";
+        dropZone.innerHTML = "<p>Drag and drop your image here, or click to select a file</p>";
+        resultMessage.style.display = "block";
+        resultDiv.style.display = "none";
     });
 
     async function classifyImage(image) {
-    const model = modelSelector.value;
-    const reader = new FileReader();
+        const model = modelSelector.value;
+        const reader = new FileReader();
 
-    // Show loading spinner
-    document.getElementById("loading-spinner").style.display = "flex";
+        // Show loading spinner
+        document.getElementById("loading-spinner").style.display = "flex";
 
-    reader.onload = async function (e) {
-        const imageDataUrl = e.target.result;
-        const base64Image = imageDataUrl.split(",")[1];
-        const prediction = await eel.classify_image(base64Image, model)();
-        resultDiv.innerHTML = "";
-        resultMessage.style.display = "none";
-        resultDiv.style.display = "block";
-        displayResult(prediction);
+        reader.onload = async function (e) {
+            const imageDataUrl = e.target.result;
+            const base64Image = imageDataUrl.split(",")[1];
+            const prediction = await eel.classify_image(base64Image, model)();
+            resultDiv.innerHTML = "";
+            resultMessage.style.display = "none";
+            resultDiv.style.display = "block";
+            displayResult(prediction);
 
-        // Hide loading spinner
-        document.getElementById("loading-spinner").style.display = "none";
-    };
+            // Hide loading spinner
+            document.getElementById("loading-spinner").style.display = "none";
+        };
 
-    reader.readAsDataURL(image);
-}
+        reader.readAsDataURL(image);
+    }
 
     function displayResult(prediction) {
-    let resultHtml = "";
-    for (const [className, percentage] of prediction) {
-        resultHtml += `
+        let resultHtml = "";
+        for (const [className, percentage] of prediction) {
+            resultHtml += `
             <div class="percentage-bar-container">
                 <strong class="class-name">${className}</strong>
                 <div class="percentage-bar" data-percentage="${percentage}">
@@ -157,11 +157,12 @@ function displayImagePreview(image) {
                 <span class="percentage-value">${percentage.toFixed(2)}%</span>
             </div>
         `;
+        }
+        resultDiv.innerHTML = resultHtml;
     }
-    resultDiv.innerHTML = resultHtml;
-}
 
 });
+
 function showLoading() {
     const loadingDiv = document.getElementById("loading");
     loadingDiv.style.display = "block";
@@ -171,5 +172,6 @@ function hideLoading() {
     const loadingDiv = document.getElementById("loading");
     loadingDiv.style.display = "none";
 }
+
 eel.expose(showLoading);
 eel.expose(hideLoading);
