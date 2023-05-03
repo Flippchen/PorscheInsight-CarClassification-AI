@@ -134,7 +134,7 @@ function displayImagePreview(image) {
         const base64Image = imageDataUrl.split(",")[1];
         const prediction = await eel.classify_image(base64Image, model)();
         resultDiv.innerHTML = "";
-          resultMessage.style.display = "none";
+        resultMessage.style.display = "none";
         resultDiv.style.display = "block";
         displayResult(prediction);
 
