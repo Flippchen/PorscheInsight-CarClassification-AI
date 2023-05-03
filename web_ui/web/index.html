@@ -23,6 +23,7 @@
     <div class="container">
         <div id="image-name" class="image-name"></div>
         <div id="drop-zone" class="drop-zone">
+            <label for="file-input" class="sr-only">Choose an image</label>
             <p>Drag and drop your image here, or click to select a file</p>
             <input type="file" id="file-input" accept="image/*" style="display:none" />
         </div>
@@ -37,7 +38,8 @@
             <button id="remove-btn">Remove</button>
         </div>
         <div id="result" class="result">
-            <p>Result will be displayed here</p>
+            <p id="result-message">Result will be displayed here</p>
+            <div id="result-content" style="display: none;"></div>
         </div>
     </div>
 </body>

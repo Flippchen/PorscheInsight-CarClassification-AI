@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const modelSelector = document.getElementById("model-selector");
     const classifyBtn = document.getElementById("classify-btn");
     const removeBtn = document.getElementById("remove-btn");
-    const resultDiv = document.getElementById("result");
+    const resultDiv = document.getElementById("result-content");
+    const resultMessage = document.getElementById("result-message");
     const darkModeBtn = document.getElementById("dark-mode-btn");
     const darkModeStylesheet = document.getElementById("dark-mode-stylesheet");
     const imageNameDiv = document.getElementById("image-name");
@@ -117,6 +118,8 @@ function displayImagePreview(image) {
     uploadedImage = null;
     fileInput.value = "";
     dropZone.innerHTML = "<p>Drag and drop your image here, or click to select a file</p>";
+    resultMessage.style.display = "block";
+    resultDiv.style.display = "none";
     });
 
     async function classifyImage(image) {
@@ -130,6 +133,9 @@ function displayImagePreview(image) {
         const imageDataUrl = e.target.result;
         const base64Image = imageDataUrl.split(",")[1];
         const prediction = await eel.classify_image(base64Image, model)();
+        resultDiv.innerHTML = "";
+          resultMessage.style.display = "none";
+        resultDiv.style.display = "block";
         displayResult(prediction);
 
         // Hide loading spinner

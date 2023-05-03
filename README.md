@@ -36,12 +36,17 @@ or download the [executable](https://github.com/Flippchen/PorscheInsight-CarClas
 ### Architecture
 The Web UI employs a two-step process involving two models. Initially, the pre_filter model determines if an image contains a Porsche. If a Porsche is detected, the image proceeds to the second model, which classifies the car according to the user's input.
 
+<img alt="Architecture of the Web UI" src="assets/lambda_architecture.png"  height="450">
+
+To see the architecture of the Local App UI, click the arrow below.
+<details>
+<summary>App UI</summary>
 <img alt="Architecture of the Web UI" src="assets/architecture.png"  height="400">
+</details>
 
 ### ToDos
-- [ ] Re-Train pre_filter with car/porsche images with bg
+- [ ] Improve pre_filter model
 - [ ] Retrain car type model with efficientnet model
-- [ ] Add docker support
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
 
@@ -64,6 +69,7 @@ The Web UI employs a two-step process involving two models. Initially, the pre_f
 - [x] Implement new Architecture: One model classifies if a car is present and a second model classifies the car
 - [x] Implement new architecture to online version
 - [x] Add release 1.0.0
+- [x] Add docker support (AWS Lambda)
 </details>
 
 
