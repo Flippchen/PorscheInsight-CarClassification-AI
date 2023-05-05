@@ -65,7 +65,6 @@ def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool
         image = replace_background(image_data, session=session)
     else:
         image = resize_and_pad_image(image_data, target_size)
-    image.show()
     img_array = np.array(image).astype('float32')
     img_array = np.expand_dims(img_array, 0)
     return img_array
