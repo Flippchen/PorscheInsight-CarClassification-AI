@@ -65,6 +65,7 @@ def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool
         image = replace_background(image_data, session=session)
     else:
         image = resize_and_pad_image(image_data, target_size)
+    image.show()
     img_array = np.array(image).astype('float32')
     img_array = np.expand_dims(img_array, 0)
     return img_array
@@ -104,10 +105,9 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
     input_size = models[model_name].get_inputs()[0].shape[1:3]
 
     # Prepare image for filtering and predict
-    # FIXME: It is a workaround to remove the bg in first place
+    # FIXME: It is a workaround to remove the bg in first place/ Why is the prediction with black background better?
     filter_image = prepare_image(image, input_size, remove_background=True)
     filter_predictions = get_pre_filter_prediction(filter_image, "pre_filter")
-
     # If the pre_filter predicts porsche or other_car_brand, predict the correct model
     if filter_predictions[0][0] == "porsche":
         # prepared_image = prepare_image(image, input_size, remove_background=True)
