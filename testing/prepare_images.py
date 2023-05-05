@@ -8,7 +8,7 @@ from functools import cache
 
 @cache
 def get_session():
-    return new_session("isnet-general-use")
+    return new_session("u2net")
 
 
 def replace_background(im: PILImage, post_process_mask=False, session=None) -> PILImage:
@@ -53,11 +53,10 @@ def get_bounding_box(im: PILImage) -> tuple:
 def resize_cutout(im: PILImage, size: tuple = (300, 300)) -> PILImage:
     # Get the bounding box of the non-transparent content
     left, top, right, bottom = get_bounding_box(im)
-
     # Crop the image to the bounding box
     im_cropped = im.crop((left, top, right, bottom))
 
-    im_resized = resize_and_pad_image(im_cropped, size, )#fill_color=(255, 255, 255, 255)
+    im_resized = resize_and_pad_image(im_cropped, size, ) #fill_color=(255, 255, 255, 255)
 
     return im_resized
 
