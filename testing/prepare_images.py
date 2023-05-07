@@ -1,14 +1,14 @@
 import io
 import os
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageFile
 from rembg import remove, new_session
 from PIL.Image import Image as PILImage
 from functools import cache
-
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 @cache
 def get_session():
-    return new_session("isnet-general-use")
+    return new_session("u2net")
 
 
 def replace_background(im: PILImage, post_process_mask=False, session=None) -> PILImage:
@@ -53,11 +53,10 @@ def get_bounding_box(im: PILImage) -> tuple:
 def resize_cutout(im: PILImage, size: tuple = (300, 300)) -> PILImage:
     # Get the bounding box of the non-transparent content
     left, top, right, bottom = get_bounding_box(im)
-
     # Crop the image to the bounding box
     im_cropped = im.crop((left, top, right, bottom))
 
-    im_resized = resize_and_pad_image(im_cropped, size, )#fill_color=(255, 255, 255, 255)
+    im_resized = resize_and_pad_image(im_cropped, size, )  # fill_color=(255, 255, 255, 255)
 
     return im_resized
 
@@ -93,6 +92,15 @@ def resize_and_pad_image(image: PILImage, target_size: tuple, fill_color=(0, 0, 
     padded_image = ImageOps.expand(resized_image, (left_padding, top_padding, padding_width - left_padding, padding_height - top_padding), fill=fill_color)
 
     return padded_image
+
+
+def fix_image(image):
+    # Convert image to RGB if not already
+    if image.mode != "RGB":
+        image = image.convert("RGB")
+    # Fix orientation if necessary
+    image = ImageOps.exif_transpose(image)
+    return image
 
 
 def load_and_remove_bg(path, size):

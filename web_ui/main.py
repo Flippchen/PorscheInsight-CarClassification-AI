@@ -4,15 +4,15 @@ from typing import List, Tuple
 # Needs to be imported before eel to not crash when using --noconsole
 import sys, io
 
-sys.stdout = io.StringIO()
-sys.stderr = io.StringIO()
+#sys.stdout = io.StringIO()
+#sys.stderr = io.StringIO()
 
 import eel
 import base64
 from io import BytesIO
 from PIL import Image
 from utilities.class_names import get_classes_for_model
-from testing.prepare_images import replace_background, resize_and_pad_image
+from testing.prepare_images import replace_background, resize_and_pad_image, fix_image
 import pooch
 from rembg import new_session
 
@@ -96,10 +96,8 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
     image_data = base64.b64decode(image_data)
     image = Image.open(BytesIO(image_data))
 
-    # Convert image to RGB if not already
-    if image.mode != "RGB":
-        image = image.convert("RGB")
-
+    # Fix image orientation and color mode if needed
+    image = fix_image(image)
     # Get correct input size for model
     input_size = models[model_name].get_inputs()[0].shape[1:3]
 
