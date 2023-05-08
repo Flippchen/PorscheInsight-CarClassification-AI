@@ -45,7 +45,7 @@ To see the architecture of the Local App UI, click the arrow below.
 </details>
 
 ### ToDos
-- [ ] Switch to Google Cloud function or use S3 bucket
+- [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model
 - [ ] Retrain car type model with efficientnet model
 - [ ] Evaluate feature engineering/ More data augmentation
