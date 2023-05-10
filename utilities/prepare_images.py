@@ -121,5 +121,5 @@ def remove_bg_from_all_images(folder: str):
 
 
 if __name__ == '__main__':
-    folder_path = 'test_images'
+    folder_path = '../predicting/test_images'
     remove_bg_from_all_images(folder_path)

@@ -1,9 +1,8 @@
-import io
 import os
-from PIL import Image, ImageOps
-from predicting.prepare_images import (get_session, replace_background, get_bounding_box,
-                                       resize_cutout, resize_image, resize_and_pad_image,
-                                       fix_image, load_and_remove_bg, remove_bg_from_all_images)
+from PIL import Image
+from utilities.prepare_images import (get_session, replace_background, get_bounding_box,
+                                      resize_cutout, resize_image, resize_and_pad_image,
+                                      fix_image, load_and_remove_bg, remove_bg_from_all_images)
 
 
 # Make sure to replace 'your_module' with the actual name of your module file

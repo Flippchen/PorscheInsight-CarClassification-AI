@@ -119,10 +119,10 @@ You can use the build in Discord Callback to get notfications on Discord after e
 To predict with a model you can use the [test_tf_model.py](predicting/predict_tf_model.py) script. You can choose the model and the image you want to predict.
 If you want to predict with an onnx model you can use the [test_onnx_model.py](predicting/predict_onnx_model.py) script.
 
-I recommend to prepare the images with [prepare_images.py](predicting/prepare_images.py) before. Thus, an error-free and improved prediction is guaranteed.
+I recommend to prepare the images with [prepare_images.py](utilities/prepare_images.py) before. Thus, an error-free and improved prediction is guaranteed.
 ### Explain a model
 To explain a model you can use the [explainer.py](model_insights/shap/explainer.py) script. You can choose the model and the image(folder) you want to get explanations.
-I recommend to prepare the images with [prepare_images.py](predicting/prepare_images.py) before.
+I recommend to prepare the images with [prepare_images.py](utilities/prepare_images.py) before.
 
 After using shap values on the new efficientnet model and the vgg16 model, both on the old head, I found out that the vgg16 model found "better" spots to distinguish between classes, at least sometimes.
 
