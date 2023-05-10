@@ -45,6 +45,7 @@ To see the architecture of the Local App UI, click the arrow below.
 </details>
 
 ### ToDos
+- [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model
 - [ ] Retrain car type model with efficientnet model
 - [ ] Evaluate feature engineering/ More data augmentation
@@ -157,7 +158,7 @@ After the data was cleaned, there are ~30.300 pictures left. Several pictures we
 <details>
 <summary><b>Have a look at the data:</b></summary>
 
-<img alt="Sample images from Dataset" src="models/car_types/results/sample_images.png"  width="700" height="700">
+<img alt="Sample images from Dataset" src="assets/sample_images.png"  width="700" height="700">
 </details>
 
 For the training of the <b>pre_filter</b> model a mixture of the [porsche-pictures](https://github.com/Flippchen/porsche-pictures) dataset, other Open Source datasets like [cifar-10](https://www.cs.toronto.edu/~kriz/cifar.html) were used.
