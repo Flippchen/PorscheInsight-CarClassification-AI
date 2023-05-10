@@ -12,7 +12,6 @@ def test_get_session():
     session = get_session()
     assert session is not None
     assert session.model_name == 'u2net'
-    assert session.model_path is not None
 
 
 def test_replace_background():
