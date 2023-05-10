@@ -29,7 +29,7 @@ jobs:
     - name: Build binary with PyInstaller
       run: |
         cd web_ui/
-        python -m eel main.py web --add-data "../utilities/class_names.py:utilities" --add-data "../testing/prepare_images.py:testing" --collect-submodules rembg --onefile 
+        python -m eel main.py web --add-data "../utilities/class_names.py:utilities" --add-data "../utilities/prepare_images.py:utilities" --collect-submodules rembg --onefile 
 
     - name: Archive binary
       uses: actions/upload-artifact@v2
@@ -58,7 +58,7 @@ jobs:
     - name: Build binary with PyInstaller
       run: |
         cd web_ui/
-        python -m eel main.py web --add-data "..\utilities\class_names.py;utilities" --add-data "..\testing\prepare_images.py;testing" --collect-submodules rembg --onefile --noconsole
+        python -m eel main.py web --add-data "..\utilities\class_names.py;utilities" --add-data "..\utilities\prepare_images.py;utilities" --collect-submodules rembg --onefile --noconsole
 
 
     - name: Archive binary
@@ -88,7 +88,7 @@ jobs:
       - name: Build binary with PyInstaller
         run: |
           cd web_ui/
-          python -m eel main.py web --add-data "../utilities/class_names.py:utilities" --add-data "../testing/prepare_images.py:testing" --collect-submodules rembg --onefile --noconsole
+          python -m eel main.py web --add-data "../utilities/class_names.py:utilities" --add-data "../utilities/prepare_images.py:utilities" --collect-submodules rembg --onefile --noconsole
 
       - name: Archive binary
         uses: actions/upload-artifact@v2
