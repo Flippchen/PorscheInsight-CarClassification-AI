@@ -32,3 +32,5 @@ jobs:
         uses: dciborow/pyaction@0.0.13
         with:
           pylint: true
+      - name: Run pytest
+        run: pytest tests/

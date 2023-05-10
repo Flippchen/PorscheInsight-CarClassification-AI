@@ -11,12 +11,13 @@ def get_session():
     return new_session("u2net")
 
 
-def replace_background(im: PILImage, post_process_mask=False, session=None) -> PILImage:
+def replace_background(im: PILImage, post_process_mask=False, session=None, size: tuple = None) -> PILImage:
+    size = size or (300, 300)
     # if not isinstance(im, PILImage):
     #   im = Image.open(io.BytesIO(im))
     session = session or get_session()
     im = remove(im, post_process_mask=post_process_mask, session=session)
-    im = resize_cutout(im)
+    im = resize_cutout(im, size)
 
     new_im = Image.new('RGBA', im.size, 'BLACK')
     new_im.paste(im, mask=im)
@@ -107,7 +108,7 @@ def load_and_remove_bg(path, size):
     image = Image.open(path)
     # image = resize_image(image, size)
     image = resize_and_pad_image(image, size)
-    image = replace_background(image)
+    image = replace_background(image, size=size)
 
     return image
 
@@ -120,5 +121,5 @@ def remove_bg_from_all_images(folder: str):
 
 
 if __name__ == '__main__':
-    folder_path = 'test_images'
+    folder_path = '../predicting/test_images'
     remove_bg_from_all_images(folder_path)

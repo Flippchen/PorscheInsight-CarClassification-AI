@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     classifyBtn.addEventListener("click", async () => {
         if (uploadedImage) {
             const container = document.querySelector('.container');
-            container.scrollIntoView({ behavior: 'smooth' });
+            container.scrollIntoView({behavior: 'smooth'});
             classifyImage(uploadedImage);
         } else {
             alert("Please upload an image first");

@@ -3,7 +3,8 @@
 
 <a href='https://play.google.com/store/apps/details?id=com.flippchen.porsche_classifier'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="70"/></a>
 ## Description
-This repository contains scripts to train models to classify pictures of Porsche cars. It is still in an early stage.
+This repository contains scripts to train models to classify pictures of Porsche cars. 
+Check out the PowerPoint presentation [here](assets/Porsche_AI_classifier.pptx).
 
 The following different model types are available:
 
@@ -115,13 +116,13 @@ Have a look at the [releases](https://github.com/Flippchen/PorscheInsight-CarCla
 To train a model you can use the [train](training) folder. You can choose the model, the dataset and the number of epochs.
 You can use the build in Discord Callback to get notfications on Discord after every epoch. You need to change the discord webhook url in the training file.
 ### Predict with a model (Inference)
-To predict with a model you can use the [test_tf_model.py](testing/test_tf_model.py) script. You can choose the model and the image you want to predict.
-If you want to predict with an onnx model you can use the [test_onnx_model.py](testing/test_onnx_model.py) script.
+To predict with a model you can use the [test_tf_model.py](predicting/predict_tf_model.py) script. You can choose the model and the image you want to predict.
+If you want to predict with an onnx model you can use the [test_onnx_model.py](predicting/predict_onnx_model.py) script.
 
-I recommend to prepare the images with [prepare_images.py](testing/prepare_images.py) before. Thus, an error-free and improved prediction is guaranteed.
+I recommend to prepare the images with [prepare_images.py](utilities/prepare_images.py) before. Thus, an error-free and improved prediction is guaranteed.
 ### Explain a model
 To explain a model you can use the [explainer.py](model_insights/shap/explainer.py) script. You can choose the model and the image(folder) you want to get explanations.
-I recommend to prepare the images with [prepare_images.py](testing/prepare_images.py) before.
+I recommend to prepare the images with [prepare_images.py](utilities/prepare_images.py) before.
 
 After using shap values on the new efficientnet model and the vgg16 model, both on the old head, I found out that the vgg16 model found "better" spots to distinguish between classes, at least sometimes.
 
