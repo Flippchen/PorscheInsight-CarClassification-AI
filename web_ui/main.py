@@ -12,7 +12,7 @@ import base64
 from io import BytesIO
 from PIL import Image
 from utilities.class_names import get_classes_for_model
-from testing.prepare_images import replace_background, resize_and_pad_image, fix_image
+from predicting.prepare_images import replace_background, resize_and_pad_image, fix_image
 import pooch
 from rembg import new_session
 
