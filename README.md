@@ -3,7 +3,8 @@
 
 <a href='https://play.google.com/store/apps/details?id=com.flippchen.porsche_classifier'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="70"/></a>
 ## Description
-This repository contains scripts to train models to classify pictures of Porsche cars. It is still in an early stage.
+This repository contains scripts to train models to classify pictures of Porsche cars. 
+Check out the PowerPoint presentation [here](assets/Porsche_AI_classifier.pptx).
 
 The following different model types are available:
 
