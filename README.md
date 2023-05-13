@@ -46,6 +46,8 @@ To see the architecture of the Local App UI, click the arrow below.
 </details>
 
 ### ToDos
+- [ ] Display the mask of the predicted car
+- [ ] Build an ensemble model
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model
 - [ ] Retrain car type model with efficientnet model
