@@ -3,20 +3,24 @@ import os
 from PIL import Image, ImageOps, ImageFile
 from rembg import remove, new_session
 from PIL.Image import Image as PILImage
+from typing import Tuple
 from functools import cache
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 
 @cache
 def get_session():
     return new_session("u2net")
 
 
-def replace_background(im: PILImage, post_process_mask=False, session=None, size: tuple = None) -> PILImage:
+def replace_background(im: PILImage, post_process_mask=False, session=None, size: tuple = None) -> Tuple[PILImage, PILImage]:
     size = size or (300, 300)
     # if not isinstance(im, PILImage):
     #   im = Image.open(io.BytesIO(im))
     session = session or get_session()
     im = remove(im, post_process_mask=post_process_mask, session=session)
+    mask = im.copy()
     im = resize_cutout(im, size)
 
     new_im = Image.new('RGBA', im.size, 'BLACK')
@@ -28,7 +32,7 @@ def replace_background(im: PILImage, post_process_mask=False, session=None, size
     image = Image.open(io.BytesIO(im_bytes))
     image = image.convert('RGB')
 
-    return image
+    return image, mask
 
 
 def get_bounding_box(im: PILImage) -> tuple:
@@ -102,6 +106,25 @@ def fix_image(image):
     # Fix orientation if necessary
     image = ImageOps.exif_transpose(image)
     return image
+
+
+def convert_mask(mask: Image, color: Tuple = (0, 0, 255)) -> Image:
+    # Convert the mask to one color
+    data = mask.load()
+    width, height = mask.size
+    for y in range(height):
+        for x in range(width):
+            r, g, b, a = data[x, y]
+            if a != 0:
+                data[x, y] = color + (a,)
+
+    # Make the mask half transparent
+    for y in range(height):
+        for x in range(width):
+            r, g, b, a = data[x, y]
+            data[x, y] = (r, g, b, a // 2)
+
+    return mask
 
 
 def load_and_remove_bg(path, size):

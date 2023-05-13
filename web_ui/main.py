@@ -5,15 +5,16 @@ import onnxruntime as ort
 from typing import List, Tuple
 # Needs to be imported before eel to not crash when using --noconsole
 
-sys.stdout = io.StringIO()
-sys.stderr = io.StringIO()
+#sys.stdout = io.StringIO()
+#sys.stderr = io.StringIO()
 
 import eel
 import base64
 from io import BytesIO
 from PIL import Image
+
 from utilities.class_names import get_classes_for_model
-from utilities.prepare_images import replace_background, resize_and_pad_image, fix_image
+from utilities.prepare_images import replace_background, resize_and_pad_image, fix_image, convert_mask
 import pooch
 from rembg import new_session
 
@@ -61,14 +62,16 @@ def load_model(model_name: str) -> ort.InferenceSession:
     return ort.InferenceSession(model_path, providers=['CPUExecutionProvider'])
 
 
-def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool) -> np.ndarray:
+def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool) -> Tuple[np.ndarray, Image.Image]:
     if remove_background:
-        image = replace_background(image_data, session=session)
+        image, mask = replace_background(image_data, session=session)
     else:
         image = resize_and_pad_image(image_data, target_size)
     img_array = np.array(image).astype('float32')
     img_array = np.expand_dims(img_array, 0)
-    return img_array
+
+    mask = mask or None
+    return img_array, mask
 
 
 def get_top_3_predictions(prediction: np.ndarray, model_name: str) -> List[Tuple[str, float]]:
@@ -88,7 +91,7 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
 
 
 @eel.expose
-def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
+def classify_image(image_data: str, model_name: str) -> tuple[list[tuple[str, float]], str] | list[tuple[str, float]]:
     # Load model if not loaded yet
     if models[model_name] is None:
         models[model_name] = load_model(model_name)
@@ -104,7 +107,12 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
 
     # Prepare image for filtering and predict
     # FIXME: It is a workaround to remove the bg in first place/ Why is the prediction with black background better?
-    filter_image = prepare_image(image, input_size, remove_background=True)
+    filter_image, mask = prepare_image(image, input_size, remove_background=True)
+
+    mask = convert_mask(mask)
+    buffer = io.BytesIO()
+    mask.save(buffer, format="PNG")
+    mask_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
     filter_predictions = get_pre_filter_prediction(filter_image, "pre_filter")
     # If the pre_filter predicts porsche or other_car_brand, predict the correct model
     if filter_predictions[0][0] == "porsche":
@@ -114,9 +122,9 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
         # Get top 3 predictions
         top_3 = get_top_3_predictions(prediction[0], model_name)
 
-        return top_3
+        return top_3, mask_base64
 
-    return filter_predictions
+    return filter_predictions, mask_base64
 
 
 eel.init("web")
