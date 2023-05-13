@@ -139,6 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
             resultMessage.style.display = "none";
             resultDiv.style.display = "block";
             displayResult(prediction);
+            overlayMask(prediction[1]);
 
             // Hide loading spinner
             document.getElementById("loading-spinner").style.display = "none";
@@ -148,20 +149,44 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayResult(prediction) {
-        let resultHtml = "";
-        for (const [className, percentage] of prediction) {
-            resultHtml += `
-            <div class="percentage-bar-container">
-                <strong class="class-name">${className}</strong>
-                <div class="percentage-bar" data-percentage="${percentage}">
-                    <div class="percentage-bar-inner" style="width: ${percentage}%;"></div>
-                </div>
-                <span class="percentage-value">${percentage.toFixed(2)}%</span>
+    let resultHtml = "";
+
+    for (const [className, percentage] of prediction[0]) {
+        resultHtml += `
+        <div class="percentage-bar-container">
+            <strong class="class-name">${className}</strong>
+            <div class="percentage-bar" data-percentage="${percentage}">
+                <div class="percentage-bar-inner" style="width: ${percentage}%;"></div>
             </div>
-        `;
-        }
-        resultDiv.innerHTML = resultHtml;
+            <span class="percentage-value">${percentage.toFixed(2)}%</span>
+        </div>
+    `;
     }
+
+    resultDiv.innerHTML = resultHtml;
+}
+
+function overlayMask(maskData) {
+    // Create a new image
+    const maskImage = new Image();
+    maskImage.onload = function() {
+        // Draw the uploaded image and the mask onto a canvas
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        const img = dropZone.querySelector('img');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        context.drawImage(img, 0, 0, img.width, img.height);
+        context.drawImage(maskImage, 0, 0, img.width, img.height);
+        // Replace the uploaded image with the new canvas
+        const dataUrl = canvas.toDataURL();
+        img.src = dataUrl;
+    };
+    // Load the mask image data
+    maskImage.src = 'data:image/png;base64,' + maskData;
+}
+
+
 
 });
 
