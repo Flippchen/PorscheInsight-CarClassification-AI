@@ -99,7 +99,7 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
 
 
 @eel.expose
-def classify_image(image_data: str, model_name: str, show_mask: str = False) -> tuple[list[tuple[str, float]], str] | list[list[tuple[str, float]]]:
+def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> tuple[list[tuple[str, float]], str] | list[list[tuple[str, float]]]:
     # Loading the model if it's not already loaded
     if models[model_name] is None:
         models[model_name] = load_model(model_name)
