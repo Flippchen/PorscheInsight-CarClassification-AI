@@ -5,8 +5,8 @@ import onnxruntime as ort
 from typing import List, Tuple
 # Needs to be imported before eel to not crash when using --noconsole
 
-# sys.stdout = io.StringIO()
-# sys.stderr = io.StringIO()
+sys.stdout = io.StringIO()
+sys.stderr = io.StringIO()
 
 import eel
 import base64
