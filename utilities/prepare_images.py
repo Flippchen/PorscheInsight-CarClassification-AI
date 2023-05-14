@@ -1,11 +1,10 @@
 import io
 import os
-from PIL import Image, ImageOps, ImageFile
+from PIL import Image, ImageOps, ImageFile, ImageFilter, ImageChops
 from rembg import remove, new_session
 from PIL.Image import Image as PILImage
 from typing import Tuple
 from functools import cache
-
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
@@ -14,7 +13,7 @@ def get_session():
     return new_session("u2net")
 
 
-def replace_background(im: PILImage, post_process_mask=False, session=None, size: tuple = None) -> Tuple[PILImage, PILImage]:
+def replace_background(im: PILImage, post_process_mask=True, session=None, size: tuple = None) -> Tuple[PILImage, PILImage]:
     size = size or (300, 300)
     # if not isinstance(im, PILImage):
     #   im = Image.open(io.BytesIO(im))
@@ -108,23 +107,39 @@ def fix_image(image):
     return image
 
 
-def convert_mask(mask: Image, color: Tuple = (0, 0, 255)) -> Image:
-    # Convert the mask to one color
-    data = mask.load()
+def convert_mask(mask, color=(29, 132, 181), border_color=(219, 84, 97), border_fraction=0.03):  # colors are in RGB format
+    # Convert the image to RGBA if it is not already
+    if mask.mode != 'RGBA':
+        mask = mask.convert('RGBA')
+
+    border_size = int(min(mask.size) * border_fraction)
+
+    if border_size % 2 == 0:
+        border_size += 1
+
+    # Create a copy of the mask and expand it to create the border
+    border_mask = mask.filter(ImageFilter.MaxFilter(border_size))
+
+    # Create the border by subtracting the original mask from the expanded mask
+    border = ImageChops.difference(border_mask, mask)
+
+    # Step 1: Convert the mask and the border to the desired colors
+    data_mask = mask.load()  # load the data of the mask
+    data_border = border.load()  # load the data of the border
     width, height = mask.size
     for y in range(height):
         for x in range(width):
-            r, g, b, a = data[x, y]
-            if a != 0:
-                data[x, y] = color + (a,)
+            r, g, b, a = data_mask[x, y]  # get the RGBA values of the pixel
+            if a != 0:  # if the pixel is not fully transparent
+                data_mask[x, y] = color + (a // 4,)  # set the color of the pixel to the desired color and make it half transparent
+            r, g, b, a = data_border[x, y]  # get the RGBA values of the pixel
+            if a != 0:  # if the pixel is not fully transparent
+                data_border[x, y] = border_color + (a,)  # set the color of the pixel to the desired border color
 
-    # Make the mask half transparent
-    for y in range(height):
-        for x in range(width):
-            r, g, b, a = data[x, y]
-            data[x, y] = (r, g, b, a // 2)
+    # Step 2: Combine the mask and the border
+    mask_with_border = ImageChops.add(mask, border)
 
-    return mask
+    return mask_with_border
 
 
 def load_and_remove_bg(path, size):
