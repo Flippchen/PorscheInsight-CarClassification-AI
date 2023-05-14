@@ -123,18 +123,18 @@ def convert_mask(mask, color=(29, 132, 181), border_color=(219, 84, 97), border_
     # Create the border by subtracting the original mask from the expanded mask
     border = ImageChops.difference(border_mask, mask)
 
-    # Step 1: Convert the mask and the border to the desired colors
-    data_mask = mask.load()  # load the data of the mask
-    data_border = border.load()  # load the data of the border
+    # Convert the mask and the border to the desired colors
+    data_mask = mask.load()
+    data_border = border.load()
     width, height = mask.size
     for y in range(height):
         for x in range(width):
-            r, g, b, a = data_mask[x, y]  # get the RGBA values of the pixel
-            if a != 0:  # if the pixel is not fully transparent
-                data_mask[x, y] = color + (a // 4,)  # set the color of the pixel to the desired color and make it half transparent
-            r, g, b, a = data_border[x, y]  # get the RGBA values of the pixel
-            if a != 0:  # if the pixel is not fully transparent
-                data_border[x, y] = border_color + (a,)  # set the color of the pixel to the desired border color
+            r, g, b, a = data_mask[x, y]
+            if a != 0:
+                data_mask[x, y] = color + (a // 4,)
+            r, g, b, a = data_border[x, y]
+            if a != 0:
+                data_border[x, y] = border_color + (a,)
 
     # Step 2: Combine the mask and the border
     mask_with_border = ImageChops.add(mask, border)
