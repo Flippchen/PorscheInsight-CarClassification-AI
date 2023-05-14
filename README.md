@@ -46,7 +46,6 @@ To see the architecture of the Local App UI, click the arrow below.
 </details>
 
 ### ToDos
-- [ ] Display the mask of the predicted car
 - [ ] Build an ensemble model
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model
@@ -74,6 +73,7 @@ To see the architecture of the Local App UI, click the arrow below.
 - [x] Implement new architecture to online version
 - [x] Add release 1.0.0
 - [x] Add docker support (AWS Lambda)
+- [x] Display the mask of the predicted car
 </details>
 
 
