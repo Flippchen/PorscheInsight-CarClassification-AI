@@ -5,8 +5,8 @@ import onnxruntime as ort
 from typing import List, Tuple
 # Needs to be imported before eel to not crash when using --noconsole
 
-#sys.stdout = io.StringIO()
-#sys.stderr = io.StringIO()
+# sys.stdout = io.StringIO()
+# sys.stderr = io.StringIO()
 
 import eel
 import base64
@@ -62,15 +62,23 @@ def load_model(model_name: str) -> ort.InferenceSession:
     return ort.InferenceSession(model_path, providers=['CPUExecutionProvider'])
 
 
-def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool) -> Tuple[np.ndarray, Image.Image]:
-    if remove_background:
+def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool, show_mask: bool) -> Tuple[np.ndarray, Image.Image]:
+    if remove_background and show_mask:
         image, mask = replace_background(image_data, session=session)
+    elif remove_background:
+        image, _ = replace_background(image_data, session=session)
+        mask = None
     else:
         image = resize_and_pad_image(image_data, target_size)
+        mask = None
+
     img_array = np.array(image).astype('float32')
     img_array = np.expand_dims(img_array, 0)
 
-    mask = mask or None
+    if mask is None:
+        mask = Image.fromarray(np.zeros((1, 1), dtype=np.uint8))
+        mask = mask.convert("RGBA")
+
     return img_array, mask
 
 
@@ -91,40 +99,53 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
 
 
 @eel.expose
-def classify_image(image_data: str, model_name: str) -> tuple[list[tuple[str, float]], str] | list[tuple[str, float]]:
-    # Load model if not loaded yet
+def classify_image(image_data: str, model_name: str, show_mask: str = False) -> tuple[list[tuple[str, float]], str] | list[list[tuple[str, float]]]:
+    # Loading the model if it's not already loaded
     if models[model_name] is None:
         models[model_name] = load_model(model_name)
 
-    # Decode image and open it
+    # Decoding the base64 image data and opening the image
     image_data = base64.b64decode(image_data)
     image = Image.open(BytesIO(image_data))
+    show_mask = True if show_mask == "yes" else False
 
-    # Fix image orientation and color mode if needed
+    # Correcting image orientation and color mode if necessary
     image = fix_image(image)
-    # Get correct input size for model
+
+    # Retrieving the required input size for the specified model
     input_size = models[model_name].get_inputs()[0].shape[1:3]
 
-    # Prepare image for filtering and predict
-    # FIXME: It is a workaround to remove the bg in first place/ Why is the prediction with black background better?
-    filter_image, mask = prepare_image(image, input_size, remove_background=True)
+    # Preparing image for processing and prediction
+    # FIXME: Currently, the background is removed prior to prediction. This is a workaround,
+    # as predictions seem to be better with a black background.
+    filter_image, mask = prepare_image(image, input_size, remove_background=True, show_mask=show_mask)
 
+    # Converting the mask for processing
     mask = convert_mask(mask)
     buffer = io.BytesIO()
     mask.save(buffer, format="PNG")
     mask_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+    # Getting initial predictions before applying filters
     filter_predictions = get_pre_filter_prediction(filter_image, "pre_filter")
-    # If the pre_filter predicts porsche or other_car_brand, predict the correct model
+
+    # If the initial prediction is 'porsche' or other car brands, run the specified model's prediction
     if filter_predictions[0][0] == "porsche":
-        # prepared_image = prepare_image(image, input_size, remove_background=True)
         input_name = models[model_name].get_inputs()[0].name
         prediction = models[model_name].run(None, {input_name: filter_image})
-        # Get top 3 predictions
+
+        # Retrieving the top 3 predictions
         top_3 = get_top_3_predictions(prediction[0], model_name)
 
-        return top_3, mask_base64
+        if show_mask:
+            return top_3, mask_base64
+        else:
+            return [top_3]
 
-    return filter_predictions, mask_base64
+    # Returning the initial predictions and an optional mask if show_mask is set to 'yes'
+    if show_mask:
+        return filter_predictions, mask_base64
+    return [filter_predictions]
 
 
 eel.init("web")
