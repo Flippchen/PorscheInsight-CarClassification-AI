@@ -131,20 +131,24 @@ def convert_mask(mask, color=(29, 132, 181), border_color=(219, 84, 97), border_
     border = ImageChops.difference(border_mask, mask)
 
     # Convert the mask and the border to the desired colors
-    data_mask = mask.load()
-    data_border = border.load()
-    width, height = mask.size
-    for y in range(height):
-        for x in range(width):
-            r, g, b, a = data_mask[x, y]
-            if a != 0:
-                data_mask[x, y] = color + (a // 4,)
-            r, g, b, a = data_border[x, y]
-            if a != 0:
-                data_border[x, y] = border_color + (a,)
+    mask_np = np.array(mask)
+    border_np = np.array(border)
 
-    # Step 2: Combine the mask and the border
-    mask_with_border = ImageChops.add(mask, border)
+    # Mask the areas where alpha channel is not zero
+    mask_area = mask_np[..., 3] != 0
+    border_area = border_np[..., 3] != 0
+
+    # Replace RGB channels with desired color while keeping alpha channel the same
+    mask_np[mask_area, :3] = color
+    mask_np[mask_area, 3] = mask_np[mask_area, 3] // 4
+    border_np[border_area, :3] = border_color
+
+    # Convert back to PIL images
+    mask = Image.fromarray(mask_np)
+    border = Image.fromarray(border_np)
+
+    # Combine the mask and the border
+    mask_with_border = Image.alpha_composite(mask, border)
 
     return mask_with_border
 
