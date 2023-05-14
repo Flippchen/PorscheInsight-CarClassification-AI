@@ -157,15 +157,15 @@ def load_and_remove_bg(path, size):
     image = Image.open(path)
     # image = resize_image(image, size)
     image = resize_and_pad_image(image, size)
-    image = replace_background(image, size=size)
+    image, mask = replace_background(image, size=size)
 
-    return image
+    return image, mask
 
 
 def remove_bg_from_all_images(folder: str):
     for image in os.listdir(f'{folder}'):
         print("Removing background from", image)
-        img = load_and_remove_bg(f"{folder}/{image}", (300, 300))
+        img, mask = load_and_remove_bg(f"{folder}/{image}", (300, 300))
         img.save(f"{folder}/{image}")
 
 
