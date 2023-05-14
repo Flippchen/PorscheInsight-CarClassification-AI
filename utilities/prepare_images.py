@@ -1,5 +1,8 @@
 import io
 import os
+
+import numpy as np
+from scipy.ndimage import maximum_filter
 from PIL import Image, ImageOps, ImageFile, ImageFilter, ImageChops
 from rembg import remove, new_session
 from PIL.Image import Image as PILImage
@@ -118,7 +121,11 @@ def convert_mask(mask, color=(29, 132, 181), border_color=(219, 84, 97), border_
         border_size += 1
 
     # Create a copy of the mask and expand it to create the border
-    border_mask = mask.filter(ImageFilter.MaxFilter(border_size))
+    mask_np = np.array(mask)
+    border_mask_np = maximum_filter(mask_np, size=border_size)
+
+    # Convert back to PIL image
+    border_mask = Image.fromarray(border_mask_np)
 
     # Create the border by subtracting the original mask from the expanded mask
     border = ImageChops.difference(border_mask, mask)
