@@ -110,7 +110,7 @@ def fix_image(image):
     return image
 
 
-def convert_mask(mask, color=(29, 132, 181), border_color=(219, 84, 97), border_fraction=0.03):  # colors are in RGB format
+def convert_mask(mask, color=(29, 132, 181), border_color=(219, 84, 97), border_fraction=0.03):
     # Convert the image to RGBA if it is not already
     if mask.mode != 'RGBA':
         mask = mask.convert('RGBA')
