@@ -45,3 +45,8 @@ input[type="password"].dark-mode,
   color: #ffffff;
   border: 1px solid #6c757d;
 }
+#show-mask.dark-mode {
+  background-color: #3c4049;
+  color: #ffffff;
+  border: 1px solid #6c757d;
+}

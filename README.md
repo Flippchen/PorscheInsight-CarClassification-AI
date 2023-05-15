@@ -32,7 +32,7 @@ python web_app/main.py
 or download the [executable](https://github.com/Flippchen/PorscheInsight-CarClassification-AI/actions).
 
 ### Demo
-<img alt="Screenshot of the Web UI" src="assets/web_app/demo_web_ui.gif"  height="500">
+<img alt="Screenshot of the Web UI" src="assets/web_app/demo_web_ui_mask.gif"  height="500">
 
 ### Architecture
 The Web UI employs a two-step process involving two models. Initially, the pre_filter model determines if an image contains a Porsche. If a Porsche is detected, the image proceeds to the second model, which classifies the car according to the user's input.
@@ -46,6 +46,7 @@ To see the architecture of the Local App UI, click the arrow below.
 </details>
 
 ### ToDos
+- [ ] Build an ensemble model
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model
 - [ ] Retrain car type model with efficientnet model
@@ -72,6 +73,7 @@ To see the architecture of the Local App UI, click the arrow below.
 - [x] Implement new architecture to online version
 - [x] Add release 1.0.0
 - [x] Add docker support (AWS Lambda)
+- [x] Display the mask of the predicted car
 </details>
 
 

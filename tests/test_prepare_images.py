@@ -16,9 +16,11 @@ def test_get_session():
 def test_replace_background():
     # Test using a sample image
     im = Image.new('RGB', (100, 100), 'WHITE')
-    new_im = replace_background(im)
+    new_im, mask = replace_background(im)
     assert new_im is not None
     assert isinstance(new_im, Image.Image)
+    assert mask is not None
+    assert isinstance(mask, Image.Image)
 
 
 def test_get_bounding_box():
@@ -55,9 +57,11 @@ def test_load_and_remove_bg(tmpdir):
     test_image = Image.new('RGB', (100, 100), 'WHITE')
     test_image_path = os.path.join(tmpdir, 'test_image.jpg')
     test_image.save(test_image_path)
-    loaded_im = load_and_remove_bg(test_image_path, (50, 50))
+    loaded_im, mask = load_and_remove_bg(test_image_path, (50, 50))
     assert loaded_im is not None
     assert loaded_im.size == (50, 50)
+    assert mask is not None
+    assert mask.size == (50, 50)
 
 
 def test_remove_bg_from_all_images(tmpdir):

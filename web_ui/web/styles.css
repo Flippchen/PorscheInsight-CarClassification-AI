@@ -240,4 +240,34 @@ button:hover {
   transform: translateY(-2px);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.model-selector-container{
+  flex: 1; /* Makes both elements expand to take up the full width of the container */
+  margin-right: 1rem;
+  width: 100%;
+}
+.mask-option-container {
+  flex: 1; /* Makes both elements expand to take up the full width of the container */
+  margin-left: 1rem;
+  width: 100%;
+}
+
+#show-mask{
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #f2f2f2;
+  appearance: none;
+  outline: none;
+}
+
 

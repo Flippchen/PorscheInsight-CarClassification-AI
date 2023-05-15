@@ -10,38 +10,49 @@
     <script type="text/javascript" src="script.js"></script>
 </head>
 <body>
-    <h1>Porsche Classifier</h1>
-    <div id="loading" class="loading" style="display:none">
+<h1>Porsche Classifier</h1>
+<div id="loading" class="loading" style="display:none">
     <p>Loading model, please wait...</p>
-    </div>
-    <div id="loading-spinner" class="loading-spinner">
+</div>
+<div id="loading-spinner" class="loading-spinner">
     <div class="spinner"></div>
+</div>
+<header>
+    <button id="dark-mode-btn">Toggle Dark Mode</button>
+</header>
+<div class="container">
+    <div id="image-name" class="image-name"></div>
+    <div id="drop-zone" class="drop-zone">
+        <label for="file-input" class="sr-only">Choose an image</label>
+        <p>Drag and drop your image here, or click to select a file</p>
+        <input type="file" id="file-input" accept="image/*" style="display:none"/>
     </div>
-    <header>
-        <button id="dark-mode-btn">Toggle Dark Mode</button>
-    </header>
-    <div class="container">
-        <div id="image-name" class="image-name"></div>
-        <div id="drop-zone" class="drop-zone">
-            <label for="file-input" class="sr-only">Choose an image</label>
-            <p>Drag and drop your image here, or click to select a file</p>
-            <input type="file" id="file-input" accept="image/*" style="display:none" />
+    <div class="controls">
+        <div class="controls-row">
+            <div class="model-selector-container">
+                <label for="model-selector">Choose a model:</label>
+                <select id="model-selector">
+                    <option value="car_type">Car Type</option>
+                    <option value="specific_model_variants">Car Series</option>
+                    <option value="all_specific_model_variants">All Model Variants</option>
+                </select>
+            </div>
+            <div class="mask-option-container">
+                <label for="show-mask">Show mask:</label>
+                <select id="show-mask" title="This option shows the mask of the recognized object. If turned on, the inference prediction needs more time and data.">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+            </div>
         </div>
-        <div class="controls">
-            <label for="model-selector">Choose a model:</label>
-            <select id="model-selector">
-                <option value="car_type">Car Type</option>
-                <option value="specific_model_variants">Car Series</option>
-                <option value="all_specific_model_variants">All Model Variants</option>
-            </select>
-            <button id="classify-btn">Classify</button>
-            <button id="remove-btn" class="red-button">Remove</button>
-        </div>
-        <div id="result" class="result">
-            <p id="result-message">Result will be displayed here</p>
-            <div id="result-content" style="display: none;"></div>
-        </div>
+        <button id="classify-btn">Classify</button>
+        <button id="remove-btn" class="red-button">Remove</button>
     </div>
+    <div id="result" class="result">
+        <p id="result-message">Result will be displayed here</p>
+        <div id="result-content" style="display: none;"></div>
+    </div>
+</div>
 </body>
 </html>
 

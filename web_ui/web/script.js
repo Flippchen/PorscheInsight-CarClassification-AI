@@ -1,7 +1,9 @@
+let overlayDisplayed = false;
 document.addEventListener("DOMContentLoaded", function () {
     const dropZone = document.getElementById("drop-zone");
     const fileInput = document.getElementById("file-input");
     const modelSelector = document.getElementById("model-selector");
+    const maskSelector = document.getElementById("show-mask");
     const classifyBtn = document.getElementById("classify-btn");
     const removeBtn = document.getElementById("remove-btn");
     const resultDiv = document.getElementById("result-content");
@@ -32,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector(".result").classList.add("dark-mode");
         document.getElementById("model-selector").classList.add("dark-mode");
         document.getElementById("dark-mode-btn").classList.add("dark-mode");
+        document.getElementById("show-mask").classList.add("dark-mode");
         document.querySelector("h1").classList.add("dark-mode");
         localStorage.setItem("darkMode", "enabled");
     }
@@ -44,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector(".result").classList.remove("dark-mode");
         document.getElementById("model-selector").classList.remove("dark-mode");
         document.getElementById("dark-mode-btn").classList.remove("dark-mode");
+        document.getElementById("show-mask").classList.remove("dark-mode");
         document.querySelector("h1").classList.remove("dark-mode");
         localStorage.setItem("darkMode", "disabled");
     }
@@ -78,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const file = e.target.files[0];
         if (file) {
             uploadedImage = file;
+            overlayDisplayed = false;
             displayImagePreview(file);
         }
     });
@@ -93,6 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const file = files[0];
             if (file.type.startsWith("image/")) {
                 uploadedImage = file;
+                overlayDisplayed = false;
                 displayImagePreview(file);
             }
         }
@@ -127,18 +133,28 @@ document.addEventListener("DOMContentLoaded", function () {
     async function classifyImage(image) {
         const model = modelSelector.value;
         const reader = new FileReader();
-
+        const showMask = maskSelector.value;
         // Show loading spinner
         document.getElementById("loading-spinner").style.display = "flex";
 
         reader.onload = async function (e) {
             const imageDataUrl = e.target.result;
             const base64Image = imageDataUrl.split(",")[1];
-            const prediction = await eel.classify_image(base64Image, model)();
+            let prediction;
+            if (showMask === "yes" && !overlayDisplayed) {
+                prediction = await eel.classify_image(base64Image, model, showMask)();
+            } else {
+                prediction = await eel.classify_image(base64Image, model)();
+            }
             resultDiv.innerHTML = "";
             resultMessage.style.display = "none";
             resultDiv.style.display = "block";
             displayResult(prediction);
+            if (showMask === "yes" && !overlayDisplayed) {
+                overlayMask(prediction[1]);
+                overlayDisplayed = true;
+            }
+
 
             // Hide loading spinner
             document.getElementById("loading-spinner").style.display = "none";
@@ -149,19 +165,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function displayResult(prediction) {
         let resultHtml = "";
-        for (const [className, percentage] of prediction) {
+
+        for (const [className, percentage] of prediction[0]) {
             resultHtml += `
-            <div class="percentage-bar-container">
-                <strong class="class-name">${className}</strong>
-                <div class="percentage-bar" data-percentage="${percentage}">
-                    <div class="percentage-bar-inner" style="width: ${percentage}%;"></div>
-                </div>
-                <span class="percentage-value">${percentage.toFixed(2)}%</span>
+        <div class="percentage-bar-container">
+            <strong class="class-name">${className}</strong>
+            <div class="percentage-bar" data-percentage="${percentage}">
+                <div class="percentage-bar-inner" style="width: ${percentage}%;"></div>
             </div>
-        `;
+            <span class="percentage-value">${percentage.toFixed(2)}%</span>
+        </div>
+    `;
         }
+
         resultDiv.innerHTML = resultHtml;
     }
+
+    function overlayMask(maskData) {
+        // Create a new image
+        const maskImage = new Image();
+        maskImage.onload = function () {
+            // Draw the uploaded image and the mask onto a canvas
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const img = dropZone.querySelector('img');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0, img.width, img.height);
+            context.drawImage(maskImage, 0, 0, img.width, img.height);
+            // Replace the uploaded image with the new canvas
+            const dataUrl = canvas.toDataURL();
+            img.src = dataUrl;
+        };
+        // Load the mask image data
+        maskImage.src = 'data:image/png;base64,' + maskData;
+    }
+
 
 });
 

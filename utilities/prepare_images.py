@@ -1,22 +1,28 @@
 import io
 import os
-from PIL import Image, ImageOps, ImageFile
+
+import numpy as np
+from scipy.ndimage import maximum_filter
+from PIL import Image, ImageOps, ImageFile, ImageFilter, ImageChops
 from rembg import remove, new_session
 from PIL.Image import Image as PILImage
+from typing import Tuple
 from functools import cache
 ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 
 @cache
 def get_session():
     return new_session("u2net")
 
 
-def replace_background(im: PILImage, post_process_mask=False, session=None, size: tuple = None) -> PILImage:
+def replace_background(im: PILImage, post_process_mask=True, session=None, size: tuple = None) -> Tuple[PILImage, PILImage]:
     size = size or (300, 300)
     # if not isinstance(im, PILImage):
     #   im = Image.open(io.BytesIO(im))
     session = session or get_session()
     im = remove(im, post_process_mask=post_process_mask, session=session)
+    mask = im.copy()
     im = resize_cutout(im, size)
 
     new_im = Image.new('RGBA', im.size, 'BLACK')
@@ -28,7 +34,7 @@ def replace_background(im: PILImage, post_process_mask=False, session=None, size
     image = Image.open(io.BytesIO(im_bytes))
     image = image.convert('RGB')
 
-    return image
+    return image, mask
 
 
 def get_bounding_box(im: PILImage) -> tuple:
@@ -104,19 +110,62 @@ def fix_image(image):
     return image
 
 
+def convert_mask(mask, color=(29, 132, 181), border_color=(219, 84, 97), border_fraction=0.03):
+    # Convert the image to RGBA if it is not already
+    if mask.mode != 'RGBA':
+        mask = mask.convert('RGBA')
+
+    border_size = int(min(mask.size) * border_fraction)
+
+    if border_size % 2 == 0:
+        border_size += 1
+
+    # Create a copy of the mask and expand it to create the border
+    mask_np = np.array(mask)
+    border_mask_np = maximum_filter(mask_np, size=border_size)
+
+    # Convert back to PIL image
+    border_mask = Image.fromarray(border_mask_np)
+
+    # Create the border by subtracting the original mask from the expanded mask
+    border = ImageChops.difference(border_mask, mask)
+
+    # Convert the mask and the border to the desired colors
+    mask_np = np.array(mask)
+    border_np = np.array(border)
+
+    # Mask the areas where alpha channel is not zero
+    mask_area = mask_np[..., 3] != 0
+    border_area = border_np[..., 3] != 0
+
+    # Replace RGB channels with desired color while keeping alpha channel the same
+    mask_np[mask_area, :3] = color
+    mask_np[mask_area, 3] = mask_np[mask_area, 3] // 4
+    border_np[border_area, :3] = border_color
+
+    # Convert back to PIL images
+    mask = Image.fromarray(mask_np)
+    border = Image.fromarray(border_np)
+
+    # Combine the mask and the border
+    mask_with_border = Image.alpha_composite(mask, border)
+
+    return mask_with_border
+
+
 def load_and_remove_bg(path, size):
     image = Image.open(path)
     # image = resize_image(image, size)
     image = resize_and_pad_image(image, size)
-    image = replace_background(image, size=size)
+    image, mask = replace_background(image, size=size)
 
-    return image
+    return image, mask
 
 
 def remove_bg_from_all_images(folder: str):
     for image in os.listdir(f'{folder}'):
         print("Removing background from", image)
-        img = load_and_remove_bg(f"{folder}/{image}", (300, 300))
+        img, mask = load_and_remove_bg(f"{folder}/{image}", (300, 300))
         img.save(f"{folder}/{image}")
 
 
