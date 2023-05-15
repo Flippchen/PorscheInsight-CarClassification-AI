@@ -248,10 +248,14 @@ button:hover {
   margin-bottom: 1rem;
 }
 
-.model-selector-container,
+.model-selector-container{
+  flex: 1; /* Makes both elements expand to take up the full width of the container */
+  margin-right: 1rem;
+  width: 100%;
+}
 .mask-option-container {
   flex: 1; /* Makes both elements expand to take up the full width of the container */
-  margin: 0 1rem; /* Adds space between the elements */
+  margin-left: 1rem;
   width: 100%;
 }
 
