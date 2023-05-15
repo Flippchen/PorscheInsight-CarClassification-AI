@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector(".container").classList.add("dark-mode");
         document.querySelector(".drop-zone").classList.add("dark-mode");
         document.querySelector(".result").classList.add("dark-mode");
+        document.getElementById("show-mask").classList.add("dark-mode");
+        document.getElementById("model-selector").classList.add("dark-mode");
         document.getElementById("model-selector").classList.add("dark-mode");
         document.getElementById("dark-mode-btn").classList.add("dark-mode");
         document.getElementById("show-mask").classList.add("dark-mode");
@@ -45,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector(".container").classList.remove("dark-mode");
         document.querySelector(".drop-zone").classList.remove("dark-mode");
         document.querySelector(".result").classList.remove("dark-mode");
+        document.getElementById("show-mask").classList.remove("dark-mode");
+        document.getElementById("model-selector").classList.remove("dark-mode");
         document.getElementById("model-selector").classList.remove("dark-mode");
         document.getElementById("dark-mode-btn").classList.remove("dark-mode");
         document.getElementById("show-mask").classList.remove("dark-mode");
@@ -125,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
     removeBtn.addEventListener("click", () => {
         uploadedImage = null;
         fileInput.value = "";
+        imageNameDiv.innerText = "";
         dropZone.innerHTML = "<p>Drag and drop your image here, or click to select a file</p>";
         resultMessage.style.display = "block";
         resultDiv.style.display = "none";

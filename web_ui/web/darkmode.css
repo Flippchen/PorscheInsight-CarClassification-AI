@@ -23,15 +23,13 @@ h1.dark-mode {
 .result.dark-mode {
   background-color: #3c4049;
 }
-
-/* Dark mode buttons */
-button.dark-mode {
-  background-color: #6c757d;
+.dark-mode-button, .info-btn {
+  background-color: #5c616f;
   color: #ffffff;
+  border: 1px solid #6c757d;
 }
-
-button.dark-mode:hover {
-  background-color: #8da3ab;
+.dark-mode-button:hover, .info-btn:hover {
+  background-color: #85898d;
   color: #ffffff;
   transform: translateY(-2px);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
@@ -41,12 +39,18 @@ button.dark-mode:hover {
 input[type="text"].dark-mode,
 input[type="password"].dark-mode,
 #model-selector.dark-mode {
-  background-color: #3c4049;
-  color: #ffffff;
+  background-color: #5c616f;
   border: 1px solid #6c757d;
+  color: #ffffff;
 }
 #show-mask.dark-mode {
-  background-color: #3c4049;
-  color: #ffffff;
+  background-color: #5c616f;
   border: 1px solid #6c757d;
+  color: #ffffff;
+}
+.result.dark-mode {
+  padding: 1rem;
+  border-radius: 3px;
+  background-color: #5c616f;
+  text-align: center;
 }
