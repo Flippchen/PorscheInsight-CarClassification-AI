@@ -112,6 +112,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 /* Style the controls */
@@ -136,7 +137,28 @@ button {
   box-sizing: border-box;
   font-size: 1rem;
 }
+.info-btn:hover {
+    background-color: #555;
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
 
+.dark-mode-button {
+  background-color: #333;
+    color: #fff;
+  padding: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+.dark-mode-button:hover {
+  background-color: #555;
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
 /* On hover, change the submit button background color */
 button:hover {
   background-color: #1b4796;
