@@ -2,55 +2,59 @@
 
 /* Dark mode body and container */
 body.dark-mode {
-  background-color: #282c34;
+    background-color: #282c34;
 }
 
 h1.dark-mode {
-  color: #93c5fd;
+    color: #93c5fd;
 }
 
 .container.dark-mode {
-  background-color: #3c4049;
-  color: #ffffff;
+    background-color: #3c4049;
+    color: #ffffff;
 }
 
 /* Dark mode drop zone */
 .drop-zone.dark-mode {
-  border-color: #6c757d;
+    border-color: #6c757d;
 }
 
 /* Dark mode result */
 .result.dark-mode {
-  background-color: #3c4049;
+    background-color: #3c4049;
 }
+
 .dark-mode-button, .info-btn {
-  background-color: #5c616f;
-  color: #ffffff;
-  border: 1px solid #6c757d;
+    background-color: #5c616f;
+    color: #ffffff;
+    border: 1px solid #6c757d;
 }
+
 .dark-mode-button:hover, .info-btn:hover {
-  background-color: #85898d;
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    background-color: #85898d;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 /* Dark mode input and select */
 input[type="text"].dark-mode,
 input[type="password"].dark-mode,
 #model-selector.dark-mode {
-  background-color: #5c616f;
-  border: 1px solid #6c757d;
-  color: #ffffff;
+    background-color: #5c616f;
+    border: 1px solid #6c757d;
+    color: #ffffff;
 }
+
 #show-mask.dark-mode {
-  background-color: #5c616f;
-  border: 1px solid #6c757d;
-  color: #ffffff;
+    background-color: #5c616f;
+    border: 1px solid #6c757d;
+    color: #ffffff;
 }
+
 .result.dark-mode {
-  padding: 1rem;
-  border-radius: 3px;
-  background-color: #5c616f;
-  text-align: center;
+    padding: 1rem;
+    border-radius: 3px;
+    background-color: #5c616f;
+    text-align: center;
 }

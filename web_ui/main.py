@@ -142,7 +142,5 @@ def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> T
     return (top_3_predictions, mask_base64) if show_mask == "yes" else [top_3_predictions]
 
 
-
-
 eel.init("web")
 eel.start("index.html", size=(1000, 800), mode="default")

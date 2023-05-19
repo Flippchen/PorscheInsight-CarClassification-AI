@@ -12,6 +12,7 @@ class DiscordCallback(Callback):
             discord_callback = DiscordCallback(webhook_url)
             model.fit(..., callbacks=[discord_callback])
         """
+
     def __init__(self, webhook_url):
         """
         Initializes the DiscordCallback class.
