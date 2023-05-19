@@ -2,272 +2,311 @@
 
 /* Set global font styles */
 body {
-  font-family: 'Poppins', sans-serif;
-  display: flex;
-  flex-direction: column; /* Add this line */
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f2f2f2;
-  text-align: center;
-  margin: 0;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column; /* Add this line */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f2f2f2;
+    text-align: center;
+    margin: 0;
 }
+
 header {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 100;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
 }
+
 /* Style the container */
 .container {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-  width: 80%;
-  max-width: 600px;
-  margin: 2rem auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    width: 80%;
+    max-width: 600px;
+    margin: 2rem auto;
 }
+
 body, header, button, select, .result {
-  transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
+
 button:active {
-  transform: translateY(0);
-  box-shadow: none;
+    transform: translateY(0);
+    box-shadow: none;
 }
+
 @media (max-width: 480px) {
-  h1 {
-    font-size: 2.5rem;
-  }
+    h1 {
+        font-size: 2.5rem;
+    }
 }
+
 .drop-zone:hover {
-  border-color: #1b4796;
+    border-color: #1b4796;
 }
 
 
 /* Style the headers */
 h1 {
-  font-size: 3rem;
-  margin-bottom: 2rem;
-  color: #132f68;
-  text-align: end; /* Align the header to the center */
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #132f68;
+    text-align: center;
 }
 
 
 /* Style the loading and spinner */
 .loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  z-index: 200; /* Add this to ensure it stays on top */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 200; /* Add this to ensure it stays on top */
 }
 
 .loading-spinner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 200; /* Add this to ensure it stays on top */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 200; /* Add this to ensure it stays on top */
 }
 
 .spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #3498db;
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  animation: spin 1.2s linear infinite;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #3498db;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 1.2s linear infinite;
 }
+
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
+
 /* Style the drop zone */
 .drop-zone {
-  border: 2px dashed #132f68;
-  border-radius: 5px;
-  padding: 2rem; /* Increase padding for a larger drop zone */
-  text-align: center;
-  margin-bottom: 1rem;
-  cursor: pointer;
-  min-height: 200px; /* Set a minimum height for the drop zone */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    border: 2px dashed #132f68;
+    border-radius: 5px;
+    padding: 2rem; /* Increase padding for a larger drop zone */
+    text-align: center;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    min-height: 200px; /* Set a minimum height for the drop zone */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 /* Style the controls */
 .controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Style the buttons */
 button {
-  background-color: #132f68;
-  color: white;
-  padding: 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 1rem;
+    background-color: #132f68;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.info-btn:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode-button {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.dark-mode-button:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 /* On hover, change the submit button background color */
 button:hover {
-  background-color: #1b4796;
-  transform: translateY(-2px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    background-color: #1b4796;
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 /* Style the model selector */
 #model-selector {
-  width: 100%;
-  padding: 1rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  background-color: #f2f2f2;
-  appearance: none;
-  outline: none;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #f2f2f2;
+    appearance: none;
+    outline: none;
 }
 
 /* Style the result */
 .result {
-  padding: 1rem;
-  border-radius: 3px;
-  background-color: #f2f2f2;
-  text-align: center;
+    padding: 1rem;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    text-align: center;
 }
+
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
-  .controls {
-    flex-direction: column;
-  }
+    .controls {
+        flex-direction: column;
+    }
 }
 
 .percentage-bar-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
 .percentage-bar {
-  flex-grow: 1;
-  height: 8px;
-  border-radius: 4px;
-  background-color: #d1d1d1;
-  margin-right: 8px;
-  overflow: hidden;
-  position: relative;
-  transition: all 0.3s ease;
-  border: 1px solid #999;
+    flex-grow: 1;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #d1d1d1;
+    margin-right: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid #999;
 }
 
 .percentage-bar-inner {
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 4px;
-  background-image: linear-gradient(45deg, #3498db, #2ecc71);
-  transition: all 0.3s ease;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 4px;
+    background-image: linear-gradient(45deg, #3498db, #2ecc71);
+    transition: all 0.3s ease;
 }
+
 .class-name {
-  display: inline-block;
-  width: 140px;
-  text-align: left;
-  margin-right: 8px;
+    display: inline-block;
+    width: 140px;
+    text-align: left;
+    margin-right: 8px;
 }
+
 /* Add or modify these styles in your styles.css file */
 .percentage-value {
-  display: inline-block;
-  width: 50px;
-  margin-left: 8px;
-  text-align: left;
+    display: inline-block;
+    width: 50px;
+    margin-left: 8px;
+    text-align: left;
 }
+
 .red-button {
-  background-color: #c0392b;
-  border: none;
-  color: white;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-size: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    background-color: #c0392b;
+    border: none;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .red-button:hover {
-  background-color: #e74c3c;
-  transform: translateY(-2px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    background-color: #e74c3c;
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
+
 .controls-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
-.model-selector-container{
-  flex: 1; /* Makes both elements expand to take up the full width of the container */
-  margin-right: 1rem;
-  width: 100%;
+.model-selector-container {
+    flex: 1; /* Makes both elements expand to take up the full width of the container */
+    margin-right: 1rem;
+    width: 100%;
 }
+
 .mask-option-container {
-  flex: 1; /* Makes both elements expand to take up the full width of the container */
-  margin-left: 1rem;
-  width: 100%;
+    flex: 1; /* Makes both elements expand to take up the full width of the container */
+    margin-left: 1rem;
+    width: 100%;
 }
 
-#show-mask{
-  width: 100%;
-  padding: 1rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  background-color: #f2f2f2;
-  appearance: none;
-  outline: none;
+#show-mask {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #f2f2f2;
+    appearance: none;
+    outline: none;
 }
 
 

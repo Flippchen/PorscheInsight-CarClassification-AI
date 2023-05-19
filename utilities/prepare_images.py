@@ -8,6 +8,7 @@ from rembg import remove, new_session
 from PIL.Image import Image as PILImage
 from typing import Tuple
 from functools import cache
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 

@@ -127,4 +127,3 @@ plot_model_score(history, name, model_type)
 
 # Save model
 model.save(f"{save_path}{name}.h5")
-

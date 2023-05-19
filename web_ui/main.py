@@ -2,7 +2,8 @@ import io
 import sys
 import numpy as np
 import onnxruntime as ort
-from typing import List, Tuple
+from typing import List, Tuple, Union
+
 # Needs to be imported before eel to not crash when using --noconsole
 
 sys.stdout = io.StringIO()
@@ -99,26 +100,24 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
 
 
 @eel.expose
-def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> tuple[list[tuple[str, float]], str] | list[list[tuple[str, float]]]:
+def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> Tuple[List[Tuple[str, float]], str] | List[List[Tuple[str, float]]]:
     # Loading the model if it's not already loaded
-    if models[model_name] is None:
+    model = models.get(model_name)
+    if not model:
+        model = load_model(model_name)
         models[model_name] = load_model(model_name)
 
-    # Decoding the base64 image data and opening the image
-    image_data = base64.b64decode(image_data)
-    image = Image.open(BytesIO(image_data))
-    show_mask = True if show_mask == "yes" else False
-
-    # Correcting image orientation and color mode if necessary
+    # Decoding the base64 image and fix image orientation/color
+    image = Image.open(BytesIO(base64.b64decode(image_data)))
     image = fix_image(image)
 
     # Retrieving the required input size for the specified model
-    input_size = models[model_name].get_inputs()[0].shape[1:3]
+    input_size = model.get_inputs()[0].shape[1:3]
 
     # Preparing image for processing and prediction
     # FIXME: Currently, the background is removed prior to prediction. This is a workaround,
     # as predictions seem to be better with a black background.
-    filter_image, mask = prepare_image(image, input_size, remove_background=True, show_mask=show_mask)
+    filter_image, mask = prepare_image(image, input_size, remove_background=True, show_mask=show_mask == "yes")
 
     # Converting the mask for processing
     mask = convert_mask(mask)
@@ -127,25 +126,20 @@ def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> t
     mask_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
 
     # Getting initial predictions before applying filters
-    filter_predictions = get_pre_filter_prediction(filter_image, "pre_filter")
+    pre_filter_predictions = get_pre_filter_prediction(filter_image, "pre_filter")
 
-    # If the initial prediction is 'porsche' or other car brands, run the specified model's prediction
-    if filter_predictions[0][0] == "porsche":
-        input_name = models[model_name].get_inputs()[0].name
-        prediction = models[model_name].run(None, {input_name: filter_image})
+    # If the pre-filter model doesn't predict a Porsche, we can skip the specific model
+    if pre_filter_predictions[0][0] != "porsche":
+        return (pre_filter_predictions, mask_base64) if show_mask == "yes" else [pre_filter_predictions]
 
-        # Retrieving the top 3 predictions
-        top_3 = get_top_3_predictions(prediction[0], model_name)
+    # Run the specific model
+    input_name = model.get_inputs()[0].name
+    prediction = model.run(None, {input_name: filter_image})
 
-        if show_mask:
-            return top_3, mask_base64
-        else:
-            return [top_3]
+    # Retrieving the top 3 predictions
+    top_3_predictions = get_top_3_predictions(prediction[0], model_name)
 
-    # Returning the initial predictions and an optional mask if show_mask is set to 'yes'
-    if show_mask:
-        return filter_predictions, mask_base64
-    return [filter_predictions]
+    return (top_3_predictions, mask_base64) if show_mask == "yes" else [top_3_predictions]
 
 
 eel.init("web")

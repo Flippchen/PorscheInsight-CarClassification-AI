@@ -76,4 +76,3 @@ def test_remove_bg_from_all_images(tmpdir):
 
     for i in range(5):
         assert os.path.exists(os.path.join(test_folder, f'test_image_{i}.jpg'))
-

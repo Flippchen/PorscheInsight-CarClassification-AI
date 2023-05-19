@@ -68,4 +68,4 @@ def test_resize_dataset():
 
     for i, (x, y) in enumerate(resized_dataset):
         assert x.shape == (new_height, new_width, 3)
-        assert y ==  labels[i]
+        assert y == labels[i]
