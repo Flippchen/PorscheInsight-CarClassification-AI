@@ -20,7 +20,7 @@ import pooch
 from rembg import new_session
 
 # Initiate models
-models = {
+models: dict[str, Union[None, ort.InferenceSession]] = {
     "car_type": None,
     "all_specific_model_variants": None,
     "specific_model_variants": None,
@@ -28,7 +28,7 @@ models = {
 }
 
 # Initiate session
-session = new_session("u2net")
+session: new_session = new_session("u2net")
 
 
 def load_model(model_name: str) -> ort.InferenceSession:
