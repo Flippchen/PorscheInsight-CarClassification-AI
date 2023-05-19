@@ -48,7 +48,7 @@ To see the architecture of the Local App UI, click the arrow below.
 ### ToDos
 - [ ] Build an ensemble model
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
-- [ ] Improve pre_filter model
+- [ ] Improve pre_filter model/Use Grounded SAM
 - [ ] Retrain car type model with efficientnet model
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
