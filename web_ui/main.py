@@ -20,17 +20,33 @@ import pooch
 from rembg import new_session
 
 # Initiate models
-models = {
+models: dict[str, Union[None, ort.InferenceSession]] = {
     "car_type": None,
     "all_specific_model_variants": None,
     "specific_model_variants": None,
     "pre_filter": None,
 }
 
-session = new_session("u2net")
+# Initiate session
+session: new_session = new_session("u2net")
 
 
 def load_model(model_name: str) -> ort.InferenceSession:
+    """
+    Load a specific model from a set of predefined models.
+
+    This function downloads a model from a remote URL based on the given model name.
+    After the model is downloaded, an ONNX Inference Session is initialized with the model
+    and the session is returned.
+
+    Args:
+        model_name (str): Name of the model to be loaded. Valid model names include 'car_type',
+        'all_specific_model_variants', 'specific_model_variants' and 'pre_filter'.
+
+    Returns:
+        ort.InferenceSession: The initialized ONNX inference session for the loaded model.
+    """
+
     if model_name == "car_type":
         url = "https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases/download/v.0.1/vgg16-pretrained-car-types.onnx"
         md5 = "7c42a075ab9ca1a2a198e5cd241a06f7"
@@ -64,6 +80,23 @@ def load_model(model_name: str) -> ort.InferenceSession:
 
 
 def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool, show_mask: bool) -> Tuple[np.ndarray, Image.Image]:
+    """
+    Prepare image data for prediction.
+
+    This function applies background removal, resizing and padding as required.
+    If remove_background is set to True, it uses the U2Net model to remove the image background.
+    If show_mask is set to True, it will also return the mask of the removed background.
+
+    Args:
+        image_data (Image): Input image data to be processed.
+        target_size (Tuple): Target size to resize the input image data.
+        remove_background (bool): Flag indicating whether to remove background from image.
+        show_mask (bool): Flag indicating whether to show the mask of removed background.
+
+    Returns:
+        Tuple[np.ndarray, Image.Image]: A tuple containing processed image data as a numpy array and the mask of the image.
+    """
+
     if remove_background and show_mask:
         image, mask = replace_background(image_data, session=session)
     elif remove_background:
@@ -84,6 +117,17 @@ def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool
 
 
 def get_top_3_predictions(prediction: np.ndarray, model_name: str) -> List[Tuple[str, float]]:
+    """
+    Get top 3 predictions from the model output.
+
+    Args:
+        prediction (np.ndarray): Output prediction from a model.
+        model_name (str): Name of the model that produced the prediction.
+
+    Returns:
+        List[Tuple[str, float]]: A list of top 3 predictions along with their respective scores.
+    """
+
     top_3 = prediction[0].argsort()[-3:][::-1]
     classes = get_classes_for_model(model_name)
     top_3 = [(classes[i], round(prediction[0][i] * 100, 2)) for i in top_3]
@@ -91,6 +135,20 @@ def get_top_3_predictions(prediction: np.ndarray, model_name: str) -> List[Tuple
 
 
 def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
+    """
+    Get pre-filter prediction results from the model.
+
+    This function loads a pre-filter model if it has not been loaded already.
+    Then it runs this model on the given image data and returns top 3 prediction results.
+
+    Args:
+        image_data (np.ndarray): Image data to run the model on.
+        model_name (str): Name of the pre-filter model.
+
+    Returns:
+        filter_names: Top 3 prediction results from the pre-filter model.
+    """
+
     if models[model_name] is None:
         models[model_name] = load_model(model_name)
     input_name = models[model_name].get_inputs()[0].name
@@ -101,6 +159,26 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
 
 @eel.expose
 def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> Tuple[List[Tuple[str, float]], str] | List[List[Tuple[str, float]]]:
+    """
+    Classify an image using a specified model.
+
+    This function loads the specified model if it has not been loaded already.
+    Then it decodes the base64 image data, fixes the image orientation and color,
+    and prepares the image for processing and prediction. Depending on the specified
+    show_mask option, it also returns the mask of the processed image.
+
+    Args:
+        image_data (str): Base64 encoded image data.
+        model_name (str): Name of the model to use for classification.
+        show_mask (str): Flag indicating whether to show the mask of processed image. Default is "no".
+
+    Returns:
+        Tuple[List[Tuple[str, float]], str] | List[List[Tuple[str, float]]]: If show_mask is "yes",
+        it returns a tuple containing the top 3 predictions along with their scores and the mask
+        of the processed image as base64 encoded string. If show_mask is "no", it returns only
+        the top 3 predictions.
+    """
+
     # Loading the model if it's not already loaded
     model = models.get(model_name)
     if not model:

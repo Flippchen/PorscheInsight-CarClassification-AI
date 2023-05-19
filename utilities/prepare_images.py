@@ -13,11 +13,34 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 @cache
-def get_session():
+def get_session() -> new_session:
+    """
+    Get the U-2 Net session with caching.
+
+    This function is decorated with @cache which means the result is stored
+    and reused instead of calling the function every time.
+
+    Returns:
+        new_session: The U-2 Net session.
+    """
+
     return new_session("u2net")
 
 
-def replace_background(im: PILImage, post_process_mask=True, session=None, size: tuple = None) -> Tuple[PILImage, PILImage]:
+def replace_background(im: PILImage, post_process_mask=True, session=None, size: Tuple = None) -> Tuple[PILImage, PILImage]:
+    """
+    Replace the background of the given image with a black color.
+
+    Args:
+        im (PILImage): The input image.
+        post_process_mask (bool, optional): If True, perform post-processing on the mask.
+        session (optional): The U-2 Net session. If None, a new session is created.
+        size (tuple, optional): The target size for the output image.
+
+    Returns:
+        Tuple[PILImage, PILImage]: The image with the replaced background and the mask.
+    """
+
     size = size or (300, 300)
     # if not isinstance(im, PILImage):
     #   im = Image.open(io.BytesIO(im))
@@ -38,7 +61,17 @@ def replace_background(im: PILImage, post_process_mask=True, session=None, size:
     return image, mask
 
 
-def get_bounding_box(im: PILImage) -> tuple:
+def get_bounding_box(im: PILImage) -> Tuple:
+    """
+    Get the bounding box of the non-transparent content in the given image.
+
+    Args:
+        im (PILImage): The input image.
+
+    Returns:
+        tuple: The bounding box (left, top, right, bottom).
+    """
+
     # Get the data of the image
     im_data = im.getdata()
 
@@ -58,7 +91,18 @@ def get_bounding_box(im: PILImage) -> tuple:
     return left, top, right, bottom
 
 
-def resize_cutout(im: PILImage, size: tuple = (300, 300)) -> PILImage:
+def resize_cutout(im: PILImage, size: Tuple = (300, 300)) -> PILImage:
+    """
+    Resize the given image to a specified size while maintaining the content's aspect ratio.
+
+    Args:
+        im (PILImage): The input image.
+        size (tuple): The target size for the output image.
+
+    Returns:
+        PILImage: The resized image.
+    """
+
     # Get the bounding box of the non-transparent content
     left, top, right, bottom = get_bounding_box(im)
     # Crop the image to the bounding box
@@ -69,11 +113,35 @@ def resize_cutout(im: PILImage, size: tuple = (300, 300)) -> PILImage:
     return im_resized
 
 
-def resize_image(image, size):
+def resize_image(image, size) -> PILImage:
+    """
+    Resize the given image to a specified size.
+
+    Args:
+        image: The input image.
+        size: The target size for the output image.
+
+    Returns:
+        image: The resized image.
+    """
+
     return image.resize(size)
 
 
-def resize_and_pad_image(image: PILImage, target_size: tuple, fill_color=(0, 0, 0, 0)):
+def resize_and_pad_image(image: PILImage, target_size: Tuple, fill_color=(0, 0, 0, 0)):
+    """
+    Resize the given image to a target size while maintaining the aspect ratio.
+    Pad the image if needed to make it square and center it.
+
+    Args:
+        image (PILImage): The input image.
+        target_size (tuple): The target size for the output image.
+        fill_color (tuple, optional): The color to use for padding.
+
+    Returns:
+        PILImage: The resized and padded image.
+    """
+
     # Calculate the aspect ratio of the image
     aspect_ratio = float(image.width) / float(image.height)
 
@@ -102,7 +170,17 @@ def resize_and_pad_image(image: PILImage, target_size: tuple, fill_color=(0, 0, 
     return padded_image
 
 
-def fix_image(image):
+def fix_image(image) -> PILImage:
+    """
+    Fix the orientation of the given image and convert it to RGB if not already.
+
+    Args:
+        image: The input image.
+
+    Returns:
+        image: The fixed image.
+    """
+
     # Convert image to RGB if not already
     if image.mode != "RGB":
         image = image.convert("RGB")
@@ -112,6 +190,19 @@ def fix_image(image):
 
 
 def convert_mask(mask, color=(29, 132, 181), border_color=(219, 84, 97), border_fraction=0.03):
+    """
+    Convert the given mask to a specific color and add a border.
+
+    Args:
+        mask: The input mask.
+        color (tuple, optional): The color to use for the mask.
+        border_color (tuple, optional): The color to use for the border.
+        border_fraction (float, optional): The fraction of the smaller dimension to use for the border size.
+
+    Returns:
+        mask_with_border: The mask with the converted color and added border.
+    """
+
     # Convert the image to RGBA if it is not already
     if mask.mode != 'RGBA':
         mask = mask.convert('RGBA')
@@ -154,7 +245,18 @@ def convert_mask(mask, color=(29, 132, 181), border_color=(219, 84, 97), border_
     return mask_with_border
 
 
-def load_and_remove_bg(path, size):
+def load_and_remove_bg(path, size) -> Tuple[PILImage, PILImage]:
+    """
+    Load an image from a file and remove its background.
+
+    Args:
+        path: The path to the image file.
+        size: The target size for the output image.
+
+    Returns:
+        Tuple[PILImage, PILImage]: The image with the removed background and the mask.
+    """
+
     image = Image.open(path)
     # image = resize_image(image, size)
     image = resize_and_pad_image(image, size)
@@ -163,7 +265,13 @@ def load_and_remove_bg(path, size):
     return image, mask
 
 
-def remove_bg_from_all_images(folder: str):
+def remove_bg_from_all_images(folder: str) -> None:
+    """
+    Remove the background from all images in a folder.
+
+    Args:
+        folder (str): The path to the folder containing the images.
+    """
     for image in os.listdir(f'{folder}'):
         print("Removing background from", image)
         img, mask = load_and_remove_bg(f"{folder}/{image}", (300, 300))
