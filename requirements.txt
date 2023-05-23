@@ -16,7 +16,7 @@ scikit-learn~=1.2.2
 # Confusion matrix
 seaborn~=0.12.2
 # Discord Callback
-requests==2.30.0
+requests==2.31.0
 # Testing
 pytest~=7.3.1
 
