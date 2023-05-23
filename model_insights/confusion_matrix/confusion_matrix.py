@@ -6,9 +6,9 @@ from utilities.class_names import get_classes_for_model
 suppress_tf_warnings()
 
 # Set model Type to 'all_specific_model_variants' or 'car_type' or "specific_model_variants"
-model_type = 'specific_model_variants'
-saved_model_path = "../../models/model_variants/best_model/efficientnet-model-variants_best_model.h5"
-name = "efficientnet-model-variants"
+model_type = 'car_type'
+saved_model_path = "../../models/car_types/efficientnet-car-type-2_best_model.h5"
+name = "efficientnet-car-type-2"
 path_addon = get_data_path_addon(model_type)
 img_height = 300
 img_width = 300
@@ -26,7 +26,7 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
               metrics=['accuracy'])
 # Load subset of data
-data = load_image_subset(**config, shuffle=10000, number_images=1024)
+data = load_image_subset(**config, shuffle=100, number_images=3024)
 
 # Extract images and labels from the dataset
 all_images = []
