@@ -7,7 +7,7 @@ suppress_tf_warnings()
 
 # Set model Type to 'all_specific_model_variants' or 'car_type' or "specific_model_variants"
 model_type = 'car_type'
-saved_model_path = "../../models/car_types/efficientnet-car-type-2_best_model.h5"
+saved_model_path = "../../models/car_types/best_model/efficientnet-car-type-2_best_model.h5"
 name = "efficientnet-car-type-2"
 path_addon = get_data_path_addon(model_type)
 img_height = 300
