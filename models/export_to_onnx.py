@@ -26,6 +26,6 @@ def convert_saved_model_to_onnx(saved_model_path, onnx_output_path):
 
 
 if __name__ == '__main__':
-    saved_model_path = 'car_types/best_model/efficientnet-car-type-2_best_model.h5'
+    saved_model_path = 'car_types/best_model/efficientnet-car-type_best_model.h5'
     onnx_output_path = 'onnx/car_types/efficientnet-car-type.onnx'
     convert_saved_model_to_onnx(saved_model_path, onnx_output_path)
