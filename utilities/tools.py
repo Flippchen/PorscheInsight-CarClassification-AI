@@ -206,7 +206,7 @@ def plot_model_score(history, name: str, model_type: str) -> None:
     """
     if model_type == "all_specific_model_variants":
         plot_save_path = f'../models/all_model_variants/results/acc-loss-{name}-model.png'
-    elif model_type == "model_type":
+    elif model_type == "car_type":
         plot_save_path = f'../models/car_types/results/acc-loss-{name}-model.png'
     elif model_type == "specific_model_variants":
         plot_save_path = f'../models/model_variants/results/acc-loss-{name}-model.png'
@@ -270,7 +270,7 @@ def plot_confusion_matrix(cm: np.ndarray, class_names: list, model_type: str, na
         plot_save_path = f'cm_all_specific_model_variants-{name}.png'
         fig_size = (25, 25)
         sns.set(font_scale=0.7)
-    elif model_type == "model_type":
+    elif model_type == "car_type":
         title = f"Confusion Matrix for Car Type"
         plot_save_path = f'cm_car_type-{name}.png'
         fig_size = (10, 10)

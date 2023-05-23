@@ -63,7 +63,7 @@ To see the architecture of the Local App UI, click the arrow below.
 - [ ] Build an ensemble model
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model/Use Grounded SAM
-- [ ] Retrain car type model with efficientnet model
+- [ ] Improve model predictions overall
 - [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
 
@@ -88,6 +88,7 @@ To see the architecture of the Local App UI, click the arrow below.
 - [x] Add release 1.0.0
 - [x] Add docker support (AWS Lambda)
 - [x] Display the mask of the predicted car
+- [x] Retrain car type model with efficientnet model
 
 </details>
 
@@ -125,6 +126,7 @@ pip install -m requirements.txt
 | efficientnetv2-b1                       | 7,099,474    | 1985,934         | 6,113,540            | 32         | 49               | 46             | 88                |
 | vit_b16 (cleaned classes)               | 85,901,470   | 102,558          | 85,798,912           | 32         | 45               | 49             | 30                |
 | efficientnetv2-b1-pre-filter-refactored | 7,095,991    | 982,451          | 6,113,540            | 32         | 97               | 98             | 3                 |
+| efficientnetv2-b1-car-type              | 7,096,894    | 1,329,386        | 5,767,508            | 32         | 96               | 97             | 10                |
 
 </details>
 

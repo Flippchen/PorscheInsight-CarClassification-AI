@@ -6,7 +6,7 @@ from utilities.class_names import get_classes_for_model
 suppress_tf_warnings()
 
 # Load model (Compiling failed, so I compiled it manually)
-model = keras.models.load_model("../../models/model_variants/best_model/efficientnet-model-variants_best_model.h5", compile=False)
+model = keras.models.load_model("../../models/car_types/efficientnet-car-type_best_model.h5", compile=False)
 # model = keras.models.load_model("../../models/car_types/best_model/vgg16-pretrained.h5", compile=False)
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
@@ -14,9 +14,9 @@ model.compile(optimizer='adam',
 # Set config
 img_height = 300
 img_width = 300
-img_folder = '../../testing/test_images'
+img_folder = '../../predicting/test_images'
 # Set model Type to 'all_specific_model_variants' or 'car_type' or "specific_model_variants"
-model_type = 'specific_model_variants'
+model_type = 'car_type'
 path_addon = get_data_path_addon(model_type)
 classes = get_classes_for_model(model_type)
 

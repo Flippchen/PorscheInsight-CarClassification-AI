@@ -19,12 +19,12 @@ suppress_tf_warnings()
 AUTOTUNE = tf.data.AUTOTUNE
 img_height = 300
 img_width = 300
-name = "efficientnet-model-variants"
+name = "efficientnet-car-type"
 # Variables to control training flow
 # Set model Type to 'all_specific_model_variants' or 'car_type or 'specific_model_variants'
-model_type = 'specific_model_variants'
+model_type = 'car_type'
 # Don't forget to change the save paths in the model checkpoint and model save
-save_path = f"../models/model_variants/"
+save_path = f"../models/car_types/"
 # Set to True to load trained model
 load_model = False
 load_path = "../models/all_model_variants/efficientnet-old-head-model-variants.h5"
@@ -104,7 +104,7 @@ model.summary()
 
 # Define callbacks
 lr = tf.keras.callbacks.LearningRateScheduler(lr_scheduler)
-early_stopping = EarlyStopping(monitor='val_loss', patience=4, verbose=1, mode='auto', restore_best_weights=True)
+early_stopping = EarlyStopping(monitor='val_loss', patience=3, verbose=1, mode='auto', restore_best_weights=True)
 model_checkpoint = ModelCheckpoint(filepath=f"{save_path}{name}_best_model.h5", monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
 # Discord callback ( If you want to use this, you need to set the environment variable "WEBHOOK_URL",
 # otherwise comment it out and also remove the callback from the model callbacks)
