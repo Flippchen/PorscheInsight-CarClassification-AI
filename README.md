@@ -60,7 +60,6 @@ To see the architecture of the Local App UI, click the arrow below.
 
 ### ToDos
 
-- [ ] Build an ensemble model
 - [ ] Train a meta-learner
 - [ ] Build an ensemble model with car_type and car_series
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
@@ -91,6 +90,7 @@ To see the architecture of the Local App UI, click the arrow below.
 - [x] Add docker support (AWS Lambda)
 - [x] Display the mask of the predicted car
 - [x] Retrain car type model with efficientnet model
+- [x] Build an ensemble prediction
 
 </details>
 
