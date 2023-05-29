@@ -62,6 +62,7 @@ To see the architecture of the Local App UI, click the arrow below.
 
 - [ ] Build an ensemble model
 - [ ] Train a meta-learner
+- [ ] Build an ensemble model with car_type and car_series
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model/Use Grounded SAM
 - [ ] Improve model predictions overall
