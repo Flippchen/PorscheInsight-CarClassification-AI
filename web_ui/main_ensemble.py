@@ -194,7 +194,7 @@ def ensemble_predictions(models, filter_image):
     # make predictions
     yhats = [model.run(None, {model.get_inputs()[0].name: filter_image}) for model in models]
     yhats = np.array(yhats)
-    # weighted average across ensemble members (60:40 split)
+    # weighted average across ensemble members
     weighted_avg = 0.35 * yhats[0] + 0.65 * yhats[1]
     return weighted_avg
 
