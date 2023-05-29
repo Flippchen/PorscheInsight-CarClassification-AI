@@ -183,12 +183,7 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
     return filter_names
 
 
-from scipy.stats import mode
-
-import numpy as np
-
-
-def ensemble_predictions(models, filter_image):
+def ensemble_predictions_weighted(models, filter_image):
     assert len(models) == 2, "This function is designed for two models only."
 
     # make predictions
@@ -252,12 +247,13 @@ def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> T
     if pre_filter_predictions[0][0] != "porsche":
         return (pre_filter_predictions, mask_base64) if show_mask == "yes" else [pre_filter_predictions]
 
-    ## Run the specific model
-    # input_name = model.get_inputs()[0].name
-    # prediction = model.run(None, {input_name: filter_image})
+    if model_name != "car_type":
+        input_name = model.get_inputs()[0].name
+        prediction = model.run(None, {input_name: filter_image})
+    else:
+        # prediction = ensemble_predictions_weighted(model, filter_image)
+        prediction = ensemble_predictions(model, filter_image)
 
-    prediction = ensemble_predictions(model, filter_image)
-    print(prediction)
     # Retrieving the top 3 predictions
     top_3_predictions = get_top_3_predictions(prediction[0], model_name)
 
