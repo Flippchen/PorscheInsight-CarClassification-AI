@@ -61,6 +61,7 @@ To see the architecture of the Local App UI, click the arrow below.
 ### ToDos
 
 - [ ] Build an ensemble model
+- [ ] Train a meta-learner
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model/Use Grounded SAM
 - [ ] Improve model predictions overall
