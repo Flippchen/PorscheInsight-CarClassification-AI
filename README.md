@@ -61,6 +61,7 @@ To see the architecture of the Local App UI, click the arrow below.
 ### ToDos
 
 - [ ] Train a meta-learner
+- [ ] Experiment with EfficientNet-Lite4
 - [ ] Build an ensemble model with car_type and car_series
 - [ ] Try autokeras
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
