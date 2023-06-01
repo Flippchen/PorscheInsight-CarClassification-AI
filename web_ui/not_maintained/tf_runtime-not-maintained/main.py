@@ -92,5 +92,5 @@ def classify_image(image_data: str, model_name: str) -> List[Tuple[str, float]]:
     return top_3
 
 
-eel.init("../web")
+eel.init("../../web")
 eel.start("index.html", size=(1000, 800))
