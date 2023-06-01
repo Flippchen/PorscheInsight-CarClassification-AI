@@ -1,13 +1,15 @@
-import base64
+import os
+from typing import Tuple, List, Any, Dict
 
 import gradio as gr
 import io
-import sys
 import numpy as np
 import onnxruntime as ort
-from typing import List, Tuple, Union, Dict, Any
-
+from typing import List, Tuple, Union
+import base64
+from io import BytesIO
 from PIL import Image
+
 from utilities.class_names import get_classes_for_model
 from utilities.prepare_images import replace_background, resize_and_pad_image, fix_image, convert_mask
 import pooch
@@ -146,7 +148,7 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
     return filter_names
 
 
-def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> tuple[Any, str] | list[Any] | tuple[dict[str, float], str] | list[dict[str, float]]:
+def classify_image(image: Image.Image, model_name: str = "car_type", show_mask: bool = False) -> Union[Tuple[dict,Image.Image], Tuple[dict, None]]:
     """
     Classify an image using a specified model.
 
@@ -156,7 +158,7 @@ def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> t
     show_mask option, it also returns the mask of the processed image.
 
     Args:
-        image_data (str): Base64 encoded image data.
+        image (Image.Image): Base64 encoded image data.
         model_name (str): Name of the model to use for classification.
         show_mask (str): Flag indicating whether to show the mask of processed image. Default is "no".
 
@@ -173,8 +175,8 @@ def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> t
         model = load_model(model_name)
         models[model_name] = load_model(model_name)
 
-    # Decoding the base64 image and fix image orientation/color
-    image = Image.open(image_data)
+    # Fix image orientation/color
+
     image = fix_image(image)
 
     # Retrieving the required input size for the specified model
@@ -183,20 +185,19 @@ def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> t
     # Preparing image for processing and prediction
     # FIXME: Currently, the background is removed prior to prediction. This is a workaround,
     # as predictions seem to be better with a black background.
-    filter_image, mask = prepare_image(image, input_size, remove_background=True, show_mask=show_mask == "yes")
+    filter_image, mask = prepare_image(image, input_size, remove_background=True, show_mask=show_mask)
 
     # Converting the mask for processing
-    mask = convert_mask(mask)
-    buffer = io.BytesIO()
-    mask.save(buffer, format="PNG")
-    mask_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+    mask: Image.Image = convert_mask(mask)
 
     # Getting initial predictions before applying filters
     pre_filter_predictions = get_pre_filter_prediction(filter_image, "pre_filter")
 
     # If the pre-filter model doesn't predict a Porsche, we can skip the specific model
     if pre_filter_predictions[0][0] != "porsche":
-        return (pre_filter_predictions, mask_base64) if show_mask == "yes" else [pre_filter_predictions]
+        top_3_predictions_dict = {k: v for k, v in pre_filter_predictions}
+
+        return (top_3_predictions_dict, mask) if show_mask else (top_3_predictions_dict, None)
 
     # Run the specific model
     input_name = model.get_inputs()[0].name
@@ -207,14 +208,36 @@ def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> t
 
     top_3_predictions_dict = {k: v for k, v in top_3_predictions}
 
-    return (top_3_predictions, mask_base64) if show_mask == "yes" else top_3_predictions_dict
+    return (top_3_predictions_dict, mask) if show_mask else (top_3_predictions_dict, None)
 
 
-title = "Porsche Classifier"
-description = "This is a classifier for Porsche cars."
-examples = [['macan_test.jpg']]
-demo = gr.Interface(classify_image,[gr.Image(type="filepath"), gr.inputs.Dropdown(["car_type", "specific_model_variants", "all_specific_model_variants"]),gr.inputs.Dropdown(["no", "yes"])], "label",
-                    title=title,
-                    description=description,)
+def clear():
+    return [None] * 4
 
-demo.launch()
+
+with gr.Blocks() as app:
+    gr.Markdown("""
+        # Porsche Classifier""")
+    gr.Markdown("""
+        **Porsche Classifier 🏎️**:  This demo uses an different AIs to predict different types of Porsche cars along with Shapley value-based *explanations*. The [source code for this Gradio demo is here](https://github.com/Flippchen/PorscheInsight-CarClassification-AI).
+        """)
+    with gr.Row():
+        with gr.Column():
+            image = gr.components.Image(label="Upload Image", type="pil")
+            model = gr.components.Dropdown(["car_type", "specific_model_variants", "all_specific_model_variants"], label="Model", value="car_type", allow_custom_value=False)
+            show_mask_component = gr.components.Checkbox(label="Show Mask", value=False)
+            with gr.Row():
+                clear_button = gr.components.Button("Clear", label="Clear")
+                predict = gr.components.Button("Predict", label="Predict")
+
+            examples = gr.Examples(examples=[[os.path.abspath("../../predicting/test_images/911_2019.jpg")], [os.path.abspath("../../predicting/test_images/911_1980.jpg")]], label="Examples", inputs=image)
+        with gr.Column():
+            out = gr.components.Label(label="Top 3 Predictions")
+            mask_image = gr.components.Image(label="Mask Image",type="pil" ,visible=True)
+
+        clear_button.click(fn=clear, inputs=None, outputs=[image, out, mask_image, show_mask_component])
+        predict.click(fn=classify_image, inputs=[image, model, show_mask_component], outputs=[out, mask_image], queue=True)
+
+app.queue()
+app.launch()
+
