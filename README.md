@@ -1,9 +1,9 @@
 # PorscheInsight-CarClassification-AI
 
 <div style="display: flex; justify-content: left; align-items: center; height: 70px;">
-  <img src="https://img.shields.io/github/v/release/Flippchen/PorscheInsight-CarClassification-AI?include_prereleases&style=flat-square" style="margin: 5px;">
-  <img src="https://img.shields.io/github/actions/workflow/status/Flippchen/PorscheInsight-CarClassification-AI/python.yaml?logoColor=blue&style=flat-square" style="margin: 5px;">
-  <img src="https://img.shields.io/github/repo-size/Flippchen/PorscheInsight-CarClassification-AI?style=flat-square" style="margin: 5px;">
+  <img src="https://img.shields.io/github/v/release/Flippchen/PorscheInsight-CarClassification-AI?include_prereleases&style=flat-square" style="margin: 5px; margin-bottom: 21px; margin-top: 21px">
+  <img src="https://img.shields.io/github/actions/workflow/status/Flippchen/PorscheInsight-CarClassification-AI/python.yaml?logoColor=blue&style=flat-square" style="margin: 5px; margin-bottom: 21px; margin-top: 21px">
+  <img src="https://img.shields.io/github/repo-size/Flippchen/PorscheInsight-CarClassification-AI?style=flat-square" style="margin: 5px; margin-bottom: 21px; margin-top: 21px">
   <a href='https://play.google.com/store/apps/details?id=com.flippchen.porsche_classifier' style="margin: 5px;">
     <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="70"/>
   </a>
