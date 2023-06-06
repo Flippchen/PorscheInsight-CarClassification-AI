@@ -1,13 +1,8 @@
 # PorscheInsight-CarClassification-AI
 
-<div style="display: flex; justify-content: left; align-items: center; height: 70px;">
-  <img src="https://img.shields.io/github/v/release/Flippchen/PorscheInsight-CarClassification-AI?include_prereleases&style=flat-square" style="margin: 5px; margin-bottom: 21px; margin-top: 21px">
-  <img src="https://img.shields.io/github/actions/workflow/status/Flippchen/PorscheInsight-CarClassification-AI/python.yaml?logoColor=blue&style=flat-square" style="margin: 5px; margin-bottom: 21px; margin-top: 21px">
-  <img src="https://img.shields.io/github/repo-size/Flippchen/PorscheInsight-CarClassification-AI?style=flat-square" style="margin: 5px; margin-bottom: 21px; margin-top: 21px">
-  <a href='https://play.google.com/store/apps/details?id=com.flippchen.porsche_classifier' style="margin: 5px;">
-    <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="70"/>
-  </a>
-</div>
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Flippchen/PorscheInsight-CarClassification-AI?include_prereleases&style=flat-square) 
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Flippchen/PorscheInsight-CarClassification-AI/python.yaml?logoColor=blue&style=flat-square) 
+![GitHub repo size](https://img.shields.io/github/repo-size/Flippchen/PorscheInsight-CarClassification-AI?style=flat-square) 
 
 <img alt="Architecture of the Web UI" src="assets/banner.jpg">
 
@@ -26,6 +21,9 @@ The following different model types are available:
 | all car series | This model classifies images into 88 classes, corresponding to specific Porsche build years. It is the most detailed classification level, predicting not only the car model type but also the specific build year, e.g., a 911 from 2008. This model is suitable for users who want to identify and classify Porsche cars down to the finest level of detail. |
 
 ## Web UI
+<a href='https://play.google.com/store/apps/details?id=com.flippchen.porsche_classifier'>
+  <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="70"/>
+</a>
 
 The Web UI is a simple local website that enables users to upload images of Porsche cars and get classification results from the models. The app is built using Eel, which allows Python and HTML/JS to
 communicate with each other.
