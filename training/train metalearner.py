@@ -59,12 +59,38 @@ ensemble_predictions_train = ensemble_predictions(models, all_images)
 ensemble_predictions_train = ensemble_predictions_train.reshape(-1, len(models) * 10)
 
 # Define your meta-learner
-meta_model = Sequential()
-meta_model.add(Dense(10, input_dim=len(models), activation='relu'))
-meta_model.add(Dense(1))
+num_classes = 10
 
-# Compile your meta-learner
-meta_model.compile(loss='mean_squared_error', optimizer='adam')
+meta_model = Sequential()
+meta_model.add(Dense(128, input_dim=len(models) * 10, activation='relu'))
+meta_model.add(Dropout(0.5))
+meta_model.add(Dense(64, activation='relu'))
+meta_model.add(Dropout(0.5))
+meta_model.add(Dense(num_classes, activation='softmax'))
+meta_model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False), optimizer='adam',
+                   metrics=['accuracy'])
 
 # Train your meta-learner
-meta_model.fit(ensemble_predictions_train, all_labels, epochs=10)
+history = meta_model.fit(ensemble_predictions_train, all_labels, epochs=100)
+
+# TODO: Try a Regression/Tree Based Model
+
+# Plot training & validation accuracy values
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plt.plot(history.history['accuracy'])
+plt.title('Model accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train'], loc='upper left')
+
+# Plot training & validation loss values
+plt.subplot(1, 2, 2)
+plt.plot(history.history['loss'])
+plt.title('Model loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Train'], loc='upper left')
+
+plt.tight_layout()
+plt.show()
