@@ -1,7 +1,10 @@
 import numpy as np
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from keras.layers import Dropout
+from keras.models import Sequential
+from keras.layers import Dense
 import onnxruntime as ort
+import tensorflow as tf
+import matplotlib.pyplot as plt
 
 from utilities.tools import load_image_subset, get_data_path_addon
 
@@ -19,7 +22,8 @@ config = {
 }
 
 # Load models
-model_paths = ["../models/onnx/car_types/efficientnet-car-type.onnx", "../models/onnx/car_types/vgg16-pretrained-car-types.onnx"]
+model_paths = ["../models/onnx/car_types/efficientnet-car-type.onnx",
+               "../models/onnx/car_types/vgg16-pretrained-car-types.onnx"]
 models = [ort.InferenceSession(model_path, providers=['CPUExecutionProvider']) for model_path in model_paths]
 
 
@@ -29,19 +33,17 @@ def ensemble_predictions(models, filter_images):
 
     # Iterate over each image in the batch
     for image in filter_images:
-        # Expand the dimensions of the image to create a batch of size 1
-        image = np.expand_dims(image, axis=0)
-        # Make predictions with each model
-        yhats = [model.run(None, {model.get_inputs()[0].name: image}) for model in models]
+        # Make predictions with each model and store it
+        yhats = [np.squeeze(model.run(None, {model.get_inputs()[0].name: image})) for model in models]
         # Append the predictions to the list
         all_predictions.append(yhats)
 
-    # Convert the list to a numpy array
-    return np.array(all_predictions)
+    # Stack the list along a new axis to create a 2D numpy array
+    return np.stack(all_predictions, axis=0)
 
 
 # Load 500 training images
-dataset = load_image_subset(**config, shuffle=1000, number_images=5)
+dataset = load_image_subset(**config, shuffle=1000, number_images=50)
 # Extract images and labels from the dataset
 all_images = []
 all_labels = []
@@ -49,12 +51,12 @@ for images, labels in dataset:
     all_images.append(images.numpy())
     all_labels.append(labels.numpy())
 
-all_images = np.vstack(all_images)
-all_labels = np.hstack(all_labels)
-
+all_labels = np.array(all_labels)
 # Get the predictions of your models on the training data
 ensemble_predictions_train = ensemble_predictions(models, all_images)
 
+# Reshape the predictions to be 2D
+ensemble_predictions_train = ensemble_predictions_train.reshape(-1, len(models) * 10)
 
 # Define your meta-learner
 meta_model = Sequential()
