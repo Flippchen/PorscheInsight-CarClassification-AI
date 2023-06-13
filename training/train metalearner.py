@@ -5,6 +5,9 @@ from keras.layers import Dense
 import onnxruntime as ort
 import tensorflow as tf
 import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+
 
 from utilities.tools import load_image_subset, get_data_path_addon
 
@@ -73,6 +76,15 @@ meta_model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logit
 # Train your meta-learner
 history = meta_model.fit(ensemble_predictions_train, all_labels, epochs=100)
 
+
+# Define Tree/Regression Model
+meta_model_tree = RandomForestClassifier(n_estimators=100, max_depth=None, random_state=0)
+meta_model_regression = LogisticRegression(solver='liblinear')
+meta_model_tree.fit(ensemble_predictions_train, all_labels.ravel())
+
+# Train Tree/Regression Model
+meta_model_tree.fit(ensemble_predictions_train, all_labels.ravel())
+meta_model_regression.fit(ensemble_predictions_train, all_labels.ravel())
 # TODO: Try a Regression/Tree Based Model
 
 # Plot training & validation accuracy values
