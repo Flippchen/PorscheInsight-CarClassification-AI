@@ -148,7 +148,7 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
     return filter_names
 
 
-def classify_image(image: Image.Image, model_name: str = "car_type", show_mask: bool = False) -> Union[Tuple[dict,Image.Image], Tuple[dict, None]]:
+def classify_image(image: Image.Image, model_name: str = "car_type", show_mask: bool = False) -> Union[Tuple[dict, Image.Image], Tuple[dict, None]]:
     """
     Classify an image using a specified model.
 
@@ -176,7 +176,6 @@ def classify_image(image: Image.Image, model_name: str = "car_type", show_mask: 
         models[model_name] = load_model(model_name)
 
     # Fix image orientation/color
-
     image = fix_image(image)
 
     # Retrieving the required input size for the specified model
@@ -215,7 +214,7 @@ def clear():
     return [None] * 4
 
 
-with gr.Blocks() as app:
+with gr.Blocks(theme=gr.themes.Default()) as app:
     gr.Markdown("""
         # Porsche Classifier""")
     gr.Markdown("""
@@ -240,4 +239,3 @@ with gr.Blocks() as app:
 
 app.queue()
 app.launch()
-
