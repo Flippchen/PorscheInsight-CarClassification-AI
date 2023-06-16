@@ -212,3 +212,7 @@ like [cifar-10](https://www.cs.toronto.edu/~kriz/cifar.html) were used.
 # Disclaimer
 
 <b>This is not an official Porsche product and is not affiliated with or endorsed by Porsche AG</b>
+
+<a href='assets/classify_qr_code.png'>
+  <img alt='Get it on Google Play' src='assets/classify_qr_code.png' height="400"/> 
+</a>
