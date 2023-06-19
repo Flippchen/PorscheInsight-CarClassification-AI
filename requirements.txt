@@ -6,7 +6,7 @@ Pillow==9.5.0
 keras~=2.10.0
 # Inference
 rembg==2.0.32
-onnxruntime==1.14.1
+onnxruntime==1.15.1
 scipy~=1.9.3
 # Export to onnx
 tf2onnx==1.14.0
