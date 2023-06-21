@@ -65,10 +65,8 @@ To see the architecture of the Local App UI, click the arrow below.
 
 ### ToDos
 
-- [ ] Train a meta-learner
 - [ ] Experiment with EfficientNet-Lite4
 - [ ] Build an ensemble model with car_type and car_series
-- [ ] Try autokeras
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model/Use Grounded SAM
 - [ ] Improve model predictions overall
@@ -98,6 +96,8 @@ To see the architecture of the Local App UI, click the arrow below.
 - [x] Display the mask of the predicted car
 - [x] Retrain car type model with efficientnet model
 - [x] Build an ensemble prediction
+- [X] Train a meta-learner
+- [x] Try autokeras
 
 </details>
 
