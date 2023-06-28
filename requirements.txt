@@ -3,7 +3,7 @@ numpy==1.23.5
 tensorflow==2.10.0
 matplotlib==3.7.1
 Pillow==9.5.0
-keras~=2.10.0
+keras~=2.13.1
 # Inference
 rembg==2.0.32
 onnxruntime==1.14.1
