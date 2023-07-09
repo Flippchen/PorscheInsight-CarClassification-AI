@@ -19,7 +19,7 @@ suppress_tf_warnings()
 AUTOTUNE = tf.data.AUTOTUNE
 img_height = 300
 img_width = 300
-name = "efficientnet-pre-filter-refactored-dataset"
+name = "efficientnet-pre-filter-refactored-dataset-2"
 # Variables to control training flow
 # Set model Type to 'all_specific_model_variants' or 'car_type or 'specific_model_variants'
 model_type = 'pre_filter'
@@ -111,16 +111,16 @@ model_checkpoint = ModelCheckpoint(filepath=f"{save_path}{name}_best_model.h5", 
 # Discord callback ( If you want to use this, you need to set the environment variable "WEBHOOK_URL",
 # otherwise comment it out and also remove the callback from the model callbacks)
 webhook_url = os.environ.get('WEBHOOK_URL')
-discord_callback = DiscordCallback(webhook_url)
+#discord_callback = DiscordCallback(webhook_url)
 
 # Train model
-epochs = 20
-with tf.device('/GPU:1'):
+epochs = 15
+with tf.device('/GPU:0'):
     history = model.fit(
         train_ds,
         validation_data=val_ds,
         epochs=epochs,
-        callbacks=[lr, early_stopping, model_checkpoint, discord_callback]
+        callbacks=[lr, early_stopping, model_checkpoint]
     )
 # Plot and save model score
 plot_model_score(history, name, model_type)
