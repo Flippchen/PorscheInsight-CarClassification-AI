@@ -195,7 +195,7 @@ def ensemble_predictions_weighted(models, filter_image):
 
 
 @eel.expose
-def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> Tuple[List[Tuple[str, float]], str] | List[List[Tuple[str, float]]]:
+def classify_image(image_data: str, model_name: str, show_mask: bool = False) -> Tuple[List[Tuple[str, float]], str] | List[List[Tuple[str, float]]]:
     """
     Classify an image using a specified model.
 
@@ -232,7 +232,7 @@ def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> T
     # Preparing image for processing and prediction
     # FIXME: Currently, the background is removed prior to prediction. This is a workaround,
     # as predictions seem to be better with a black background.
-    filter_image, mask = prepare_image(image, input_size, remove_background=True, show_mask=show_mask == "yes")
+    filter_image, mask = prepare_image(image, input_size, remove_background=True, show_mask=show_mask)
 
     # Converting the mask for processing
     mask = convert_mask(mask)
@@ -245,7 +245,7 @@ def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> T
 
     # If the pre-filter model doesn't predict a Porsche, we can skip the specific model
     if pre_filter_predictions[0][0] != "porsche":
-        return (pre_filter_predictions, mask_base64) if show_mask == "yes" else [pre_filter_predictions]
+        return (pre_filter_predictions, mask_base64) if show_mask else [pre_filter_predictions]
 
     if model_name != "car_type":
         input_name = model.get_inputs()[0].name
@@ -257,7 +257,7 @@ def classify_image(image_data: str, model_name: str, show_mask: str = "no") -> T
     # Retrieving the top 3 predictions
     top_3_predictions = get_top_3_predictions(prediction[0], model_name)
 
-    return (top_3_predictions, mask_base64) if show_mask == "yes" else [top_3_predictions]
+    return (top_3_predictions, mask_base64) if show_mask else [top_3_predictions]
 
 
 eel.init("web")
