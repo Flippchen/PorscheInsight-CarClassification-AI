@@ -29,8 +29,8 @@ The Web UI is a simple local website that enables users to upload images of Pors
 communicate with each other.
 For a free online version of the Web UI, check out [PorscheInsight](https://classify.autos).
 
-Using the Web UI, non-car images led to random predictions. I trained a model to classify Porsche, other car brands, and others, resulting in a two-step [Web UI](web_ui) architecture for Porsche
-identification and classification.
+With the Web UI, non-car images tend to lead to more random predictions. I trained a model to classify Porsche, other car brands, and others, resulting in a two-step [Web UI](web_ui) architecture for Porsche
+Identification and Classification.
 
 ### Installation
 
