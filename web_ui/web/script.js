@@ -147,9 +147,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const base64Image = imageDataUrl.split(",")[1];
             let prediction;
             if (showMask === "yes" && !overlayDisplayed) {
-                prediction = await eel.classify_image(base64Image, model, showMask)();
+                prediction = await eel.classify_image(base64Image, model, true)();
             } else {
-                prediction = await eel.classify_image(base64Image, model)();
+                prediction = await eel.classify_image(base64Image, model, false)();
             }
             resultDiv.innerHTML = "";
             resultMessage.style.display = "none";
