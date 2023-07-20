@@ -143,6 +143,11 @@ pip install -m requirements.txt
 The models with * were trained on the pre cleaned dataset.
 
 Have a look at the [releases](https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases) to see the models and [results](models/car_types/results) folder to see the training results.
+You can have a look at the models structure with [Netron](https://netron.app/) or look at the [model_structure](assets/model_structure_visualizations) folder to see the model insights.
+
+<details><summary>Have a look at an example</summary>
+<img alt="Architecture of the Web UI" src="assets/model_structure_visualizations/efficientnet-car-type.onnx.svg">
+</details>
 
 ## Usage
 
