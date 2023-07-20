@@ -66,11 +66,10 @@ To see the architecture of the Local App UI, click the arrow below.
 ### ToDos
 
 - [ ] Experiment with EfficientNet-Lite4
+- [ ] Retrain all models with better dataset
 - [ ] Build an ensemble model with car_type and car_series
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model/Use Grounded SAM
-- [ ] Improve model predictions overall
-- [ ] Evaluate feature engineering/ More data augmentation
 - [ ] Add Taycans to images/models
 
 <details>
@@ -98,6 +97,8 @@ To see the architecture of the Local App UI, click the arrow below.
 - [x] Build an ensemble prediction
 - [X] Train a meta-learner
 - [x] Try autokeras
+- [x] Improve model predictions overall
+- [x] Evaluate feature engineering/ More data augmentation
 
 </details>
 
@@ -142,6 +143,11 @@ pip install -m requirements.txt
 The models with * were trained on the pre cleaned dataset.
 
 Have a look at the [releases](https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases) to see the models and [results](models/car_types/results) folder to see the training results.
+You can have a look at the models structure with [Netron](https://netron.app/) or look at the [model_structure](assets/model_structure_visualizations) folder to see the model insights.
+
+<details><summary>Have a look at an example</summary>
+<img alt="Architecture of the Web UI" src="assets/model_structure_visualizations/efficientnet-car-type.onnx.svg">
+</details>
 
 ## Usage
 
