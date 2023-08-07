@@ -1,24 +1,24 @@
 # Trainig
 numpy==1.23.5
 tensorflow==2.10.0
-matplotlib==3.7.1
-Pillow==9.5.0
+matplotlib==3.7.2
+Pillow==10.0.0
 keras~=2.10.0
 # Inference
-rembg==2.0.32
-onnxruntime==1.14.1
-scipy~=1.9.3
+rembg==2.0.50
+onnxruntime==1.15.1
+scipy==1.11.1
 # Export to onnx
 tf2onnx==1.14.0
 # Explaining the model
-shap~=0.41.0
-scikit-learn~=1.2.2
+shap==0.42.1
+scikit-learn==1.3.0
 # Confusion matrix
 seaborn~=0.12.2
 # Discord Callback
-requests==2.30.0
+requests==2.31.0
 # Testing
-pytest~=7.3.1
+pytest==7.4.0
 
 # Optional
 # Vision Transformer
