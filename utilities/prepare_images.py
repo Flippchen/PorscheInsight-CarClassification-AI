@@ -3,7 +3,7 @@ import os
 
 import numpy as np
 from scipy.ndimage import maximum_filter
-from PIL import Image, ImageOps, ImageFile, ImageFilter, ImageChops
+from PIL import Image, ImageOps, ImageFile, ImageChops
 from rembg import remove, new_session
 from PIL.Image import Image as PILImage
 from typing import Tuple
@@ -154,7 +154,7 @@ def resize_and_pad_image(image: PILImage, target_size: Tuple, fill_color=(0, 0, 
         new_height = target_size[1]
 
     # Resize the image while maintaining its aspect ratio
-    resized_image = image.resize((new_width, new_height), Image.ANTIALIAS)
+    resized_image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
 
     # Calculate padding
     padding_width = target_size[0] - new_width
