@@ -251,7 +251,6 @@ def classify_image(image_data: str, model_name: str, show_mask: bool = False) ->
         input_name = model.get_inputs()[0].name
         prediction = model.run(None, {input_name: filter_image})
     else:
-        # prediction = ensemble_predictions_weighted(model, filter_image)
         prediction = ensemble_predictions_weighted(model, filter_image)
 
     # Retrieving the top 3 predictions
