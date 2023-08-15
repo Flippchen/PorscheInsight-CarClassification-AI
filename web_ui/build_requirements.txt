@@ -2,6 +2,6 @@
 eel~=0.16.0
 pooch==1.7.0
 numpy==1.23.5
-Pillow==9.5.0
+Pillow==10.0.0
 rembg~=2.0.32
 onnxruntime==1.14.1
