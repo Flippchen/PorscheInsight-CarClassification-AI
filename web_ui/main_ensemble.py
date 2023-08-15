@@ -262,13 +262,21 @@ def classify_image(image_data: str, model_name: str, show_mask: bool = False) ->
             models["car_type_2"] = load_model("car_type_2")
 
         pre_prediction = ensemble_predictions_weighted([models["car_type"], models["car_type_2"]], filter_image)
+        top__pre_prediction = get_top_n_predictions(pre_prediction[0], "car_type")[0][0]
 
         input_name = model.get_inputs()[0].name
         prediction = model.run(None, {input_name: filter_image})
 
+        # Filter the second model's predictions based on the top result of the first model
+        classes = get_classes_for_model("specific_model_variants")
 
+        valid_indices = [i for i, class_name in enumerate(classes) if class_name.startswith(top__pre_prediction)]
+        filtered_predictions = [prediction[0][i] for i in valid_indices]
 
-
+        # Get top 3 predictions after filtering
+        top_3_predictions = sorted(zip(filtered_predictions, valid_indices), key=lambda x: x[0], reverse=True)[:3]
+        top_3_predictions = [(classes[i], round(score * 100, 2)) for score, i in top_3_predictions]
+        return (top_3_predictions, mask_base64) if show_mask else [top_3_predictions]
     else:
         prediction = ensemble_predictions_weighted(model, filter_image)
 
