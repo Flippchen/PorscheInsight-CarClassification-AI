@@ -250,13 +250,17 @@ def classify_image(image_data: str, model_name: str, show_mask: bool = False) ->
     if model_name != "car_type":
         input_name = model.get_inputs()[0].name
         prediction = model.run(None, {input_name: filter_image})
-    elif model_name == "car_series":
+    elif model_name == "specific_model_variants":
         if models["car_type"] is None:
             models["car_type"] = load_model("car_type")
         if models["car_type_2"] is None:
             models["car_type_2"] = load_model("car_type_2")
 
         pre_prediction = ensemble_predictions_weighted([models["car_type"], models["car_type_2"]], filter_image)
+
+        input_name = model.get_inputs()[0].name
+        prediction = model.run(None, {input_name: filter_image})
+
 
 
 
