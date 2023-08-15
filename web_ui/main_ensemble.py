@@ -142,22 +142,27 @@ def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool
     return img_array, mask
 
 
-def get_top_3_predictions(prediction: np.ndarray, model_name: str) -> List[Tuple[str, float]]:
+def get_top_n_predictions(prediction: np.ndarray, model_name: str, n: int = 3) -> List[Tuple[str, float]]:
     """
-    Get top 3 predictions from the model output.
+    Get top n predictions from the model output.
 
     Args:
         prediction (np.ndarray): Output prediction from a model.
         model_name (str): Name of the model that produced the prediction.
+        n (int, optional): Number of top predictions to retrieve. Defaults to 3.
 
     Returns:
-        List[Tuple[str, float]]: A list of top 3 predictions along with their respective scores.
+        List[Tuple[str, float]]: A list of top n predictions along with their respective scores.
     """
 
-    top_3 = prediction[0].argsort()[-3:][::-1]
+    # Ensure that n does not exceed the total number of classes
+    n = min(n, prediction[0].shape[0])
+
+    top_n_indices = prediction[0].argsort()[-n:][::-1]
     classes = get_classes_for_model(model_name)
-    top_3 = [(classes[i], round(prediction[0][i] * 100, 2)) for i in top_3]
-    return top_3
+    top_n_predictions = [(classes[i], round(prediction[0][i] * 100, 2)) for i in top_n_indices]
+
+    return top_n_predictions
 
 
 def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
@@ -179,7 +184,7 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
         models[model_name] = load_model(model_name)
     input_name = models[model_name].get_inputs()[0].name
     prediction = models[model_name].run(None, {input_name: image_data})
-    filter_names = get_top_3_predictions(prediction[0], "pre_filter")
+    filter_names = get_top_n_predictions(prediction[0], "pre_filter")
     return filter_names
 
 
@@ -268,7 +273,7 @@ def classify_image(image_data: str, model_name: str, show_mask: bool = False) ->
         prediction = ensemble_predictions_weighted(model, filter_image)
 
     # Retrieving the top 3 predictions
-    top_3_predictions = get_top_3_predictions(prediction[0], model_name)
+    top_3_predictions = get_top_n_predictions(prediction[0], model_name)
 
     return (top_3_predictions, mask_base64) if show_mask else [top_3_predictions]
 
