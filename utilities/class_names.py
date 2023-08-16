@@ -11,11 +11,47 @@ ALL_MODEL_VARIANTS = ['718 Boxster_2016', '718 Boxster_2017', '718 Boxster_2018'
                       'Cayman_2013', 'Cayman_2014', 'Cayman_2015', 'Cayman_2016', 'Macan_2014', 'Macan_2015', 'Macan_2016', 'Macan_2017', 'Macan_2018', 'Macan_2019', 'Panamera_2009', 'Panamera_2010',
                       'Panamera_2011', 'Panamera_2012', 'Panamera_2013', 'Panamera_2014', 'Panamera_2015', 'Panamera_2016', 'Panamera_2017', 'Panamera_2018', 'Panamera_2019']
 
-MODEL_VARIANTS = ['911_930', '911_964', '911_991', '911_991_Facelift', '911_992', '911_996_Facelift', '911_997', '911_997_Facelift', '918_Spyderr_1_Generation', 'Boxster_981', 'Boxster_982',
-                  'Boxster_986', 'Boxster_987_Facelift', 'Boxter_986_Facelift', 'Boxter_987', 'Carrera_GT_980', 'Cayenne_955', 'Cayenne_955_Facelift', 'Cayenne_958', 'Cayenne_958_Facelift',
+MODEL_VARIANTS = ['911_930', '911_964', '911_991', '911_991_Facelift', '911_992', '911_996_Facelift', '911_997', '911_997_Facelift', '918_Spyder_1_Generation', 'Boxster_981', 'Boxster_982',
+                  'Boxster_986', 'Boxster_987_Facelift', 'Boxster_986_Facelift', 'Boxter_987', 'Carrera_GT_980', 'Cayenne_955', 'Cayenne_955_Facelift', 'Cayenne_958', 'Cayenne_958_Facelift',
                   'Cayenne_9YA', 'Cayman_981C', 'Cayman_982C', 'Cayman_987C', 'Cayman_987_Facelift', 'Macan_95B', 'Macan_95B_Facelift', 'Panamera_970', 'Panamera_970_Facelift', 'Panamera_971']
 
 PRE_FILTER = ['other', 'other_car_brand', 'porsche']
+HIERARCHY = {
+    '911': [
+        '911_930', '911_964', '911_991', '911_991_Facelift', '911_992',
+        '911_996_Facelift', '911_997', '911_997_Facelift'
+    ],
+    '918': [
+        '918_Spyder_1_Generation'
+    ],
+    'Boxster': [
+        'Boxster_981', 'Boxster_982', 'Boxster_986', 'Boxster_987_Facelift',
+        'Boxster_986_Facelift', 'Boxster_987'
+    ],
+    'Carrera GT': [
+        'Carrera_GT_980'
+    ],
+    'Cayenne': [
+        'Cayenne_955', 'Cayenne_955_Facelift', 'Cayenne_958',
+        'Cayenne_958_Facelift', 'Cayenne_9YA'
+    ],
+    'Cayman': [
+        'Cayman_981C', 'Cayman_982C', 'Cayman_987C', 'Cayman_987_Facelift'
+    ],
+    'Macan': [
+        'Macan_95B', 'Macan_95B_Facelift'
+    ],
+    'Panamera': [
+        'Panamera_970', 'Panamera_970_Facelift', 'Panamera_971'
+    ],
+    '718 Cayman': [
+        'Cayman_981C', 'Cayman_982C', 'Cayman_987C', 'Cayman_987_Facelift'
+    ],
+    '718 Boxster': [
+        'Boxster_981', 'Boxster_982', 'Boxster_986', 'Boxster_987_Facelift',
+        'Boxster_986_Facelift', 'Boxster_987'
+    ]
+}
 
 
 def get_classes_for_model(name: str) -> List[str]:
