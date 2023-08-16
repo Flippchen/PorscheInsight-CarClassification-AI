@@ -67,7 +67,6 @@ To see the architecture of the Local App UI, click the arrow below.
 
 - [ ] Experiment with EfficientNet-Lite4
 - [ ] Retrain all models with better dataset
-- [ ] Build an ensemble model with car_type and car_series
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model/Use Grounded SAM
 - [ ] Add Taycans to images/models
@@ -99,6 +98,7 @@ To see the architecture of the Local App UI, click the arrow below.
 - [x] Try autokeras
 - [x] Improve model predictions overall
 - [x] Evaluate feature engineering/ More data augmentation
+- [x] Build an ensemble model with car_type and car_series
 
 </details>
 
