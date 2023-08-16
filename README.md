@@ -63,6 +63,22 @@ To see the architecture of the Local App UI, click the arrow below.
 <img alt="Architecture of the Web UI" src="assets/architecture.png"  height="400">
 </details>
 
+### Experimental Ensemble Models 🧪
+To improve accuracy and prediction capabilities, I have experimented with two ensemble models. Ensemble models combine predictions from multiple models to give a final verdict, which often results in better prediction accuracy. These ensemble models are still in the experimental phase and can be found in the [ensemble](web_ui/main_ensemble.py).
+
+1. Car Type Ensemble Model (weighted average)
+    - Description: Trained two models on the same objective. Each with its on strengths and weaknesses. The results get weighted (correct weights through intensive testing). The models also differ in model architecture. 
+    - Achievements:
+      - More balanced predictions
+      - Better prediction accuracy
+2. Car Type hierarchy with car series (specific car type) (weighted average)
+    - Description: Created a hierachy of models. The first models predicts the car type. The second model predicts the car series. After this the results get aligned with the car type model.
+    - Achievements:
+      - much less outlier predictions
+      - better prediction accuracy
+      
+
+
 ### ToDos
 
 - [ ] Experiment with EfficientNet-Lite4
