@@ -259,9 +259,11 @@ def classify_image(image_data: str, model_name: str, show_mask: bool = False) ->
         if models["car_type"] is None:
             models["car_type"] = load_model("car_type")
 
+        # Hierarchical prediction
         pre_prediction = ensemble_predictions_weighted(models["car_type"], filter_image)
         top_pre_prediction = get_top_n_predictions(pre_prediction[0], "car_type", 8)
 
+        # Run the specific model
         input_name = model.get_inputs()[0].name
         prediction = model.run(None, {input_name: filter_image})
         top_prediction = get_top_n_predictions(prediction[0], "specific_model_variants", 25)
@@ -295,7 +297,7 @@ def classify_image(image_data: str, model_name: str, show_mask: bool = False) ->
             # Append them to the overall list
             all_adjusted_predictions.extend(car_type_adjusted_predictions)
 
-        # You can choose to overwrite top_prediction with adjusted_predictions or use it as a separate list
+        # Get top 3 predictions
         top_3_predictions = all_adjusted_predictions[:3]
 
         return (top_3_predictions, mask_base64) if show_mask else [top_3_predictions]
