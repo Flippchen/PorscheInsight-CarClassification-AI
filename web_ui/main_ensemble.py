@@ -14,7 +14,7 @@ import base64
 from io import BytesIO
 from PIL import Image
 
-from utilities.class_names import get_classes_for_model
+from utilities.class_names import get_classes_for_model, HIERARCHY
 from utilities.prepare_images import replace_background, resize_and_pad_image, fix_image, convert_mask
 import pooch
 from rembg import new_session
@@ -25,7 +25,6 @@ models: dict[str, Union[None, ort.InferenceSession]] = {
     "all_specific_model_variants": None,
     "specific_model_variants": None,
     "pre_filter": None,
-    "car_type_2": None,
 }
 
 # Initiate session
@@ -142,22 +141,27 @@ def prepare_image(image_data: Image, target_size: Tuple, remove_background: bool
     return img_array, mask
 
 
-def get_top_3_predictions(prediction: np.ndarray, model_name: str) -> List[Tuple[str, float]]:
+def get_top_n_predictions(prediction: np.ndarray, model_name: str, n: int = 3) -> List[Tuple[str, float]]:
     """
-    Get top 3 predictions from the model output.
+    Get top n predictions from the model output.
 
     Args:
         prediction (np.ndarray): Output prediction from a model.
         model_name (str): Name of the model that produced the prediction.
+        n (int, optional): Number of top predictions to retrieve. Defaults to 3.
 
     Returns:
-        List[Tuple[str, float]]: A list of top 3 predictions along with their respective scores.
+        List[Tuple[str, float]]: A list of top n predictions along with their respective scores.
     """
 
-    top_3 = prediction[0].argsort()[-3:][::-1]
+    # Ensure that n does not exceed the total number of classes
+    n = min(n, prediction[0].shape[0])
+
+    top_n_indices = prediction[0].argsort()[-n:][::-1]
     classes = get_classes_for_model(model_name)
-    top_3 = [(classes[i], round(prediction[0][i] * 100, 2)) for i in top_3]
-    return top_3
+    top_n_predictions = [(classes[i], round(prediction[0][i] * 100, 2)) for i in top_n_indices]
+
+    return top_n_predictions
 
 
 def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
@@ -179,7 +183,7 @@ def get_pre_filter_prediction(image_data: np.ndarray, model_name: str):
         models[model_name] = load_model(model_name)
     input_name = models[model_name].get_inputs()[0].name
     prediction = models[model_name].run(None, {input_name: image_data})
-    filter_names = get_top_3_predictions(prediction[0], "pre_filter")
+    filter_names = get_top_n_predictions(prediction[0], "pre_filter")
     return filter_names
 
 
@@ -247,18 +251,83 @@ def classify_image(image_data: str, model_name: str, show_mask: bool = False) ->
     if pre_filter_predictions[0][0] != "porsche":
         return (pre_filter_predictions, mask_base64) if show_mask else [pre_filter_predictions]
 
-    if model_name != "car_type":
+    if model_name != "car_type" and model_name != "specific_model_variants":
         input_name = model.get_inputs()[0].name
         prediction = model.run(None, {input_name: filter_image})
+    elif model_name == "specific_model_variants":
+        if models["car_type"] is None:
+            models["car_type"] = load_model("car_type")
+
+        # Hierarchical prediction
+        pre_prediction = ensemble_predictions_weighted(models["car_type"], filter_image)
+        top_pre_prediction = get_top_n_predictions(pre_prediction[0], "car_type", 8)
+
+        # Run the specific model
+        input_name = model.get_inputs()[0].name
+        prediction = model.run(None, {input_name: filter_image})
+        top_prediction = get_top_n_predictions(prediction[0], "specific_model_variants", 25)
+
+        # Adjust the top_prediction based on top_pre_prediction and hierarchy
+        all_adjusted_predictions = []
+
+        for car_type, car_type_possibility in top_pre_prediction:
+            # Initialize an empty list for each car_type to store its adjusted predictions
+            car_type_adjusted_predictions = []
+
+            # Normalize the car_type_possibility
+            normalized_car_type_possibility = car_type_possibility / 100.0
+
+            # Fetch the possible series based on hierarchy
+            possible_series = HIERARCHY.get(car_type, [])
+
+            # Check if any of the series from the top_prediction belongs to possible_series
+            for car_series, car_series_possibility in top_prediction:
+                if car_series in possible_series:
+                    normalized_car_series_possibility = car_series_possibility / 100.0
+                    # Multiply the normalized possibilities
+                    adjusted_possibility_normalized = 0.6 * normalized_car_series_possibility + 0.4 * normalized_car_type_possibility
+                    # Convert back to the 1-100 scale
+                    adjusted_possibility = adjusted_possibility_normalized * 100
+                    car_type_adjusted_predictions.append((car_series, adjusted_possibility))
+
+            # Sort the predictions for this car_type
+            car_type_adjusted_predictions = sorted(car_type_adjusted_predictions, key=lambda x: x[1], reverse=True)
+
+            # Append them to the overall list
+            all_adjusted_predictions.extend(car_type_adjusted_predictions)
+
+        # Get top 3 predictions
+        top_3_predictions = all_adjusted_predictions[:3]
+
+        return (top_3_predictions, mask_base64) if show_mask else [top_3_predictions]
     else:
-        # prediction = ensemble_predictions_weighted(model, filter_image)
         prediction = ensemble_predictions_weighted(model, filter_image)
 
     # Retrieving the top 3 predictions
-    top_3_predictions = get_top_3_predictions(prediction[0], model_name)
+    top_3_predictions = get_top_n_predictions(prediction[0], model_name)
 
     return (top_3_predictions, mask_base64) if show_mask else [top_3_predictions]
 
 
 eel.init("web")
 eel.start("index.html", size=(1000, 800), mode="default")
+
+
+"""How the car_type/car_series ensemble works:
+
+Incorporating Hierarchical Predictions for Porsche Images
+
+Hierarchy Setup:
+
+Create a mapping between 'car type' (e.g., Macan, 911) and 'car series' (e.g., 911_991, Macan_95B).
+Prediction Process:
+
+Get the top predictions for 'car type' using Model 1.
+Predict 'car series' using Model 2.
+Adjustment:
+
+For each 'car type' from Model 1:
+Filter 'car series' predictions of Model 2 that align with the hierarchy.
+Adjust the probabilities of these 'car series' predictions based on 'car type' probability.
+Sort and combine the adjusted predictions.
+"""
