@@ -25,7 +25,6 @@ models: dict[str, Union[None, ort.InferenceSession]] = {
     "all_specific_model_variants": None,
     "specific_model_variants": None,
     "pre_filter": None,
-    "car_type_2": None,
 }
 
 # Initiate session
