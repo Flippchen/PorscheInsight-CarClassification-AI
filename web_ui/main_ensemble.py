@@ -312,3 +312,23 @@ def classify_image(image_data: str, model_name: str, show_mask: bool = False) ->
 
 eel.init("web")
 eel.start("index.html", size=(1000, 800), mode="default")
+
+
+"""How the car_type/car_series ensemble works:
+
+Incorporating Hierarchical Predictions for Porsche Images
+
+Hierarchy Setup:
+
+Create a mapping between 'car type' (e.g., Macan, 911) and 'car series' (e.g., 911_991, Macan_95B).
+Prediction Process:
+
+Get the top predictions for 'car type' using Model 1.
+Predict 'car series' using Model 2.
+Adjustment:
+
+For each 'car type' from Model 1:
+Filter 'car series' predictions of Model 2 that align with the hierarchy.
+Adjust the probabilities of these 'car series' predictions based on 'car type' probability.
+Sort and combine the adjusted predictions.
+"""

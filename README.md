@@ -72,7 +72,7 @@ To improve accuracy and prediction capabilities, I have experimented with two en
       - More balanced predictions
       - Better prediction accuracy
 2. Car Type hierarchy with car series (specific car type) (weighted average)
-    - Description: Created a hierachy of models. The first models predicts the car type. The second model predicts the car series. After this the results get aligned with the car type model.
+    - Description: Created a hierarchy of models. The first models predicts the car type. The second model predicts the car series. After this the results get aligned with the car type model.
     - Achievements:
       - much less outlier predictions
       - better prediction accuracy
