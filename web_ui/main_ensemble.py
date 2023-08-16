@@ -14,7 +14,7 @@ import base64
 from io import BytesIO
 from PIL import Image
 
-from utilities.class_names import get_classes_for_model
+from utilities.class_names import get_classes_for_model, HIERARCHY
 from utilities.prepare_images import replace_background, resize_and_pad_image, fix_image, convert_mask
 import pooch
 from rembg import new_session
@@ -260,21 +260,43 @@ def classify_image(image_data: str, model_name: str, show_mask: bool = False) ->
             models["car_type"] = load_model("car_type")
 
         pre_prediction = ensemble_predictions_weighted(models["car_type"], filter_image)
-        top_pre_prediction = get_top_n_predictions(pre_prediction[0], "car_type")[0][0]
+        top_pre_prediction = get_top_n_predictions(pre_prediction[0], "car_type", 8)
 
         input_name = model.get_inputs()[0].name
         prediction = model.run(None, {input_name: filter_image})
+        top_prediction = get_top_n_predictions(prediction[0], "specific_model_variants", 25)
 
-        # Filter the second model's predictions based on the top result of the first model
-        classes = get_classes_for_model("specific_model_variants")
+        # Adjust the top_prediction based on top_pre_prediction and hierarchy
+        all_adjusted_predictions = []
 
-        print(top_pre_prediction)
-        valid_indices = [i for i, class_name in enumerate(classes) if class_name.startswith(top_pre_prediction)]
-        filtered_predictions = [prediction[0][i] for i in valid_indices]
+        for car_type, car_type_possibility in top_pre_prediction:
+            # Initialize an empty list for each car_type to store its adjusted predictions
+            car_type_adjusted_predictions = []
 
-        # Get top 3 predictions after filtering
-        top_3_predictions = sorted(zip(filtered_predictions, valid_indices), key=lambda x: x[0], reverse=True)[:3]
-        top_3_predictions = [(classes[i], round(score * 100, 2)) for score, i in top_3_predictions]
+            # Normalize the car_type_possibility
+            normalized_car_type_possibility = car_type_possibility / 100.0
+
+            # Fetch the possible series based on hierarchy
+            possible_series = HIERARCHY.get(car_type, [])
+
+            # Check if any of the series from the top_prediction belongs to possible_series
+            for car_series, car_series_possibility in top_prediction:
+                if car_series in possible_series:
+                    normalized_car_series_possibility = car_series_possibility / 100.0
+                    # Multiply the normalized possibilities
+                    adjusted_possibility_normalized = 0.6 * normalized_car_series_possibility + 0.4 * normalized_car_type_possibility
+                    # Convert back to the 1-100 scale
+                    adjusted_possibility = adjusted_possibility_normalized * 100
+                    car_type_adjusted_predictions.append((car_series, adjusted_possibility))
+
+            # Sort the predictions for this car_type
+            car_type_adjusted_predictions = sorted(car_type_adjusted_predictions, key=lambda x: x[1], reverse=True)
+
+            # Append them to the overall list
+            all_adjusted_predictions.extend(car_type_adjusted_predictions)
+
+        # You can choose to overwrite top_prediction with adjusted_predictions or use it as a separate list
+        top_3_predictions = all_adjusted_predictions[:3]
 
         return (top_3_predictions, mask_base64) if show_mask else [top_3_predictions]
     else:
