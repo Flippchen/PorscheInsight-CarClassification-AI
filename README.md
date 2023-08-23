@@ -81,7 +81,6 @@ They can be found at [PorscheInsight-Ensemble](https://classify.autos/classify-e
 
 ### ToDos
 
-- [ ] Experiment with EfficientNet-Lite4
 - [ ] Retrain all models with better dataset
 - [ ] Switch to Google Cloud function/use S3 bucket/compress image
 - [ ] Improve pre_filter model/Use Grounded SAM
@@ -115,6 +114,7 @@ They can be found at [PorscheInsight-Ensemble](https://classify.autos/classify-e
 - [x] Improve model predictions overall
 - [x] Evaluate feature engineering/ More data augmentation
 - [x] Build an ensemble model with car_type and car_series
+- [x] Experiment with EfficientNet-Lite4
 
 </details>
 
