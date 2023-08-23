@@ -82,7 +82,7 @@ They can be found at [PorscheInsight-Ensemble](https://classify.autos/classify-e
 ### ToDos
 
 - [ ] Retrain all models with better dataset
-- [ ] Switch to Google Cloud function/use S3 bucket/compress image
+- [ ] Switch to Google Cloud function/use S3 bucket
 - [ ] Improve pre_filter model/Use Grounded SAM
 - [ ] Add Taycans to images/models
 
@@ -115,6 +115,7 @@ They can be found at [PorscheInsight-Ensemble](https://classify.autos/classify-e
 - [x] Evaluate feature engineering/ More data augmentation
 - [x] Build an ensemble model with car_type and car_series
 - [x] Experiment with EfficientNet-Lite4
+- [x] Compress images on upload
 
 </details>
 
