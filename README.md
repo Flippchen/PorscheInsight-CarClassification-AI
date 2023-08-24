@@ -57,7 +57,13 @@ which classifies the car according to the user's input.
 
 <img alt="Architecture of the Web UI" src="assets/lambda_architecture.png"  height="450">
 
-To see the architecture of the Local App UI, click the arrow below.
+To see the architecture of the experimental ensemble models or the local web UI, click the arrow below.
+
+<details>
+<summary>Ensemble models</summary>
+<img alt="Architecture of the ensemble models" src="assets/ensemble_architecture.png"  height="450">
+</details>
+
 <details>
 <summary>App UI</summary>
 <img alt="Architecture of the Web UI" src="assets/architecture.png"  height="400">
@@ -81,9 +87,8 @@ They can be found at [PorscheInsight-Ensemble](https://classify.autos/classify-e
 
 ### ToDos
 
-- [ ] Experiment with EfficientNet-Lite4
 - [ ] Retrain all models with better dataset
-- [ ] Switch to Google Cloud function/use S3 bucket/compress image
+- [ ] Switch to Google Cloud function/use S3 bucket
 - [ ] Improve pre_filter model/Use Grounded SAM
 - [ ] Add Taycans to images/models
 
@@ -115,6 +120,8 @@ They can be found at [PorscheInsight-Ensemble](https://classify.autos/classify-e
 - [x] Improve model predictions overall
 - [x] Evaluate feature engineering/ More data augmentation
 - [x] Build an ensemble model with car_type and car_series
+- [x] Experiment with EfficientNet-Lite4
+- [x] Compress images on upload
 
 </details>
 
