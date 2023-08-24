@@ -57,7 +57,13 @@ which classifies the car according to the user's input.
 
 <img alt="Architecture of the Web UI" src="assets/lambda_architecture.png"  height="450">
 
-To see the architecture of the Local App UI, click the arrow below.
+To see the architecture of the experimental ensemble models or the local web UI, click the arrow below.
+
+<details>
+<summary>Ensemble models</summary>
+<img alt="Architecture of the ensemble models" src="assets/ensemble_architecture.png"  height="450">
+</details>
+
 <details>
 <summary>App UI</summary>
 <img alt="Architecture of the Web UI" src="assets/architecture.png"  height="400">
