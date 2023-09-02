@@ -88,7 +88,6 @@ They can be found at [PorscheInsight-Ensemble](https://classify.autos/classify-e
 ### ToDos
 
 - [ ] Retrain all models with better dataset
-- [ ] Switch to Google Cloud function/use S3 bucket
 - [ ] Improve pre_filter model/Use Grounded SAM
 - [ ] Add Taycans to images/models
 
