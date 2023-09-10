@@ -86,7 +86,7 @@ To improve accuracy and prediction capabilities, I have experimented with two en
 They can be found at [PorscheInsight-Ensemble](https://classify.autos/classify-ensemble).
 
 ### ToDos
-
+- [ ] Add (explaining) Popup on first start of website
 - [ ] Retrain all models with better dataset
 - [ ] Improve pre_filter model/Use Grounded SAM
 - [ ] Add Taycans to images/models
