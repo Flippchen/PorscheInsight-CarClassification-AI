@@ -6,7 +6,7 @@ Pillow==10.0.0
 keras~=2.10.0
 # Inference
 rembg==2.0.50
-onnxruntime==1.15.1
+onnxruntime==1.16.0
 scipy==1.11.2
 # Export to onnx
 tf2onnx==1.14.0 # Not upgradable due to incompatibility with onnxruntime/tf
