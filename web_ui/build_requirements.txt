@@ -4,4 +4,4 @@ pooch==1.7.0
 numpy==1.23.5
 Pillow==10.0.0
 rembg~=2.0.32
-onnxruntime==1.15.1
+onnxruntime==1.16.3
