@@ -1,24 +1,24 @@
 # Trainig
-numpy==1.23.5
-tensorflow==2.10.1
-matplotlib==3.7.2
-Pillow==10.0.0
-keras~=2.10.0
+numpy>=1.23.5
+tensorflow>=2.10.0
+matplotlib>=3.7.2
+Pillow>=10.0.0
+keras>=2.10.0
 # Inference
-rembg==2.0.50
-onnxruntime==1.15.1
-scipy==1.11.2
+rembg>=2.0.50
+onnxruntime>=1.15.1
+scipy>=1.11.2
 # Export to onnx
-tf2onnx==1.14.0 # Not upgradable due to incompatibility with onnxruntime/tf
+tf2onnx>=1.14.0 # Not upgradable due to incompatibility with onnxruntime/tf
 # Explaining the model
-shap==0.42.1
-scikit-learn==1.3.0
+shap>=0.42.1
+scikit-learn>=1.3.0
 # Confusion matrix
-seaborn~=0.12.2
+seaborn>=0.12.2
 # Discord Callback
-requests==2.31.0
+requests>=2.31.0
 # Testing
-pytest==7.4.0
+pytest>=7.4.0
 
 # Optional
 # Vision Transformer
