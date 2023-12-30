@@ -1,14 +1,16 @@
 # This file contains the code for training a model with data augmentation and a pretrained base.
 # Import libraries
+import keras
+from keras import layers
 from keras.models import Sequential
 from keras.applications import EfficientNetV2B1
-from utilities.tools import get_data_path_addon, get_base_path, suppress_tf_warnings, load_dataset, show_augmented_batch, create_augmentation_layer, plot_model_score
+from utilities.tools import get_data_path_addon, get_base_path, suppress_tf_warnings, load_dataset, show_augmented_batch, create_augmentation_layer, plot_model_score, show_sample_batch, show_batch_shape
 from utilities.discord_callback import DiscordCallback
 from keras.optimizers import Adam
 from keras.regularizers import l1_l2
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
-
+import tensorflow as tf
 # Ignore warnings
 import warnings
 
