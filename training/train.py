@@ -2,7 +2,7 @@
 # Import libraries
 from keras.models import Sequential
 from keras.applications import EfficientNetV2B1
-from utilities.tools import *
+from utilities.tools import get_data_path_addon, get_base_path, suppress_tf_warnings, load_dataset, show_augmented_batch, create_augmentation_layer, plot_model_score
 from utilities.discord_callback import DiscordCallback
 from keras.optimizers import Adam
 from keras.regularizers import l1_l2
@@ -29,9 +29,10 @@ save_path = f"../models/car_types/"
 load_model = False
 load_path = "../models/all_model_variants/efficientnet-old-head-model-variants.h5"
 # Config
+base_path = get_base_path()
 path_addon = get_data_path_addon(model_type)
 config = {
-    "path": f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}",
+    "path": f"{base_path}/{path_addon}",
     "batch_size": 32,
     "img_height": img_height,
     "img_width": img_width,
