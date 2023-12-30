@@ -115,7 +115,9 @@ discord_callback = DiscordCallback(webhook_url)
 
 # Train model
 epochs = 20
-with tf.device('/GPU:0'):
+device = tf.test.gpu_device_name() if tf.test.is_gpu_available() else '/CPU:0'
+print("Using Device:", device)
+with tf.device(device):
     history = model.fit(
         train_ds,
         validation_data=val_ds,
