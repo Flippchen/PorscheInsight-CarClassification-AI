@@ -4,7 +4,6 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Flippchen/PorscheInsight-CarClassification-AI/python.yaml?logoColor=blue&style=flat-square) 
 ![GitHub repo size](https://img.shields.io/github/repo-size/Flippchen/PorscheInsight-CarClassification-AI?style=flat-square) 
 
-<img alt="Architecture of the Web UI" src="assets/bannger_gif_2.gif">
 <img alt="Architecture of the Web UI" src="assets/banner.jpg">
 
 ## Description
