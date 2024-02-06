@@ -8,6 +8,7 @@ from keras.optimizers import Adam
 from keras.regularizers import l1_l2
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
+import random
 
 # Ignore warnings
 import warnings
@@ -28,6 +29,8 @@ save_path = f"../models/car_types/"
 # Set to True to load trained model
 load_model = False
 load_path = "../models/all_model_variants/efficientnet-old-head-model-variants.h5"
+# Set seed for reproducibility
+random_seed = True
 # Config
 path_addon = get_data_path_addon(model_type)
 config = {
@@ -35,6 +38,7 @@ config = {
     "batch_size": 32,
     "img_height": img_height,
     "img_width": img_width,
+    "seed": random.randint(0, 1000) if random_seed else 123
 }
 
 # Load dataset and classes
