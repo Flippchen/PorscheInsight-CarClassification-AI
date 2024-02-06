@@ -19,14 +19,6 @@ def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) ->
     :return: Tuple of train, val Dataset and Class names
     """
     data_dir = pathlib.Path(path)
-    # if "more_classes" in path:
-    #    image_count = len(list(data_dir.glob('*/*/*.jpg')))
-    # else:
-    #    image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
-
-    # print("Image count:", image_count)
-    # cars = list(data_dir.glob('*/*/*/*.jpg'))
-    # PIL.Image.open(str(cars[0]))
     train_ds = tf.keras.utils.image_dataset_from_directory(
         data_dir,
         validation_split=0.2,
