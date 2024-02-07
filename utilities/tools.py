@@ -90,12 +90,6 @@ def load_image_subset(path: str, batch_size: int, img_height: int, img_width: in
     :return: Subset of Dataset
     """
     data_dir = pathlib.Path(path)
-    # if "more_classes" in path:
-    #    image_count = len(list(data_dir.glob('*/*/*.jpg')))
-    # else:
-    #    image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
-
-    # print("Image count:", image_count)
 
     data = tf.keras.utils.image_dataset_from_directory(
         data_dir,
