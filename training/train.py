@@ -88,7 +88,7 @@ model = Sequential([
 ]) if not load_model else keras.models.load_model(load_path)
 
 # Define optimizer
-optimizer = AdamW(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
+optimizer = AdamW(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, use_ema=True)
 
 # Define learning rate scheduler
 initial_learning_rate = 0.001
