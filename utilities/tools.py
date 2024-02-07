@@ -159,12 +159,13 @@ def create_augmentation_layer(img_height: int, img_width: int) -> keras.Sequenti
     """
     return keras.Sequential(
         [
-            layers.RandomFlip("horizontal",
+            layers.RandomFlip("vertical",
                               input_shape=(img_height,
                                            img_width,
                                            3)),
-            layers.RandomRotation(0.1),
+            layers.RandomRotation(0.2),
             layers.RandomZoom(0.1),
+            layers.RandomContrast(0.1),
         ]
     )
 
