@@ -4,7 +4,7 @@ from keras.models import Sequential
 from keras.applications import EfficientNetV2B1
 from utilities.tools import *
 from utilities.discord_callback import DiscordCallback
-from keras.optimizers import Adam
+from keras.optimizers import AdamW
 from keras.regularizers import l1_l2
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
@@ -88,7 +88,7 @@ model = Sequential([
 ]) if not load_model else keras.models.load_model(load_path)
 
 # Define optimizer
-optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
+optimizer = AdamW(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 
 # Define learning rate scheduler
 initial_learning_rate = 0.001
