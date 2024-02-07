@@ -102,7 +102,7 @@ lr_scheduler = tf.keras.optimizers.schedules.ExponentialDecay(
 
 # Compile model
 model.compile(optimizer=optimizer,
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
               metrics=['accuracy'])
 model.summary()
 
