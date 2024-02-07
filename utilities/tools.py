@@ -10,7 +10,7 @@ import os
 import logging
 
 
-def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
+def load_dataset(path: str, batch_size: int, img_height: int, img_width: int, seed: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
     """
     :param path: Path to the Dataset folder
     :param batch_size: Integer which defines how many Images are in one Batch
@@ -23,7 +23,7 @@ def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) ->
         data_dir,
         validation_split=0.2,
         subset="training",
-        seed=123,
+        seed=seed,
         image_size=(img_height, img_width),
         batch_size=batch_size)
 
@@ -31,7 +31,7 @@ def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) ->
         data_dir,
         validation_split=0.2,
         subset="validation",
-        seed=123,
+        seed=seed,
         image_size=(img_height, img_width),
         batch_size=batch_size)
 
