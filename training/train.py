@@ -6,10 +6,12 @@ from keras.models import Sequential
 from keras.applications import EfficientNetV2B1
 from utilities.tools import get_data_path_addon, get_base_path, suppress_tf_warnings, load_dataset, show_augmented_batch, create_augmentation_layer, plot_model_score, show_sample_batch, show_batch_shape
 from utilities.discord_callback import DiscordCallback
-from keras.optimizers import Adam
+from keras.optimizers import AdamW
 from keras.regularizers import l1_l2
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
+import random
+
 import tensorflow as tf
 # Ignore warnings
 import warnings
@@ -30,6 +32,8 @@ save_path = f"../models/car_types/"
 # Set to True to load trained model
 load_model = False
 load_path = "../models/all_model_variants/efficientnet-old-head-model-variants.h5"
+# Set seed for reproducibility
+random_seed = True
 # Config
 base_path = get_base_path()
 path_addon = get_data_path_addon(model_type)
@@ -38,6 +42,7 @@ config = {
     "batch_size": 32,
     "img_height": img_height,
     "img_width": img_width,
+    "seed": random.randint(0, 1000) if random_seed else 123
 }
 
 # Load dataset and classes
@@ -51,11 +56,6 @@ show_batch_shape(train_ds)
 # Shuffle/cache and set prefetch buffer size
 train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
-
-# Normalize the data
-normalization_layer = layers.Rescaling(1. / 255)
-normalized_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
-image_batch, labels_batch = next(iter(normalized_ds))
 
 # Create data augmentation layer and show augmented batch
 data_augmentation = create_augmentation_layer(img_height, img_width)
@@ -87,11 +87,11 @@ model = Sequential([
 ]) if not load_model else keras.models.load_model(load_path)
 
 # Define optimizer
-optimizer = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
+optimizer = AdamW(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, use_ema=True)
 
 # Define learning rate scheduler
 initial_learning_rate = 0.001
-lr_decay_steps = 1000
+lr_decay_steps = 10
 lr_decay_rate = 0.96
 lr_scheduler = tf.keras.optimizers.schedules.ExponentialDecay(
     initial_learning_rate,
@@ -101,7 +101,7 @@ lr_scheduler = tf.keras.optimizers.schedules.ExponentialDecay(
 
 # Compile model
 model.compile(optimizer=optimizer,
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
               metrics=['accuracy'])
 model.summary()
 
@@ -134,4 +134,3 @@ plot_model_score(history, name, model_type)
 # Save model
 model.save(f"{save_path}{name}.h5")
 
-# TODO: Different data augmentation (vertical, ..), Augmentation before training

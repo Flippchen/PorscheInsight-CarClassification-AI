@@ -11,7 +11,7 @@ import logging
 import platform
 
 
-def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
+def load_dataset(path: str, batch_size: int, img_height: int, img_width: int, seed: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
     """
     :param path: Path to the Dataset folder
     :param batch_size: Integer which defines how many Images are in one Batch
@@ -20,19 +20,11 @@ def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) ->
     :return: Tuple of train, val Dataset and Class names
     """
     data_dir = pathlib.Path(path)
-    # if "more_classes" in path:
-    #    image_count = len(list(data_dir.glob('*/*/*.jpg')))
-    # else:
-    #    image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
-
-    # print("Image count:", image_count)
-    # cars = list(data_dir.glob('*/*/*/*.jpg'))
-    # PIL.Image.open(str(cars[0]))
     train_ds = tf.keras.utils.image_dataset_from_directory(
         data_dir,
         validation_split=0.2,
         subset="training",
-        seed=123,
+        seed=seed,
         image_size=(img_height, img_width),
         batch_size=batch_size)
 
@@ -40,7 +32,7 @@ def load_dataset(path: str, batch_size: int, img_height: int, img_width: int) ->
         data_dir,
         validation_split=0.2,
         subset="validation",
-        seed=123,
+        seed=seed,
         image_size=(img_height, img_width),
         batch_size=batch_size)
 
@@ -99,12 +91,6 @@ def load_image_subset(path: str, batch_size: int, img_height: int, img_width: in
     :return: Subset of Dataset
     """
     data_dir = pathlib.Path(path)
-    # if "more_classes" in path:
-    #    image_count = len(list(data_dir.glob('*/*/*.jpg')))
-    # else:
-    #    image_count = len(list(data_dir.glob('*/*/*/*.jpg')))
-
-    # print("Image count:", image_count)
 
     data = tf.keras.utils.image_dataset_from_directory(
         data_dir,
@@ -168,12 +154,14 @@ def create_augmentation_layer(img_height: int, img_width: int) -> keras.Sequenti
     """
     return keras.Sequential(
         [
-            layers.RandomFlip("horizontal",
+            layers.RandomFlip("vertical",
                               input_shape=(img_height,
                                            img_width,
                                            3)),
-            layers.RandomRotation(0.1),
+            layers.RandomRotation(0.2),
             layers.RandomZoom(0.1),
+            layers.RandomContrast(0.1),
+            layers.GaussianNoise(0.1)
         ]
     )
 
