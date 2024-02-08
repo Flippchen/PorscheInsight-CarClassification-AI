@@ -21,7 +21,7 @@ def test_load_dataset(tmp_path):
         p2 = d2 / f"img{i + 1}.jpg"
         p2.write_text("fake image data")
 
-    train_ds, val_ds, class_names = load_dataset(str(d), 2, 32, 32)
+    train_ds, val_ds, class_names = load_dataset(str(d), 2, 32, 32, 123)
 
     assert len(train_ds) == 4
     assert len(val_ds) == 1
@@ -30,10 +30,13 @@ def test_load_dataset(tmp_path):
 
 def test_create_augmentation_layer():
     data_augmentation = create_augmentation_layer(32, 32)
-    assert len(data_augmentation.layers) == 3
+    assert len(data_augmentation.layers) == 5
     assert isinstance(data_augmentation.layers[0], tf.keras.layers.RandomFlip)
     assert isinstance(data_augmentation.layers[1], tf.keras.layers.RandomRotation)
     assert isinstance(data_augmentation.layers[2], tf.keras.layers.RandomZoom)
+    assert isinstance(data_augmentation.layers[3], tf.keras.layers.RandomContrast)
+    assert isinstance(data_augmentation.layers[4], tf.keras.layers.GaussianNoise)
+
 
 
 def test_get_data_path_addon():
