@@ -8,6 +8,7 @@ import keras
 from keras import layers
 import os
 import logging
+import platform
 
 
 def load_dataset(path: str, batch_size: int, img_height: int, img_width: int, seed: int) -> tuple[tf.data.Dataset, tf.data.Dataset, list]:
@@ -317,3 +318,17 @@ def get_data_path_addon(name: str) -> str:
         return "pre_filter"
     else:
         raise ValueError("Invalid model name")
+
+
+def get_base_path():
+    # Determine the base path depending on the operating system
+    if platform.system() == 'Windows':
+        base_path = r"C:/Users\phili/.keras/datasets/resized_DVM"
+    elif platform.system() == 'Linux':
+        base_path = "/home/luke/datasets/"
+    elif platform.system() == 'Darwin':  # Darwin is the system name for macOS
+        base_path = "/Users/flippchen/datasets/"
+    else:
+        raise ValueError("Operating system not supported.")
+
+    return base_path

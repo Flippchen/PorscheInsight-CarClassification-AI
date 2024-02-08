@@ -1,8 +1,10 @@
 # This file contains the code for training a model with data augmentation and a pretrained base.
 # Import libraries
+import keras
+from keras import layers
 from keras.models import Sequential
 from keras.applications import EfficientNetV2B1
-from utilities.tools import *
+from utilities.tools import get_data_path_addon, get_base_path, suppress_tf_warnings, load_dataset, show_augmented_batch, create_augmentation_layer, plot_model_score, show_sample_batch, show_batch_shape
 from utilities.discord_callback import DiscordCallback
 from keras.optimizers import AdamW
 from keras.regularizers import l1_l2
@@ -10,6 +12,7 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint
 import os
 import random
 
+import tensorflow as tf
 # Ignore warnings
 import warnings
 
@@ -32,9 +35,10 @@ load_path = "../models/all_model_variants/efficientnet-old-head-model-variants.h
 # Set seed for reproducibility
 random_seed = True
 # Config
+base_path = get_base_path()
 path_addon = get_data_path_addon(model_type)
 config = {
-    "path": f"C:/Users\phili/.keras/datasets/resized_DVM/{path_addon}",
+    "path": f"{base_path}/{path_addon}",
     "batch_size": 32,
     "img_height": img_height,
     "img_width": img_width,
