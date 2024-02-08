@@ -38,7 +38,6 @@ def test_create_augmentation_layer():
     assert isinstance(data_augmentation.layers[4], tf.keras.layers.GaussianNoise)
 
 
-
 def test_get_data_path_addon():
     assert get_data_path_addon("car_type") == "Porsche"
     assert get_data_path_addon("all_specific_model_variants") == "Porsche_more_classes"
