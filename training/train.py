@@ -87,7 +87,7 @@ optimizer = AdamW(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, use_ema=Tru
 
 # Define learning rate scheduler
 initial_learning_rate = 0.001
-lr_decay_steps = 1000
+lr_decay_steps = 10
 lr_decay_rate = 0.96
 lr_scheduler = tf.keras.optimizers.schedules.ExponentialDecay(
     initial_learning_rate,
