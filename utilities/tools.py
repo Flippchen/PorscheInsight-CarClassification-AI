@@ -161,6 +161,7 @@ def create_augmentation_layer(img_height: int, img_width: int) -> keras.Sequenti
             layers.RandomRotation(0.2),
             layers.RandomZoom(0.1),
             layers.RandomContrast(0.1),
+            layers.GaussianNoise(0.1)
         ]
     )
 
