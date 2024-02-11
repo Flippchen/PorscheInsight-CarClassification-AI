@@ -4,7 +4,8 @@ import keras
 from keras import layers
 from keras.models import Sequential
 from keras.applications import EfficientNetV2B1
-from utilities.tools import get_data_path_addon, get_base_path, suppress_tf_warnings, load_dataset, show_augmented_batch, create_augmentation_layer, plot_model_score, show_sample_batch, show_batch_shape
+from utilities.tools import get_data_path_addon, get_base_path, suppress_tf_warnings, load_dataset, show_augmented_batch, create_augmentation_layer, plot_model_score, show_sample_batch,\
+    show_batch_shape, compute_class_weights
 from utilities.discord_callback import DiscordCallback
 from keras.optimizers import AdamW
 from keras.regularizers import l1_l2
@@ -56,6 +57,9 @@ show_batch_shape(train_ds)
 # Shuffle/cache and set prefetch buffer size
 train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
+
+# Compute class weights to balance the data
+class_weights = compute_class_weights(class_names, train_ds, val_ds)
 
 # Create data augmentation layer and show augmented batch
 data_augmentation = create_augmentation_layer(img_height, img_width)
@@ -126,7 +130,8 @@ with tf.device(device):
         train_ds,
         validation_data=val_ds,
         epochs=epochs,
-        callbacks=[lr, early_stopping, model_checkpoint, discord_callback]
+        callbacks=[lr, early_stopping, model_checkpoint, discord_callback],
+        class_weight=class_weights
     )
 # Plot and save model score
 plot_model_score(history, name, model_type)
