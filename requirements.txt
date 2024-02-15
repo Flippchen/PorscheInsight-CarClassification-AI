@@ -4,6 +4,8 @@ tensorflow>=2.10.0
 matplotlib>=3.7.2
 Pillow>=10.0.0
 keras>=2.10.0
+# Hyperparameter optimization
+keras-tuner<=1.4.6
 # Inference
 rembg>=2.0.50
 onnxruntime>=1.15.1
