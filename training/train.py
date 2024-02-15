@@ -47,7 +47,7 @@ config = {
     "seed": random.randint(0, 1000) if random_seed else 123
 }
 tune_model = False
-tune_and_train = False
+train = True
 
 # Load dataset and classes
 train_ds, val_ds, class_names = load_dataset(**config)
@@ -136,7 +136,7 @@ if tune_model:
     tuner.search(train_ds, epochs=5, validation_data=val_ds)
     model = tuner.get_best_models()[0]
 
-if tune_and_train or not tune_model:
+if train or not tune_model:
     with tf.device(device):
         history = model.fit(
             train_ds,
