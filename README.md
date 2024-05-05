@@ -27,7 +27,9 @@ The following different model types are available:
 
 The Web UI is a simple local website that enables users to upload images of Porsche cars and get classification results from the models. The app is built using Eel, which allows Python and HTML/JS to
 communicate with each other.
-For a free online version of the Web UI, check out [PorscheInsight](https://classify.autos).
+
+> [!TIP]
+> For a free online version of the Web UI, check out [PorscheInsight](https://classify.autos).
 
 With the Web UI, non-car images tend to lead to more random predictions. I trained a model to classify Porsche, other car brands, and others, resulting in a two-step [Web UI](web_ui) architecture for Porsche
 Identification and Classification.
@@ -71,6 +73,8 @@ To see the architecture of the experimental ensemble models or the local web UI,
 
 ### Experimental Ensemble Models 🧪
 To improve accuracy and prediction capabilities, I have experimented with two ensemble models. Ensemble models combine predictions from multiple models to give a final verdict, which often results in better prediction accuracy. These ensemble models are still in the experimental phase and can be found in the [ensemble](web_ui/main_ensemble.py).
+> [!NOTE]  
+> The ensemble models are experimental and may not always provide accurate predictions. They are still in the testing phase and may be subject to change.
 
 1. Car Type Ensemble Model (weighted average)
     - Description: Trained two models on the same objective. Each with its on strengths and weaknesses. The results get weighted (correct weights through intensive testing). The models also differ in model architecture. 
@@ -162,7 +166,8 @@ pip install -m requirements.txt
 
 </details>
 
-The models with * were trained on the pre cleaned dataset.
+> [!IMPORTANT]  
+> The models with * were trained on the pre cleaned dataset.
 
 Have a look at the [releases](https://github.com/Flippchen/PorscheInsight-CarClassification-AI/releases) to see the models and [results](models/car_types/results) folder to see the training results.
 You can have a look at the models structure with [Netron](https://netron.app/) or look at the [model_structure](assets/model_structure_visualizations) folder to see the model insights.
@@ -210,11 +215,11 @@ The confusion matrix of the specific model variants is too big to show it here. 
 
 ### Sample images from the shap values
 
+<img alt="Shap values for 911_1980" src="model_insights/shap/results/car_types/shap_values_911_1980.png"  width="700" height="280">
+
 <details>
 <summary><b>Explained images</b></summary>
 
-
-<img alt="Shap values for 911_1980" src="model_insights/shap/results/car_types/shap_values_911_1980.png"  width="700" height="280">
 <img alt="Shap values for Cayman_2009" src="model_insights/shap/results/all_model_variants/shap_values_Cayman_2009.png"  width="700" height="280">
 </details>
 
@@ -237,9 +242,8 @@ After the data was cleaned, there are ~30.300 pictures left. Several pictures we
 For the training of the <b>pre_filter</b> model a mixture of the [porsche-pictures](https://github.com/Flippchen/porsche-pictures) dataset, other Open Source datasets
 like [cifar-10](https://www.cs.toronto.edu/~kriz/cifar.html) were used.
 
-# Disclaimer
-
-<b>This is not an official Porsche product and is not affiliated with or endorsed by Porsche AG</b>
+> [!Caution]
+> This is not an official Porsche product and is not affiliated with or endorsed by Porsche AG</b>
 
 <a href='assets/classify_qr_code.png'>
   <img alt='Get it on Google Play' src='assets/classify_qr_code.png' height="400"/> 
