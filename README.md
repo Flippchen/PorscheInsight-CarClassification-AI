@@ -27,7 +27,9 @@ The following different model types are available:
 
 The Web UI is a simple local website that enables users to upload images of Porsche cars and get classification results from the models. The app is built using Eel, which allows Python and HTML/JS to
 communicate with each other.
-For a free online version of the Web UI, check out [PorscheInsight](https://classify.autos).
+
+> [!TIP]
+> For a free online version of the Web UI, check out [PorscheInsight](https://classify.autos).
 
 With the Web UI, non-car images tend to lead to more random predictions. I trained a model to classify Porsche, other car brands, and others, resulting in a two-step [Web UI](web_ui) architecture for Porsche
 Identification and Classification.
@@ -71,6 +73,8 @@ To see the architecture of the experimental ensemble models or the local web UI,
 
 ### Experimental Ensemble Models 🧪
 To improve accuracy and prediction capabilities, I have experimented with two ensemble models. Ensemble models combine predictions from multiple models to give a final verdict, which often results in better prediction accuracy. These ensemble models are still in the experimental phase and can be found in the [ensemble](web_ui/main_ensemble.py).
+> [!NOTE]  
+> The ensemble models are experimental and may not always provide accurate predictions. They are still in the testing phase and may be subject to change.
 
 1. Car Type Ensemble Model (weighted average)
     - Description: Trained two models on the same objective. Each with its on strengths and weaknesses. The results get weighted (correct weights through intensive testing). The models also differ in model architecture. 
