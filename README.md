@@ -237,7 +237,7 @@ After the data was cleaned, there are ~30.300 pictures left. Several pictures we
 For the training of the <b>pre_filter</b> model a mixture of the [porsche-pictures](https://github.com/Flippchen/porsche-pictures) dataset, other Open Source datasets
 like [cifar-10](https://www.cs.toronto.edu/~kriz/cifar.html) were used.
 
-> [!Disclaimer]
+> [!Caution]
 > This is not an official Porsche product and is not affiliated with or endorsed by Porsche AG</b>
 
 <a href='assets/classify_qr_code.png'>
