@@ -1,6 +1,6 @@
 from typing import List
 
-CAR_TYPE = ['718 Boxster', '718 Cayman', '911', '918', 'Boxster', 'Carrera Gt', 'Cayenne', 'Cayman', 'Macan', 'Panamera']
+CAR_TYPE = ['718 Boxster', '718 Cayman', '911', '918', 'Boxster', 'Carrera Gt', 'Cayenne', 'Cayman', 'Macan', 'Panamera', 'Taycan']
 
 ALL_MODEL_VARIANTS = ['718 Boxster_2016', '718 Boxster_2017', '718 Boxster_2018', '718 Boxster_2019', '718 Cayman_2016', '718 Cayman_2017', '718 Cayman_2018', '718 Cayman_2019', '911_1980',
                       '911_1990', '911_2001', '911_2003', '911_2004', '911_2006', '911_2007', '911_2008', '911_2009', '911_2012', '911_2013', '911_2014', '911_2015', '911_2016', '911_2017',
